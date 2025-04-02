@@ -2,43 +2,39 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { BottomTabBarButtonProps, BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import { RouteProp } from "@react-navigation/native";
 import { Colors } from "../../assets/styles/Colors";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Feather } from "@expo/vector-icons";
 
-export const iconesTabBar = ({ route }: {route: RouteProp<Record<string, object | undefined>, string>;}): BottomTabNavigationOptions => {
+export const tabBar = ({ route }: {route: RouteProp<Record<string, object | undefined>, string>;}): BottomTabNavigationOptions => {
     
     return {
         tabBarIcon: ({ color }: { color: string }) => {
-            let iconName: string = '';
+            let nomeIcone: "home" | "search" | "tool" | "user" = "home";
 
             switch (route.name) {
                 case "pesquisa":
-                    iconName = "card-search-outline";
+                    nomeIcone = "search";
                     break;
                 case "servico":
-                    iconName = "hammer-wrench";
+                    nomeIcone = "tool";
                     break;
                 case "perfil":
-                    iconName = "account-outline";
+                    nomeIcone = "user";
                     break;
                 default:
-                    iconName = "home";
+                    nomeIcone = "home";
             }
 
-            return <MaterialCommunityIcons name={iconName} size={30} color={color} />;
+            return <Feather name={nomeIcone} size={30} color={color} />;
         },
         tabBarStyle: {
             ...styles.shadow,
             position: "absolute",
-            bottom: 25,
-            left: 20,
-            right: 20,
             borderRadius: 20,
-            height: 80,
-            justifyContent: "center",
-            alignItems: "center",
-            paddingBottom: 0,
-            borderColor: Colors.cor_primaria,
-            borderWidth: 1,
+            height: 70,
+            marginTop: 10,
+            marginBottom: 25,
+            marginHorizontal: 20,
+            paddingTop: 12
         },
         tabBarActiveTintColor: Colors.cor_primaria,
         tabBarInactiveTintColor: Colors.cinza_escuro,
@@ -52,11 +48,11 @@ interface TabButtonProps extends BottomTabBarButtonProps {}
 export const botaoCentralTabBar: React.FC<TabButtonProps> = ({ onPress }) => (
     <TouchableOpacity
         onPress={onPress}
-        style={{ top: -20, justifyContent: "center", alignItems: "center" }}>
+        style={{ top: -18, justifyContent: "center", alignItems: "center" }}>
 
         <View style={{
-                width: 56,
-                height: 56,
+                width: 60,
+                height: 60,
                 borderRadius: 32,
                 backgroundColor: Colors.cor_primaria,
                 ...styles.shadow,
@@ -64,7 +60,7 @@ export const botaoCentralTabBar: React.FC<TabButtonProps> = ({ onPress }) => (
                 alignItems: "center",
             }}>
 
-            <MaterialCommunityIcons name="map-marker" size={30} color={Colors.branco} />
+            <Feather name="map-pin" size={30} color={Colors.branco} />
         </View>
     </TouchableOpacity>
 );
