@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { styles } from "./PerfilStyleScreen";
+import { styles } from "./PesquisaScreenStyle";
 
 export default function PesquisaScreen() {
     return (

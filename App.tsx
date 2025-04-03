@@ -3,7 +3,7 @@ import Fonts from './assets/styles/Fonts';
 import { useFonts } from "expo-font";
 import { MenuProvider } from "react-native-popup-menu";
 import { NavigationContainer } from "@react-navigation/native";
-import AppRoutes from './src/routes/AppRoutes';
+import AppRoute from './src/routes/AppRoute';
 import FlashMessage from "react-native-flash-message";
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
         // Habilitando o MenuProvider para o uso de popup
         <MenuProvider>
             <NavigationContainer>
-                <AppRoutes />
+                <AppRoute />
                 <FlashMessage position="top" />
             </NavigationContainer>
         </MenuProvider>

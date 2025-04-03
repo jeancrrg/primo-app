@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { styles } from "./ServicoStyleScreen";
+import { styles } from "./ServicoScreenStyle";
 
 export default function ServicoScreen() {
     return (

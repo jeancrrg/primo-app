@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { styles } from "./MapaStyleScreen";
+import { styles } from "./MapaScreenStyle";
 
 export default function MapaScreen() {
     return (

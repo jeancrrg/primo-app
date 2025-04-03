@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { styles } from "./PerfilStyleScreen";
+import { styles } from "./PerfilScreenStyle";
 
 export default function PerfilScreen() {
     return (
