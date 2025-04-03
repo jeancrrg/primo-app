@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     containerTitulo: {
         marginVertical: 16,
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "center"
     },
     titulo: {
         fontSize: 34,
@@ -20,58 +20,53 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     containerCard: {
-
-
+        height: 240,
+        marginVertical: 20
     },
-
     card: {
         flex: 1,
         flexDirection: "row",
-        width: 400,
-        height: 400,
+        width: '100%',
+        height: 240,
         borderRadius: 20,
         backgroundColor: Colors.branco,
         shadowColor: Colors.cinza_escuro,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
         elevation: 4,
-        alignSelf: "flex-end"
-    },
-    button_box: {
-        position: "absolute",
-        justifyContent: "flex-end",
-        bottom: 0,
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-    },
-    button: {
-        backgroundColor: Colors.cor_primaria,
-        borderRadius: 20,
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        justifyContent: "center",
         alignSelf: "flex-start",
+        justifyContent: "space-between"
     },
-    button_text: {
-        fontSize: 16,
-        fontFamily: "Mulish-Bold",
-        color: Colors.branco,
+    containerTexto: {
+        width: '55%',
+        padding: 15,
+        alignItems: "center"
     },
-    image_box: {
-        flex: 1,
-        paddingVertical: 24,
-        height: 200
+    tituloTexto: {
+        fontSize: 23,
+        fontFamily: "Mulish-Medium",
+        color: Colors.cor_primaria,
+        marginTop: 5,
+        marginBottom: 15
     },
-    category_image: {
-        flex: 1,
-        resizeMode: "contain",
+    texto: {
+        fontSize: 15,
+        fontFamily: "Mulish-Medium",
+        textAlign: "center",
+        lineHeight: 24,
+        marginBottom: 8
     },
-
-
+    containerImagem: {
+        paddingVertical: 24
+    },
+    imagem: {
+        height: 180,
+        width: 180,
+        resizeMode: "contain"
+    },
     containerTiposServicos: {
         flex: 1,
         paddingHorizontal: 24,
-        marginTop: 280,
         alignItems: "center"
     },
     textoTipoServico: {
@@ -80,9 +75,8 @@ export const styles = StyleSheet.create({
         fontFamily: "Mulish-Medium",
     },
     tiposServico: {
-        marginVertical:8,
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "center"
-    },
+    }
 });
