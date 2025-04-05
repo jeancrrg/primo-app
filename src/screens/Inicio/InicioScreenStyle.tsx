@@ -4,24 +4,18 @@ import { Colors } from "../../../assets/styles/Colors";
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 48,
         marginBottom: 120,
         paddingHorizontal: 24
-    },
-    containerTitulo: {
-        marginVertical: 16,
-        flexDirection: "row",
-        alignItems: "center"
     },
     titulo: {
         fontSize: 34,
         fontFamily: "Mulish-Medium",
         color: Colors.cor_primaria,
-        flex: 1,
+        marginVertical: 30
     },
     containerCard: {
         height: 240,
-        marginVertical: 20
+        marginBottom: 20
     },
     card: {
         flex: 1,

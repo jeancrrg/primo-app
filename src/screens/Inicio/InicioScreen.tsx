@@ -1,26 +1,23 @@
 import { Image, Text, View } from "react-native";
-import { styles } from "./InicioScreenStyle";
 import CardTipoServico from "../../components/CardTipoServico/CardTipoServico";
-import { TipoServico } from "../../models/interfaces/Interface";
+import { Rotas, TipoServico } from "../../models/interfaces/Interface";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { styles } from "./InicioScreenStyle";
 
 export default function InicioScreen() {
 
+    const navigation = useNavigation<NavigationProp<Rotas>>();
+
     const listaTiposServico: TipoServico[] = [
         { nome: "Borracheiro", icone: "tire" },
-        { nome: "Mecânico", icone: "tools" },
+        { nome: "Chaveiro", icone: "key-variant" },
         { nome: "Guincho", icone: "tow-truck"},
         { nome: "Auto Elétrica", icone: "lightning-bolt"}
     ];
 
-    function onPressTipoServico(tipoServico: TipoServico) {
-        console.log('Tipo serviço: ', tipoServico.nome);
-    }
-
     return (
         <View style={styles.container}>
-            <View style={styles.containerTitulo}>
-                <Text style={styles.titulo}> Primo </Text>
-            </View>
+            <Text style={styles.titulo}> Primo </Text>
 
             <View style={styles.containerCard}>
                 <View style={styles.card}>
@@ -31,7 +28,7 @@ export default function InicioScreen() {
                     </View>            
 
                     <View style={styles.containerImagem}>
-                        <Image source={require("../../../assets/images/servico-24h.png")} style={styles.imagem} />
+                        <Image source={require("../../../assets/images/ilustracoes/servico-24h.png")} style={styles.imagem} />
                     </View>
                 </View>
             </View>
@@ -41,7 +38,7 @@ export default function InicioScreen() {
 
                 <View style={styles.tiposServico}>
                     {listaTiposServico.map(tipoServico => (
-                        <CardTipoServico key={tipoServico.nome} tipoServico={tipoServico} onPress={() => onPressTipoServico(tipoServico)}/>
+                        <CardTipoServico key={tipoServico.nome} tipoServico={tipoServico} onPress={() => navigation.navigate('mapa')}/>
                     ))}
                 </View>
             </View>

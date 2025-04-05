@@ -7,3 +7,17 @@ export interface PropsCardTipoServico {
     tipoServico: TipoServico;
     onPress: () => void;
 }
+
+export interface PropsCardSmall {
+    nomeIcone: string;
+    tipoInformacao: string;
+    informacao: string;
+}
+
+export interface Rotas {
+    'inicio': undefined;
+    'pesquisa': undefined;
+    'mapa': undefined;
+    'servico': undefined;
+    'perfil': undefined;
+}

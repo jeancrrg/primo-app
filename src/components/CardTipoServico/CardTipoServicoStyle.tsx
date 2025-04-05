@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Colors } from "../../../assets/styles/Colors";
 
 export const styles = StyleSheet.create({
@@ -16,7 +16,9 @@ export const styles = StyleSheet.create({
     },
     icone: {
         flex: 1,
-        marginTop: 8
+        marginTop: 8,
+        fontSize: 36,
+        color: Colors.cor_primaria
     },
     texto: {
         color: Colors.cor_primaria,
