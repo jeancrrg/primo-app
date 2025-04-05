@@ -33,7 +33,7 @@ export default function CardPrestadorServico(props: PropsCardPrestadorServico) {
             </View>
 
             <View style={styles.containerBotao}>
-                <TouchableOpacity style={styles.botao}>
+                <TouchableOpacity style={styles.botao} onPress={props.onSelect}>
                     <Text style={styles.textoBotao}> Chamar </Text>
                 </TouchableOpacity>
             </View>

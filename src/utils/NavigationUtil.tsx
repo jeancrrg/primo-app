@@ -5,7 +5,6 @@ import { Colors } from "../../assets/styles/Colors";
 import { Feather } from "@expo/vector-icons";
 
 export const tabBar = ({ route }: {route: RouteProp<Record<string, object | undefined>, string>;}): BottomTabNavigationOptions => {
-    
     return {
         tabBarIcon: ({ color }: { color: string }) => {
             let nomeIcone: "home" | "search" | "tool" | "user" = "home";
