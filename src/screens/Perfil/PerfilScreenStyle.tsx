@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     titulo: {
         fontSize: 34,
         fontFamily: "Mulish-Medium",
-        color: Colors.cor_primaria,
+        color: Colors.corPrimaria,
         marginVertical: 30
     },
     containerPerfil: {
@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     logo: {
         fontSize: 34,
         fontFamily: "Mulish-Medium",
-        color: Colors.cinza_medio
+        color: Colors.cinzaMedio
     },
     containerSaidaApp: {
         flexDirection: "row",

@@ -59,7 +59,7 @@ export default function MapaScreen() {
                     style={styles.map}
                     provider="google"
                     initialRegion={initialRegion}
-                    loadingIndicatorColor={Colors.cor_primaria}
+                    loadingIndicatorColor={Colors.corPrimaria}
                     userLocationUpdateInterval={1000}
                     showsUserLocation={true}
                     showsMyLocationButton={true}>
@@ -91,7 +91,7 @@ export default function MapaScreen() {
                                             {service.expertArea}
                                         </Text>
                                     </View>
-                                    <MaterialCommunityIcons name='chevron-right' color={Colors.cor_primaria} size={24}/>
+                                    <MaterialCommunityIcons name='chevron-right' color={Colors.corPrimaria} size={24}/>
                                 </TouchableOpacity>
                             </Callout>
                         </Marker>

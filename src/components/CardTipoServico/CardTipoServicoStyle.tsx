@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         marginHorizontal: 8,
         marginVertical: 8,
         borderRadius: 10,
-        borderColor: Colors.cor_primaria,
+        borderColor: Colors.corPrimaria,
         borderWidth: 1,
         width: 102,
         height: 102,
@@ -18,10 +18,10 @@ export const styles = StyleSheet.create({
         flex: 1,
         marginTop: 8,
         fontSize: 36,
-        color: Colors.cor_primaria
+        color: Colors.corPrimaria
     },
     texto: {
-        color: Colors.cor_primaria,
+        color: Colors.corPrimaria,
         fontSize: 14,
         fontFamily: "Mulish-Medium",
         textAlign: "center"

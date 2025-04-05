@@ -36,8 +36,8 @@ export const tabBar = ({ route }: {route: RouteProp<Record<string, object | unde
             marginHorizontal: 20,
             paddingTop: 12
         },
-        tabBarActiveTintColor: Colors.cor_primaria,
-        tabBarInactiveTintColor: Colors.cinza_escuro,
+        tabBarActiveTintColor: Colors.corPrimaria,
+        tabBarInactiveTintColor: Colors.cinzaEscuro,
         headerShown: false,
         tabBarShowLabel: false,
     };
@@ -54,7 +54,7 @@ export const botaoCentralTabBar: React.FC<TabButtonProps> = ({ onPress }) => (
                 width: 60,
                 height: 60,
                 borderRadius: 32,
-                backgroundColor: Colors.cor_primaria,
+                backgroundColor: Colors.corPrimaria,
                 ...styles.shadow,
                 justifyContent: "center",
                 alignItems: "center",
@@ -67,7 +67,7 @@ export const botaoCentralTabBar: React.FC<TabButtonProps> = ({ onPress }) => (
 
 const styles = StyleSheet.create({
     shadow: {
-        shadowColor: Colors.cinza_escuro,
+        shadowColor: Colors.cinzaEscuro,
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.2,
         shadowRadius: 4,

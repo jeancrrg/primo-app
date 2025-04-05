@@ -27,6 +27,6 @@ export const styles = StyleSheet.create({
     tipoInformacao: {
         fontSize: 14,
         fontFamily: "Mulish-Light",
-        color: Colors.cinza_escuro
+        color: Colors.cinzaEscuro
     }
 })

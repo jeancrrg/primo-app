@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     titulo: {
         fontSize: 34,
         fontFamily: "Mulish-Medium",
-        color: Colors.cor_primaria,
+        color: Colors.corPrimaria,
         marginVertical: 30
     },
     containerCard: {
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
         height: 240,
         borderRadius: 20,
         backgroundColor: Colors.branco,
-        shadowColor: Colors.cinza_escuro,
+        shadowColor: Colors.cinzaEscuro,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
         elevation: 4,
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     tituloTexto: {
         fontSize: 23,
         fontFamily: "Mulish-Medium",
-        color: Colors.cor_primaria,
+        color: Colors.corPrimaria,
         marginTop: 5,
         marginBottom: 15
     },

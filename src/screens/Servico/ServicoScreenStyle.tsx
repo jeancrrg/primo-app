@@ -7,8 +7,8 @@ export const styles = StyleSheet.create({
         marginBottom: 120
     },
     imagem: {
-        height: 300,
-        width: 300,
+        height: 260,
+        width: 260,
         alignSelf: "center"
     }
 });
