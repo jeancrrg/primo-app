@@ -66,11 +66,12 @@ export const styles = StyleSheet.create({
     textoTipoServico: {
         flex: 1,
         fontSize: 18,
-        fontFamily: "Mulish-Medium",
+        fontFamily: "Mulish-Medium"
     },
     tiposServico: {
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginBottom: 15
     }
 });
