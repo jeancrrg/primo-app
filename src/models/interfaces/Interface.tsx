@@ -34,3 +34,13 @@ export interface PropsCardPrestadorServico {
     onSelect: () => void;
 }
 
+export interface PrestadorServico {
+    codigo: number;
+    nome: string;
+    tipoServico: string;
+    endereco: string;
+    telefone: string;
+    latitude: number;
+    longitude: number;
+}
+

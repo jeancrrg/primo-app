@@ -1,102 +1,104 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import MapView, { Callout, Circle, Marker, Region } from "react-native-maps";
-import { Colors } from "../../../assets/styles/Colors";
-import { useEffect, useState } from "react";
-import * as Location from "expo-location";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ActivityIndicator, Text, View } from "react-native";
 import { styles } from "./MapaScreenStyle";
-
-interface PrestadorServico {
-    id: number;
-    firstName: string;
-    lastName: string;
-    district: string;
-    expertArea: string;
-}
-
-type DistrictCoordinates = Record<string, { latitude: number; longitude: number }>;
+import MapView, { Callout, Circle, Marker, Region } from "react-native-maps";
+import { useEffect, useState } from "react";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "../../../assets/styles/Colors";
+import * as Location from "expo-location";
+import { PrestadorServico } from "../../models/interfaces/Interface";
 
 export default function MapaScreen() {
-    const [initialRegion, setInitialRegion] = useState<Region | null>(null);
-    const [serviceList] = useState<PrestadorServico[]>([
-        { id: 1, firstName: "Carlos", lastName: "Silva", district: "Aparecida", expertArea: "Mecânica" },
-        { id: 2, firstName: "Mariana", lastName: "Souza", district: "Aparecida", expertArea: "Elétrica" },
-        { id: 3, firstName: "João", lastName: "Pereira", district: "Aparecida", expertArea: "Pintura" }
+
+    const [loading, setLoading] = useState<boolean>(true);
+    const [localizacaoAtual, setLocalizacaoAtual] = useState<Region | null>(null);
+
+    const [listaPrestadoresServico] = useState<PrestadorServico[]>([
+        { codigo: 1, nome: "Carlos", tipoServico: "Mecânico", endereco: 'Rua A, 123', telefone: '123456789',
+            latitude: -18.914500, longitude: -48.275000 },
+
+        { codigo: 2, nome: "Mariana", tipoServico: "Elétrica", endereco: 'Rua B, 456', telefone: '987654321',
+            latitude: -18.914000, longitude: -48.274500 },
+
+        { codigo: 3, nome: "João", tipoServico: "Pintura", endereco: 'Rua C, 789', telefone: '456789123',
+            latitude: -18.913500, longitude: -48.274200 }
     ]);
 
-    const districtCoordinates: DistrictCoordinates = {
-        Aparecida: { latitude: -18.918432, longitude: -48.277229 },
-    };
-
     useEffect(() => {
-        async function getLocationAsync() {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== "granted") {
-                return;
-            }
-
-            let location = await Location.getCurrentPositionAsync({});
-            const { latitude, longitude } = location.coords;
-            setInitialRegion({
-                latitude,
-                longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-            });
-        }
-
-        getLocationAsync();
+        obterLocalizacaoAtual();
     }, []);
 
-    function getCoordinatesForDistrict(district: string) {
-        return districtCoordinates[district] || { latitude: 0, longitude: 0 };
+    async function obterLocalizacaoAtual(): Promise<void> {
+        const concedeuPermissaoLocalizacao: boolean = await solicitarPermissaoLocalizacao(); 
+        if (!concedeuPermissaoLocalizacao) {
+            return;
+        }
+
+        // Obtém a localização atual do usuário
+        let localizacao = await Location.getCurrentPositionAsync({});
+
+        // Extrai latitude e longitude da localização retornada
+        const { latitude, longitude } = localizacao.coords;
+
+        // Define a região inicial do mapa com base na localização do usuário
+        setLocalizacaoAtual({
+            latitude, // Latitude atual
+            longitude, // Longitude atual
+            latitudeDelta: 0.0922, // Zoom vertical do mapa (quanto maior, mais afastado)
+            longitudeDelta: 0.0421, // Zoom horizontal do mapa
+        });
+
+        setLoading(false);
+    }
+
+    async function solicitarPermissaoLocalizacao(): Promise<boolean> {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+            return false;
+        }
+        return true;
     }
 
     return (
         <View style={styles.container}>
-            {initialRegion && (
+            {localizacaoAtual && !loading ? (
                 <MapView
-                    style={styles.map}
+                    style={styles.mapa}
                     provider="google"
-                    initialRegion={initialRegion}
+                    initialRegion={localizacaoAtual}
                     loadingIndicatorColor={Colors.corPrimaria}
                     userLocationUpdateInterval={1000}
                     showsUserLocation={true}
                     showsMyLocationButton={true}>
 
                     <Circle
-                        center={{
-                            latitude: initialRegion.latitude,
-                            longitude: initialRegion.longitude,
-                        }}
+                        center={{ latitude: localizacaoAtual.latitude, longitude: localizacaoAtual.longitude }}
                         radius={2000}
                         strokeWidth={2}
-                        strokeColor="rgba(0, 0, 255, 0.5)"
-                        fillColor="rgba(0, 0, 255, 0.2)"
+                        strokeColor={Colors.azulEscuroTransparente}
+                        fillColor={Colors.azulClaroTransparente} 
                     />
 
-                    {serviceList.map((service) => (
+                    {listaPrestadoresServico.map((prestadorServico) => (
                         <Marker
-                            key={service.id}
-                            coordinate={getCoordinatesForDistrict(service.district)}
-                            title={`${service.firstName} ${service.lastName}`}>
+                            key={prestadorServico.codigo}
+                            coordinate={{ latitude: prestadorServico.latitude, longitude: prestadorServico.longitude }}
+                            title={`${prestadorServico.nome}`}>
 
-                            <Callout style={styles.callout_container}>
-                                <TouchableOpacity onPress={() => console.log('teste')}>
+                            <Callout onPress={() => console.log('Chamando...')}>
+                                <View>
                                     <View style={styles.callout_button}>
-                                        <Text style={styles.callout_title}>
-                                            {service.firstName} {service.lastName}
-                                        </Text>
-                                        <Text style={styles.callout_text}>
-                                            {service.expertArea}
-                                        </Text>
+                                        <Text style={styles.callout_title}> {prestadorServico.nome} </Text>
+                                        <Text style={styles.callout_text}> {prestadorServico.tipoServico} </Text>
                                     </View>
-                                    <MaterialCommunityIcons name='chevron-right' color={Colors.corPrimaria} size={24}/>
-                                </TouchableOpacity>
+
+                                    <MaterialCommunityIcons name='logout-variant' size={24} color={Colors.corPrimaria} />
+                                </View>
                             </Callout>
                         </Marker>
                     ))}
                 </MapView>
+            ) : (
+                <ActivityIndicator style={styles.loading} size="large" color={Colors.corPrimaria} />
             )}
         </View>
     );

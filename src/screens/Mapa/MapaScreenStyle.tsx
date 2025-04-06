@@ -5,16 +5,18 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    map: {
+    mapa: {
         width: "100%",
         height: "100%"
     },
-    callout_container: {
+    containerInfoLocalizacao: {
         flex: 1,
         flexDirection: "row",
         justifyContent: "center",
-        backgroundColor: Colors.branco,
-        paddingLeft: 8
+        backgroundColor: Colors.corPrimaria,
+        paddingLeft: 20,
+        borderWidth: 1,
+        borderColor: Colors.preto,
     },
     callout_button: {
         justifyContent: "center",
@@ -29,6 +31,10 @@ export const styles = StyleSheet.create({
     callout_text: {
         fontFamily: "Mulish-Light",
         fontSize: 13
+    },
+    loading: {
+        position: "absolute",
+        top: 200,
+        left: 200
     }
-
 });

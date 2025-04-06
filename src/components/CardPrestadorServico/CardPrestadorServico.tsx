@@ -1,5 +1,5 @@
 import { Image, Text, Touchable, TouchableOpacity, View } from "react-native";
-import { styles } from "./CardPrestadorServiceStyle";
+import { styles } from "./CardPrestadorServicoStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../assets/styles/Colors";
 import { PropsCardPrestadorServico } from "../../models/interfaces/Interface";
@@ -34,7 +34,7 @@ export default function CardPrestadorServico(props: PropsCardPrestadorServico) {
 
             <View style={styles.containerBotao}>
                 <TouchableOpacity style={styles.botao} onPress={props.onSelect}>
-                    <Text style={styles.textoBotao}> Chamar </Text>
+                    <Text style={styles.textoBotao}> Solicitar </Text>
                 </TouchableOpacity>
             </View>
         </View>

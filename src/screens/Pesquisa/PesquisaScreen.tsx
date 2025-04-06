@@ -2,7 +2,7 @@ import { FlatList, View } from "react-native";
 import { styles } from "./PesquisaScreenStyle";
 import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
 import { useEffect, useState } from "react";
-import CardPrestadorServico from "../../components/CardPrestadorServico/CardPrestadorService";
+import CardPrestadorServico from "../../components/CardPrestadorServico/CardPrestadorServico";
 import { PropsCardPrestadorServico, Rotas } from "../../models/interfaces/Interface";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 
