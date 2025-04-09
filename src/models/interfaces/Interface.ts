@@ -42,5 +42,6 @@ export interface PrestadorServico {
     telefone: string;
     latitude: number;
     longitude: number;
+    preco: number;
 }
 

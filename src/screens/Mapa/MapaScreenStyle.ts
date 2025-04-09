@@ -9,32 +9,71 @@ export const styles = StyleSheet.create({
         height: '100%',
         width: "100%"
     },
-    containerInfoLocalizacao: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
-        backgroundColor: Colors.corPrimaria,
-        paddingLeft: 20,
-        borderWidth: 1,
-        borderColor: Colors.preto,
-    },
-    callout_button: {
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 8
-    },
-    callout_title: {
-        fontFamily: "Mulish-Medium",
-        paddingBottom: 12,
-        fontSize: 18
-    },
-    callout_text: {
-        fontFamily: "Mulish-Light",
-        fontSize: 13
-    },
     loading: {
         position: "absolute",
         top: 200,
         left: 200
+    },
+    containerBottomSheet: {
+        height: 110,
+        backgroundColor: Colors.branco,
+        flexDirection: 'row',
+        padding: 10,
+        marginHorizontal: 20,
+        borderRadius: 20
+    },
+    containerAvatar: {
+        width: 75,
+        justifyContent: 'center'
+    },
+    avatar: {
+        height: 72,
+        width: 72
+    },
+    containerDescricao: {
+        flex: 1
+    },
+    nome: {
+        fontSize: 18,
+        fontFamily: "Mulish-Medium",
+        fontWeight: "bold",
+        marginBottom: 5
+    },
+    tipoServico: {
+        color: Colors.cinzaEscuro,
+        fontSize: 16,
+        fontFamily: "Mulish-Light"
+    },
+    precoServico: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        fontFamily: "Mulish-Light"
+    },
+    containerSolicitacao: {
+        width: 120,
+        alignItems: "flex-end",
+        justifyContent: "space-between"
+    },
+    tempoSolicitacao: {
+        color: Colors.corPrimaria,
+        fontSize: 16,
+        fontFamily: "Mulish-Medium",
+        fontWeight: "bold"
+    },
+    botaoSolicitacao: {
+        width: 120,
+        height: 45,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: Colors.corPrimaria,
+        padding: 10,
+        borderRadius: 10
+    },
+    textoBotaoSolicitacao: {
+        color: Colors.branco,
+        marginLeft: 5,
+        fontSize: 16,
+        fontFamily: "Mulish-Medium"
     }
 });

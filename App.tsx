@@ -5,17 +5,20 @@ import AppRoute from './src/routes/AppRoute';
 import FlashMessage from "react-native-flash-message";
 import { View } from "react-native";
 import { styles } from "./Styles";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
     return (
-        // Habilitando o MenuProvider para o uso de popup
-        <MenuProvider>
-            <NavigationContainer>
-                <View style={styles.container}>
-                    <AppRoute />
-                </View>
-                <FlashMessage position="top" />
-            </NavigationContainer>
-        </MenuProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            // Habilita o uso de popup
+            <MenuProvider>
+                <NavigationContainer>
+                    <View style={styles.container}>
+                        <AppRoute />
+                    </View>
+                    <FlashMessage position="top" />
+                </NavigationContainer>
+            </MenuProvider>
+        </GestureHandlerRootView>
     );
 }

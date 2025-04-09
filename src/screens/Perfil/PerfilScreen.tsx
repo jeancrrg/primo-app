@@ -22,7 +22,7 @@ export default function PerfilScreen() {
                     </View>
                 </View>
 
-                <CardSmall nomeIcone="cellphone-check" tipoInformacao="Telefone:" informacao="(34) 9 9196 - 8327" />
+                <CardSmall nomeIcone="phone" tipoInformacao="Telefone:" informacao="(34) 9 9196 - 8327" />
 
                 <CardSmall nomeIcone="email-outline" tipoInformacao="Email:" informacao="jeancrg@gmail.com" />
 
