@@ -6,8 +6,8 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     mapa: {
-        width: "100%",
-        height: "100%"
+        height: '100%',
+        width: "100%"
     },
     containerInfoLocalizacao: {
         flex: 1,

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import InicioScreen from '../screens/Inicio/InicioScreen';
+import InicioScreen from '../screens/inicio/InicioScreen';
 import { tabBar, botaoCentralTabBar } from "../utils/NavigationUtil";
-import PesquisaScreen from '../screens/Pesquisa/PesquisaScreen';
-import MapaScreen from '../screens/Mapa/MapaScreen';
-import ServicoScreen from '../screens/Servico/ServicoScreen';
-import PerfilScreen from '../screens/Perfil/PerfilScreen';
+import PesquisaScreen from '../screens/pesquisa/PesquisaScreen';
+import MapaScreen from '../screens/mapa/MapaScreen';
+import ServicoScreen from '../screens/servico/ServicoScreen';
+import PerfilScreen from '../screens/perfil/PerfilScreen';
 
 const { Screen, Navigator } = createBottomTabNavigator();
 

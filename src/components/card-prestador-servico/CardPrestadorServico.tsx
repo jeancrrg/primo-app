@@ -1,4 +1,4 @@
-import { Image, Text, Touchable, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./CardPrestadorServicoStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../assets/styles/Colors";

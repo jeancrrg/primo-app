@@ -1,7 +1,7 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { styles } from "./PerfilScreenStyle";
-import CardSmall from "../../components/CardSmall/CardSmall";
+import CardSmall from "../../components/card-small/CardSmall";
 
 export default function PerfilScreen() {
 

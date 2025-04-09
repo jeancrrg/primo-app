@@ -1,8 +1,8 @@
 import { FlatList, View } from "react-native";
 import { styles } from "./PesquisaScreenStyle";
-import BarraPesquisa from "../../components/BarraPesquisa/BarraPesquisa";
+import BarraPesquisa from "../../components/barra-pesquisa/BarraPesquisa";
 import { useEffect, useState } from "react";
-import CardPrestadorServico from "../../components/CardPrestadorServico/CardPrestadorServico";
+import CardPrestadorServico from "../../components/card-prestador-servico/CardPrestadorServico";
 import { PropsCardPrestadorServico, Rotas } from "../../models/interfaces/Interface";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 

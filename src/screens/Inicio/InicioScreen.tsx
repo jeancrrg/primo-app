@@ -1,5 +1,5 @@
 import { Image, Text, View } from "react-native";
-import CardTipoServico from "../../components/CardTipoServico/CardTipoServico";
+import CardTipoServico from "../../components/card-tipo-servico/CardTipoServico";
 import { Rotas, TipoServico } from "../../models/interfaces/Interface";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { styles } from "./InicioScreenStyle";
