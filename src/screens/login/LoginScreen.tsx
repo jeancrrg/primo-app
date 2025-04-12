@@ -1,4 +1,4 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Keyboard, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./LoginScreenStyle";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -30,67 +30,69 @@ export default function LoginScreen() {
     }
 
     return (
-        <View style={styles.container}>
-            <Animatable.View animation='fadeInLeft' delay={500} style={styles.containerLogo}>
-                <Image source={require("../../../assets/logo-primo.png")} style={styles.logo} />
-            </Animatable.View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.container}>
+                <Animatable.View animation='fadeInLeft' delay={500} style={styles.containerLogo}>
+                    <Image source={require("../../../assets/logo-primo.png")} style={styles.logo} />
+                </Animatable.View>
 
-            <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
-                <Text style={styles.titulo}> Bem-Vindo(a) </Text>
+                <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
+                    <Text style={styles.titulo}> Bem-Vindo(a) </Text>
 
-                <TextInput 
-                    label="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                    mode="outlined"
-                    style={styles.input}
-                    maxLength={50}
-                    outlineColor={Colors.cinzaClaro}
-                    activeOutlineColor={Colors.cinzaEscuro2}
-                    left={renderIconeInput('email-outline')}
-                    theme={{
-                        roundness: 20, // borda arredondada
-                    }}
-                />
+                    <TextInput 
+                        label="Email"
+                        value={email}
+                        onChangeText={setEmail}
+                        mode="outlined"
+                        style={styles.input}
+                        maxLength={50}
+                        outlineColor={Colors.cinzaClaro}
+                        activeOutlineColor={Colors.cinzaEscuro2}
+                        left={renderIconeInput('email-outline')}
+                        theme={{
+                            roundness: 20, // borda arredondada
+                        }}
+                    />
 
-                <TextInput 
-                    label="Senha"
-                    value={senha}
-                    onChangeText={setSenha}
-                    mode="outlined"
-                    style={styles.input}
-                    maxLength={20}
-                    outlineColor={Colors.cinzaClaro}
-                    activeOutlineColor={Colors.cinzaEscuro2}
-                    left={renderIconeInput('lock-outline')}
-                    theme={{
-                        roundness: 20, // borda arredondada
-                    }}
-                    secureTextEntry={!mostrarSenha}
-                    right={
-                        <TextInput.Icon
-                            icon={mostrarSenha ? 'eye' : 'eye-off'}
-                            onPress={() => setMostrarSenha(!mostrarSenha)}
-                        />
-                    }
-                />
-            
-                <TouchableOpacity style={styles.botaoLogin} onPress={() => navigation.replace("tabs")}>
-                    <Text style={styles.textoBotaoLogin}> Acessar </Text>    
-                </TouchableOpacity>
+                    <TextInput 
+                        label="Senha"
+                        value={senha}
+                        onChangeText={setSenha}
+                        mode="outlined"
+                        style={styles.input}
+                        maxLength={20}
+                        outlineColor={Colors.cinzaClaro}
+                        activeOutlineColor={Colors.cinzaEscuro2}
+                        left={renderIconeInput('lock-outline')}
+                        theme={{
+                            roundness: 20, // borda arredondada
+                        }}
+                        secureTextEntry={!mostrarSenha}
+                        right={
+                            <TextInput.Icon
+                                icon={mostrarSenha ? 'eye' : 'eye-off'}
+                                onPress={() => setMostrarSenha(!mostrarSenha)}
+                            />
+                        }
+                    />
+                
+                    <TouchableOpacity style={styles.botaoLogin} onPress={() => navigation.replace("tabs")}>
+                        <Text style={styles.textoBotaoLogin}> Acessar </Text>    
+                    </TouchableOpacity>
 
-                <View style={styles.containerDivider}>
-                    <View style={styles.divider}></View>
-                    <Text style={styles.textoDivider}> OU </Text>
-                    <View style={styles.divider}></View>
-                </View>
+                    <View style={styles.containerDivider}>
+                        <View style={styles.divider}></View>
+                        <Text style={styles.textoDivider}> OU </Text>
+                        <View style={styles.divider}></View>
+                    </View>
 
-                <Text style={styles.infoCadastro}> Ainda não possui cadastro? Cadastre-se</Text>
+                    <Text style={styles.infoCadastro}> Ainda não possui cadastro? Cadastre-se</Text>
 
-                <TouchableOpacity style={styles.botaoCadastro} onPress={() => navigation.replace("tabs")}> 
-                    <Text style={styles.textoBotaoCadastro}> Cadastrar </Text>    
-                </TouchableOpacity>
-            </Animatable.View>
-        </View>
+                    <TouchableOpacity style={styles.botaoCadastro} onPress={() => navigation.replace("tabs")}> 
+                        <Text style={styles.textoBotaoCadastro}> Cadastrar </Text>    
+                    </TouchableOpacity>
+                </Animatable.View>
+            </View>
+        </TouchableWithoutFeedback>
     );
 }
