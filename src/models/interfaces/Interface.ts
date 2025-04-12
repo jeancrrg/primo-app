@@ -1,4 +1,4 @@
-export interface Rotas {
+export interface RotasTabBar {
     'inicio': undefined;
     'pesquisa': undefined;
     'mapa': undefined;

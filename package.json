@@ -1,37 +1,38 @@
 {
-  "name": "primo-app",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
-  },
-  "dependencies": {
-    "@gorhom/bottom-sheet": "^4.6.4",
-    "@react-navigation/bottom-tabs": "^7.3.3",
-    "@react-navigation/native": "^7.0.19",
-    "@react-navigation/stack": "^7.2.3",
-    "axios": "^1.8.4",
-    "expo": "~52.0.42",
-    "expo-location": "^18.0.10",
-    "expo-status-bar": "~2.0.1",
-    "react": "18.3.1",
-    "react-native": "0.76.8",
-    "react-native-flash-message": "^0.4.2",
-    "react-native-gesture-handler": "~2.20.2",
-    "react-native-maps": "^1.20.1",
-    "react-native-paper": "^5.13.1",
-    "react-native-popup-menu": "^0.17.0",
-    "react-native-reanimated": "~3.16.1",
-    "react-native-vector-icons": "^10.2.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@types/react": "~18.3.12",
-    "@types/react-native-vector-icons": "^6.4.18",
-    "typescript": "^5.3.3"
-  },
-  "private": true
+    "name": "primo-app",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "scripts": {
+        "start": "expo start",
+        "android": "expo start --android",
+        "ios": "expo start --ios",
+        "web": "expo start --web"
+    },
+    "dependencies": {
+        "@gorhom/bottom-sheet": "^4.6.4",
+        "@react-navigation/bottom-tabs": "^6.5.12",
+        "@react-navigation/native": "^6.1.9",
+        "@react-navigation/native-stack": "^6.9.12",
+        "@react-navigation/stack": "^6.3.16",
+        "axios": "^1.8.4",
+        "expo": "~49.0.13",
+        "expo-location": "~15.1.1",
+        "expo-status-bar": "~2.0.1",
+        "react": "18.2.0",
+        "react-native": "0.72.6",
+        "react-native-flash-message": "^0.4.2",
+        "react-native-gesture-handler": "~2.12.0",
+        "react-native-maps": "^1.20.1",
+        "react-native-paper": "^5.10.1",
+        "react-native-popup-menu": "^0.17.0",
+        "react-native-reanimated": "~3.3.0",
+        "react-native-vector-icons": "^10.2.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.20.0",
+        "@types/react": "~18.0.27",
+        "@types/react-native-vector-icons": "^6.4.18",
+        "typescript": "^5.3.3"
+    },
+    "private": true
 }

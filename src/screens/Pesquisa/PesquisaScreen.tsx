@@ -3,7 +3,7 @@ import { styles } from "./PesquisaScreenStyle";
 import BarraPesquisa from "../../components/barra-pesquisa/BarraPesquisa";
 import { useEffect, useState } from "react";
 import CardPrestadorServico from "../../components/card-prestador-servico/CardPrestadorServico";
-import { Rotas } from "../../models/interfaces/Interface";
+import { RotasTabBar } from "../../models/interfaces/Interface";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { PrestadorServico } from "../../models/PrestadorServico";
 import { buscarPrestadoresServico } from "../../services/PrestadorServico.service";
@@ -12,7 +12,7 @@ export default function PesquisaScreen() {
 
     const [listaPrestadoresServico, setListaPrestadoresServico] = useState<PrestadorServico[]>([]);
 
-    const navigation = useNavigation<NavigationProp<Rotas>>();
+    const navigation = useNavigation<NavigationProp<RotasTabBar>>();
 
     useEffect(() => {
         buscarPrestadores();

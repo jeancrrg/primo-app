@@ -1,22 +1,15 @@
 import * as React from "react";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import InicioScreen from '../screens/inicio/InicioScreen';
-import PesquisaScreen from '../screens/pesquisa/PesquisaScreen';
-import { tabBar, botaoCentralTabBar } from "../utils/NavigationUtil";
-import MapaScreen from '../screens/mapa/MapaScreen';
-import ServicoScreen from '../screens/servico/ServicoScreen';
-import PerfilScreen from '../screens/perfil/PerfilScreen';
+import TabsRoute from "./TabsRoute.routes";
+import LoginScreen from "../screens/login/LoginScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function AppRoute() {
     return (
-        <Tab.Navigator screenOptions={tabBar} initialRouteName='inicio'>
-            <Tab.Screen name='inicio' component={InicioScreen} />
-            <Tab.Screen name='pesquisa' component={PesquisaScreen} />
-            <Tab.Screen name='mapa' component={MapaScreen} options={{ tabBarButton: botaoCentralTabBar }}/>
-            <Tab.Screen name='servico' component={ServicoScreen} />
-            <Tab.Screen name='perfil' component={PerfilScreen} />
-        </Tab.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="login">
+            <Stack.Screen name="login" component={LoginScreen} />
+            <Stack.Screen name="tabs" component={TabsRoute} />
+        </Stack.Navigator>
     );
 };
