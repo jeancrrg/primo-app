@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     texto: {
         color: Colors.corPrimaria,
         fontSize: 14,
-        fontFamily: "Mulish-Medium",
-        textAlign: "center"
+        textAlign: "center",
+        fontWeight: 'bold'
     }
 });

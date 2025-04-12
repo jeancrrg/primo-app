@@ -73,6 +73,7 @@ export const styles = StyleSheet.create({
     textoBotao: {
         fontFamily: "Mulish-Light",
         color: Colors.branco,
-        fontSize: 16
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 })
