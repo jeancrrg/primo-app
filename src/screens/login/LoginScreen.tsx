@@ -7,11 +7,7 @@ import { TextInput } from 'react-native-paper';
 import { useState } from "react";
 import { Colors } from "../../../assets/styles/Colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
-type StackParamList = {
-    login: undefined;
-    tabs: undefined;
-};
+import { RotasStack } from "../../models/interfaces/Interface";
 
 export default function LoginScreen() {
 
@@ -19,7 +15,7 @@ export default function LoginScreen() {
     const [senha, setSenha] = useState<string>('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
-    const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
+    const navigation = useNavigation<NativeStackNavigationProp<RotasStack>>();
 
     function renderIconeInput(nomeIcone: string) {
         return (

@@ -51,9 +51,8 @@ export const styles = StyleSheet.create({
         marginTop: 5,
     },
     endereco: {
-        fontSize: 14,
-        fontFamily: "Mulish-Light",
         flex: 1,
+        fontSize: 14,
         color: Colors.corPrimaria,
         justifyContent: "center"
     },

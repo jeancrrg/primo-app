@@ -1,11 +1,33 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { styles } from "./PerfilScreenStyle";
 import CardSmall from "../../components/card-small/CardSmall";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import { RotasStack } from "../../models/interfaces/Interface";
 
 export default function PerfilScreen() {
 
-    function sairAplicativo() { }
+    const navigation = useNavigation<NativeStackNavigationProp<RotasStack>>();
+
+    function confirmarSaidaAplicativo(): void {
+        Alert.alert(
+            "Aviso",
+            "Deseja realmente sair do aplicativo?",
+            [
+                {
+                    text: "NÃO",
+                    onPress: () => {},
+                    style: "cancel",
+                },
+                {
+                    text: "SIM",
+                    onPress: () => navigation.replace('login'),
+                },
+            ],
+            {cancelable: true}
+        );
+    }
 
     return (
         <View style={styles.container}>
@@ -33,7 +55,7 @@ export default function PerfilScreen() {
                 <View style={styles.containerLogo}>
                     <Text style={styles.logo}> Primo </Text>
 
-                    <TouchableOpacity style={styles.containerSaidaApp} onPress={() => sairAplicativo()}>
+                    <TouchableOpacity style={styles.containerSaidaApp} onPress={() => confirmarSaidaAplicativo()}>
                         <Text style={styles.textoSaidaApp}> sair do aplicativo </Text>
                         <MaterialCommunityIcons name='logout-variant' style={styles.iconeSaidaApp} />
                     </TouchableOpacity>

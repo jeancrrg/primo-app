@@ -1,3 +1,8 @@
+export type RotasStack = {
+    login: undefined;
+    tabs: undefined;
+};
+
 export interface RotasTabBar {
     'inicio': undefined;
     'pesquisa': undefined;
@@ -34,4 +39,3 @@ export interface PropsCardPrestadorServico {
     nomeBairro: string;
     onSelect: () => void;
 }
-
