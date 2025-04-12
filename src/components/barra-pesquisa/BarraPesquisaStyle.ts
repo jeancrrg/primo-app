@@ -4,7 +4,7 @@ import { Colors } from "../../../assets/styles/Colors";
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.branco,
-        padding: 5,
+        padding: 10,
         borderRadius: 20,
         flexDirection: "row",
         shadowColor: Colors.cinzaEscuro,
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     icone: { 
         paddingHorizontal: 10,
         fontSize: 22,
-        color: Colors.cinzaMedio
+        color: Colors.cinzaEscuro
     },
     input: {
         flex: 1,

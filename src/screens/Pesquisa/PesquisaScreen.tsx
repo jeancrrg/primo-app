@@ -1,4 +1,4 @@
-import { FlatList, View } from "react-native";
+import { FlatList, Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./PesquisaScreenStyle";
 import BarraPesquisa from "../../components/barra-pesquisa/BarraPesquisa";
 import { useEffect, useState } from "react";
@@ -7,6 +7,8 @@ import { RotasTabBar } from "../../models/interfaces/Interface";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { PrestadorServico } from "../../models/PrestadorServico";
 import { buscarPrestadoresServico } from "../../services/PrestadorServico.service";
+import LottieView from 'lottie-react-native';
+import { isNotEmpty } from "../../utils/ValidationUtil";
 
 export default function PesquisaScreen() {
 
@@ -23,6 +25,10 @@ export default function PesquisaScreen() {
         setListaPrestadoresServico(listaPrestadoresServico);
     }
 
+    function validarPossuiPrestadores(): boolean {
+        return isNotEmpty(listaPrestadoresServico);
+    }
+
     function renderCardPrestadorServico(prestador: PrestadorServico) {
         return (
             <CardPrestadorServico
@@ -37,19 +43,36 @@ export default function PesquisaScreen() {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.search_container}>
-                <BarraPesquisa label="Pesquisar" />
-            </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.container}>
+                <View style={styles.containerBarraPesquisa}>
+                    <BarraPesquisa label="Pesquisar" />
+                </View>
 
-            <View>
-                <FlatList
-                    data={listaPrestadoresServico}
-                    renderItem={({ item }) => renderCardPrestadorServico(item)}
-                    keyExtractor={(item) => item.codigo!.toString()}
-                    showsVerticalScrollIndicator={false}
-                />
+                {validarPossuiPrestadores() ?
+                    (
+                        <View>
+                            <FlatList
+                                data={listaPrestadoresServico}
+                                renderItem={({ item }) => renderCardPrestadorServico(item)}
+                                keyExtractor={(item) => item.codigo!.toString()}
+                                showsVerticalScrollIndicator={false}
+                            />
+                        </View>
+                    ) : (
+                        <View style={styles.containerAnimacao}>
+                            <LottieView
+                                source={require('./../../../assets/animations/nenhum-resultado-encontrado.json')}
+                                autoPlay={true}
+                                loop={false}
+                                style={styles.animacao}
+                            />
+                            <Text style={styles.textoAnimacao}> Opss! Nenhum resultado encontrado! </Text>
+                        </View>
+                    )
+                }
+                
             </View>
-        </View>
+        </TouchableWithoutFeedback>
     );
 }

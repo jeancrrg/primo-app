@@ -16,14 +16,14 @@ export default function PerfilScreen() {
             "Deseja realmente sair do aplicativo?",
             [
                 {
-                    text: "NÃO",
-                    onPress: () => {},
-                    style: "cancel",
-                },
-                {
                     text: "SIM",
                     onPress: () => navigation.replace('login'),
                 },
+                {
+                    text: "NÃO",
+                    onPress: () => {},
+                    style: "cancel",
+                }
             ],
             {cancelable: true}
         );

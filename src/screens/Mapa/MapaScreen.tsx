@@ -86,8 +86,8 @@ export default function MapaScreen() {
                     initialRegion={{
                         latitude: localizacaoAtual.coords.latitude,
                         longitude: localizacaoAtual.coords.longitude,
-                        latitudeDelta: 0.01,
-                        longitudeDelta: 0.01
+                        latitudeDelta: 0.050,
+                        longitudeDelta: 0.050
                     }}
                     loadingIndicatorColor={Colors.corPrimaria}
                     userLocationUpdateInterval={1000}
