@@ -32,8 +32,7 @@ export const tabBar = ({ route }: {route: RouteProp<Record<string, object | unde
             height: 70,
             marginTop: 10,
             marginBottom: 25,
-            marginHorizontal: 20,
-            paddingTop: 12
+            marginHorizontal: 20
         },
         tabBarActiveTintColor: Colors.corPrimaria,
         tabBarInactiveTintColor: Colors.cinzaMedioEscuro,

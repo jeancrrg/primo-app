@@ -38,6 +38,7 @@ export const styles = StyleSheet.create({
     },
     nome: {
         fontSize: 18,
+        fontWeight: 'bold',
         fontFamily: "Mulish-Medium"
     },
     tipoServico: {
