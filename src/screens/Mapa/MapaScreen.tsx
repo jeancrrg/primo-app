@@ -4,34 +4,25 @@ import MapView, { Circle, Marker } from "react-native-maps";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Colors } from "../../../assets/styles/Colors";
 import * as Location from "expo-location";
-import { PrestadorServico } from "../../models/interfaces/Interface";
 import BottomSheet from "@gorhom/bottom-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Surface } from "react-native-paper"
+import { PrestadorServico } from "../../models/PrestadorServico";
+import { buscarPrestadoresServico } from "../../services/PrestadorServico.service";
 
 export default function MapaScreen() {
 
-    const [listaPrestadoresServico] = useState<PrestadorServico[]>([
-        { codigo: 1, nome: "Welligton Cardoso", tipoServico: "Chaveiro", endereco: 'Rua A, 123', telefone: '123456789',
-            latitude: -18.9048018, longitude: -48.2795889, preco: 120 },
-
-        { codigo: 2, nome: "Mariana Ribeiro", tipoServico: "Auto Elétrica", endereco: 'Rua B, 456', telefone: '987654321',
-            latitude: -18.9125313, longitude: -48.2696829, preco: 150 },
-
-        { codigo: 3, nome: "João Pedro", tipoServico: "Guincho", endereco: 'Rua C, 789', telefone: '456789123',
-            latitude: -18.9016061, longitude: -48.2602384, preco: 180 },
-    ]);
-
     const [loading, setLoading] = useState<boolean>(true);
     const [localizacaoAtual, setLocalizacaoAtual] = useState<Location.LocationObject | null>(null);
+    const [listaPrestadoresServico, setListaPrestadoresServico] = useState<PrestadorServico[]>([]);
     const [prestadorServicoSelecionado, setPrestadorServicoSelecionado] = useState<PrestadorServico | null>(null);
 
     const bottomSheetRef = useRef<BottomSheet>(null)
     const snapPoints = useMemo(() => ['20%', '33%'], []);
 
     useEffect(() => {
-        fecharBottomSheet();
         obterLocalizacaoAtual();
+        buscarPrestadores();
     }, []);
 
     // Atualiza a localização em tempo real
@@ -51,6 +42,11 @@ export default function MapaScreen() {
             const localizacao: Location.LocationObject = await Location.getCurrentPositionAsync();
             setLocalizacaoAtual(localizacao);
         }
+    }
+
+    async function buscarPrestadores(): Promise<void> {
+        const listaPrestadoresServico: PrestadorServico[] = await buscarPrestadoresServico();
+        setListaPrestadoresServico(listaPrestadoresServico);
         setLoading(false);
     }
 
@@ -114,11 +110,11 @@ export default function MapaScreen() {
                         <Marker
                             key={prestadorServico.codigo}
                             coordinate={{
-                                latitude: prestadorServico.latitude,
-                                longitude: prestadorServico.longitude
+                                latitude: parseFloat(prestadorServico.endereco?.latitude ?? '0'),
+                                longitude: parseFloat(prestadorServico.endereco?.longitude ?? '0')
                             }}
                             title={prestadorServico.nome}
-                            description={prestadorServico.tipoServico}
+                            description={prestadorServico.descricaoTipoServico}
                             onPress={() => onPressMarker(prestadorServico)}
                         />
                     ))}
@@ -127,34 +123,36 @@ export default function MapaScreen() {
                 <ActivityIndicator style={styles.loading} size="large" color={Colors.corPrimaria} />
             )}
 
-            <BottomSheet
-                ref={bottomSheetRef}
-                index={1}
-                snapPoints={snapPoints}
-                enablePanDownToClose={true}
-                backgroundStyle={{ backgroundColor: Colors.cinzaClaro }}>
+            {prestadorServicoSelecionado && (
+                <BottomSheet
+                    ref={bottomSheetRef}
+                    index={1}
+                    snapPoints={snapPoints}
+                    enablePanDownToClose={true}
+                    backgroundStyle={{ backgroundColor: Colors.cinzaClaro }}>
 
-                <Surface elevation={5} style={styles.containerBottomSheet}>
-                    <View style={styles.containerAvatar}>
-                        <Image source={require("../../../assets/images/avatares/avatar-jean.png")} style={styles.avatar} />
-                    </View>
+                    <Surface elevation={5} style={styles.containerBottomSheet}>
+                        <View style={styles.containerAvatar}>
+                            <Image source={require("../../../assets/images/avatares/avatar-5.png")} style={styles.avatar} />
+                        </View>
 
-                    <View style={styles.containerDescricao}>
-                        <Text style={styles.nome}> {prestadorServicoSelecionado?.nome} </Text>
-                        <Text style={styles.tipoServico}> {prestadorServicoSelecionado?.tipoServico} </Text>
-                        <Text style={styles.precoServico}> R$ {prestadorServicoSelecionado?.preco} </Text>
-                    </View>
+                        <View style={styles.containerDescricao}>
+                            <Text style={styles.nome}> {prestadorServicoSelecionado?.nome} </Text>
+                            <Text style={styles.tipoServico}> {prestadorServicoSelecionado?.descricaoTipoServico} </Text>
+                            <Text style={styles.precoServico}> R$ {prestadorServicoSelecionado?.valorServico} </Text>
+                        </View>
 
-                    <View style={styles.containerSolicitacao}>
-                        <Text style={styles.tempoSolicitacao}> 20 min </Text>
+                        <View style={styles.containerSolicitacao}>
+                            <Text style={styles.tempoSolicitacao}> 20 min </Text>
 
-                        <TouchableOpacity style={styles.botaoSolicitacao}>
-                            <MaterialCommunityIcons name='checkbox-marked-circle-outline' size={24} color={Colors.branco} />
-                            <Text style={styles.textoBotaoSolicitacao}> Solicitar </Text>
-                        </TouchableOpacity>
-                    </View>
-                </Surface>
-            </BottomSheet>
+                            <TouchableOpacity style={styles.botaoSolicitacao}>
+                                <MaterialCommunityIcons name='checkbox-marked-circle-outline' size={24} color={Colors.branco} />
+                                <Text style={styles.textoBotaoSolicitacao}> Solicitar </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Surface>
+                </BottomSheet>
+            )}
 
         </View>
     );

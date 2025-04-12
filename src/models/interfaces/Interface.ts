@@ -29,19 +29,9 @@ export interface PropsBarraPesquisa {
 export interface PropsCardPrestadorServico {
     codigo: number;
     nome: string;
-    tipoServico: string;
-    endereco: string;
+    descricaoTipoServico: string;
+    logradouro: string;
+    nomeBairro: string;
     onSelect: () => void;
-}
-
-export interface PrestadorServico {
-    codigo: number;
-    nome: string;
-    tipoServico: string;
-    endereco: string;
-    telefone: string;
-    latitude: number;
-    longitude: number;
-    preco: number;
 }
 
