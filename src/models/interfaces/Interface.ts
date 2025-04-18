@@ -1,5 +1,6 @@
 export type RotasStack = {
     login: undefined;
+    cadastro: undefined;
     tabs: undefined;
 };
 

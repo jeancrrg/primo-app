@@ -74,6 +74,8 @@ export const styles = StyleSheet.create({
         color: Colors.branco,
         marginLeft: 5,
         fontSize: 16,
-        fontFamily: "Mulish-Medium"
+        
+        fontFamily: "Mulish-Medium",
+        fontWeight: 'bold'
     }
 });

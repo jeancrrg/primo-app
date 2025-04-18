@@ -6,8 +6,14 @@ export const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.corPrimaria
     },
+    botaoVoltar: {
+        paddingTop: 20,
+        paddingLeft: 25
+    },
     containerLogo: {
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 30
     },
     logo: {
         height: 200,
@@ -29,47 +35,52 @@ export const styles = StyleSheet.create({
     texto: {
         fontSize: 18,
         textAlign: 'center',
+        paddingHorizontal: 20,
         marginTop: 20,
-        marginBottom: 30
+        marginBottom: 40
     },
-    input: {
-        backgroundColor: Colors.cinzaClaro,
-        height: 55,
-        marginBottom: 15,
-        paddingLeft: 8
-    },
-    botaoLogin: {
+    botaoPrincipal: {
         height: 55,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.corPrimaria,
         borderRadius: 20,
-        marginTop: 30,
         marginBottom: 20
     },
-    textoBotaoLogin: {
+    textoBotaoPrincipal: {
         color: Colors.branco,
         fontSize: 20,
         fontWeight: 'bold'
     },
-    infoCadastro: {
-        textAlign: 'center',
-        color: Colors.cinzaEscuro2,
-        marginVertical: 15
-    },
-    botaoCadastro: {
+    botaoSecundario: {
         height: 55,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: Colors.corPrimaria,
         borderWidth: 2,
-        borderRadius: 20
+        borderRadius: 20,
+        marginBottom: 30
     },
-    textoBotaoCadastro: {
+    textoBotaoSecundario: {
         color: Colors.corPrimaria,
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    containerPossuiCadastro: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20
+    },
+    textoPossuiCadastro: {
+        color: Colors.cinzaEscuro2,
+        fontSize: 18
+    },
+    textoEntrarCadastro: {
+        color: Colors.corPrimaria,
+        fontWeight: 'bold',
+        fontSize: 18,
+        textDecorationLine: 'underline'
     }
 })

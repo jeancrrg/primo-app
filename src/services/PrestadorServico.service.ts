@@ -1,5 +1,5 @@
 import { PrestadorServico } from "../models/PrestadorServico";
-import Api from "../api/Api";
+import Api from "../config/api/Api";
 
 export async function buscarPrestadoresServico(): Promise<PrestadorServico[]> {
     try {

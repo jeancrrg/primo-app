@@ -64,7 +64,6 @@ export default function PesquisaScreen() {
                             <LottieView
                                 source={require('./../../../assets/animations/nenhum-resultado-encontrado.json')}
                                 autoPlay={true}
-                                loop={false}
                                 style={styles.animacao}
                             />
                             <Text style={styles.textoAnimacao}> Opss! Nenhum resultado encontrado! </Text>
