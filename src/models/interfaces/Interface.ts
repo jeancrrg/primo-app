@@ -1,15 +1,17 @@
 export type RotasStack = {
     login: undefined;
-    cadastro: undefined;
+    opcaoCadastro: undefined;
+    cadastroCliente: undefined;
+    cadastroPrestador: undefined;
     tabs: undefined;
 };
 
 export interface RotasTabBar {
-    'inicio': undefined;
-    'pesquisa': undefined;
-    'mapa': undefined;
-    'servico': undefined;
-    'perfil': undefined;
+    inicio: undefined;
+    pesquisa: undefined;
+    mapa: undefined;
+    servico: undefined;
+    perfil: undefined;
 }
 
 export interface TipoServico {
@@ -28,10 +30,6 @@ export interface PropsCardSmall {
     informacao: string;
 }
 
-export interface PropsBarraPesquisa {
-    label: string;
-}
-
 export interface PropsCardPrestadorServico {
     codigo: number;
     nome: string;
@@ -39,4 +37,20 @@ export interface PropsCardPrestadorServico {
     logradouro: string;
     nomeBairro: string;
     onSelect: () => void;
+}
+
+export interface PropsBotao {
+    label: string;
+    onPress: () => void;
+}
+
+export interface PropsInput {
+    label: string;
+    valor: any;
+    onChangeText: (text: string) => void;
+    nomeIconeEsquerda?: string;
+    nomeIconeDireita?: string;
+    onPressIconeDireita?: () => void;
+    mostrarValor?: boolean;
+    maxLength: number;
 }

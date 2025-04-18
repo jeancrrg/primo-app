@@ -1,13 +1,19 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../../assets/styles/Colors";
+import { Colors } from "../../../../assets/styles/Colors";
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.corPrimaria
     },
+    botaoVoltar: {
+        paddingTop: 20,
+        paddingLeft: 25
+    },
     containerLogo: {
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 20,
+        marginBottom: 40
     },
     logo: {
         height: 200,
@@ -29,10 +35,17 @@ export const styles = StyleSheet.create({
     texto: {
         fontSize: 18,
         textAlign: 'center',
+        paddingHorizontal: 20,
         marginTop: 15,
-        marginBottom: 40
+        marginBottom: 20
     },
-    infoCadastro: {
-        textAlign: 'center'
+    containerPossuiCadastro: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    textoEntrar: {
+        color: Colors.corPrimaria,
+        fontWeight: 'bold',
+        textDecorationLine: 'underline'
     }
 })

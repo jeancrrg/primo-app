@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "../../../assets/styles/Colors";
 
 export const styles = StyleSheet.create({
     container: {
@@ -7,6 +8,25 @@ export const styles = StyleSheet.create({
     },
     containerBarraPesquisa: {
         marginVertical: 30
+    },
+    barraPesquisa: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: Colors.branco,
+        padding: 10,
+        borderRadius: 20,
+        shadowColor: Colors.cinzaEscuro,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        elevation: 6,
+    },
+    iconeBarraPesquisa: {
+        fontSize: 16
+    },
+    inputBarraPesquisa: {
+        paddingHorizontal: 10,
+        fontSize: 22,
+        color: Colors.cinzaEscuro
     },
     containerAnimacao: {
         flex: 1,

@@ -1,6 +1,5 @@
-import { FlatList, Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
+import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./PesquisaScreenStyle";
-import BarraPesquisa from "../../components/barra-pesquisa/BarraPesquisa";
 import { useEffect, useState } from "react";
 import CardPrestadorServico from "../../components/card-prestador-servico/CardPrestadorServico";
 import { RotasTabBar } from "../../models/interfaces/Interface";
@@ -9,6 +8,7 @@ import { PrestadorServico } from "../../models/PrestadorServico";
 import { buscarPrestadoresServico } from "../../services/PrestadorServico.service";
 import LottieView from 'lottie-react-native';
 import { isNotEmpty } from "../../utils/ValidationUtil";
+import { Feather } from "@expo/vector-icons";
 
 export default function PesquisaScreen() {
 
@@ -46,7 +46,10 @@ export default function PesquisaScreen() {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
                 <View style={styles.containerBarraPesquisa}>
-                    <BarraPesquisa label="Pesquisar" />
+                    <TouchableOpacity style={styles.barraPesquisa}>
+                        <Feather name='search' style={styles.iconeBarraPesquisa} />
+                        <TextInput style={styles.inputBarraPesquisa} placeholder='Pesquisar' />
+                    </TouchableOpacity>
                 </View>
 
                 {validarPossuiPrestadores() ?
