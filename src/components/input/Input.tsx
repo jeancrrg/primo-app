@@ -13,7 +13,7 @@ export default function Input(props: PropsInput) {
             return (
                 <TextInput.Icon 
                     icon={nomeIcone}
-                    color={isNotEmpty(props.errosValidacao) ? Colors.vermelho : Colors.cinzaEscuro2} 
+                    color={isNotEmpty(props.errosValidacao) ? Colors.vermelhoErro : Colors.cinzaEscuro2} 
                     onPress={onPressIconeDireita ? () => onPressIconeDireita() : undefined}
                 />
             );

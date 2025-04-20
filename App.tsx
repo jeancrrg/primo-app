@@ -4,11 +4,13 @@ import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import AppRoute from './src/routes/AppRoute.routes';
 import FlashMessage from "react-native-flash-message";
-import { StatusBar, View } from "react-native";
+import { StatusBar, Text, View } from "react-native";
 import { styles } from "./Styles";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Colors } from "./assets/styles/Colors";
 import Fonts from "./assets/styles/Fonts";
+import Toast from "react-native-toast-message";
+import { ToastMessageConfig } from "./src/components/toast-message/ToastMessageConfig";
 
 export default function App() {
 
@@ -26,6 +28,7 @@ export default function App() {
                     </View>
                     <StatusBar backgroundColor={Colors.corPrimaria} barStyle={"light-content"}/>
                     <FlashMessage position="top" />
+                    <Toast config={ToastMessageConfig} />
                 </NavigationContainer>
             </MenuProvider>
         </GestureHandlerRootView>

@@ -15,6 +15,9 @@ import { validacoesFormularioCliente } from "../../../validations/ClienteValidat
 import { RotaStack } from "../../../models/types/RotaStack";
 import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente";
 import { formatarTelefone } from "../../../utils/FormatterUtil";
+import { cadastrarUsuario } from "../../../services/Autenticacao.service";
+import { User } from "firebase/auth";
+import Toast from "react-native-toast-message";
 
 export default function CadastroClienteScreen() {
 
@@ -24,8 +27,14 @@ export default function CadastroClienteScreen() {
         resolver: yupResolver(validacoesFormularioCliente)
     });
 
-    function cadastrar(formulario: FormularioCadastroCliente): void {
-        console.log('Dados: ', formulario)
+    async function cadastrar(formulario: FormularioCadastroCliente): Promise<void> {
+        cadastrarUsuario(formulario.email, formulario.senha)
+            .then((usuario: User) => {
+                Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso!'});
+            })
+            .catch(error => {
+                Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+            });
     }
 
     return (
@@ -47,7 +56,7 @@ export default function CadastroClienteScreen() {
                             control={control}
                             name='nome'
                             label='Nome'
-                            maxLength={15}
+                            maxLength={50}
                             nomeIconeEsquerda='clipboard-text-outline'
                             errosValidacao={errors.nome?.message}
                         />

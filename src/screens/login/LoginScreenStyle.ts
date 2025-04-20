@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'center',
         marginTop: 15,
-        marginBottom: 40
+        marginBottom: 25
     },
     infoCadastro: {
         textAlign: 'center'

@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
 import { auth } from "../config/firebase/FirebaseConfig";
 
-export async function cadastrar(email: string, senha: string): Promise<User> {
+export async function cadastrarUsuario(email: string, senha: string): Promise<User> {
     const credencialUsuario: UserCredential = await createUserWithEmailAndPassword(auth, email, senha);
     return credencialUsuario.user;
 }

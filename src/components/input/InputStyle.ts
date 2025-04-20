@@ -9,6 +9,6 @@ export const styles = StyleSheet.create({
         marginTop: 10
     },
     mensagemErro: {
-        color: Colors.vermelho
+        color: Colors.vermelhoErro
     }
 })

@@ -12,6 +12,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioLogin } from "../../validations/LoginValidation";
 import { RotaStack } from "../../models/types/RotaStack";
+import { FormularioLogin } from "../../models/interfaces/formularios/FormularioLogin";
+import { User } from "firebase/auth";
+import { realizarLogin } from "../../services/Autenticacao.service";
+import { isNotEmpty } from "../../utils/ValidationUtil";
+import Toast from "react-native-toast-message";
 
 export default function LoginScreen() {
 
@@ -21,6 +26,26 @@ export default function LoginScreen() {
         resolver: yupResolver(validacoesFormularioLogin)
     });
 
+    function entrar(formulario: FormularioLogin): void {   
+        realizarLogin(formulario.email, formulario.senha)
+            .then((usuario: User) => {
+                if (isNotEmpty(usuario)) {
+                    navigation.navigate('tabs');
+                }
+            })
+            .catch(error => {
+                console.log('erro: ', error);
+
+                let mensagemErro: string = '';
+
+                if (error.code == 'auth/invalid-login-credentials') {
+                    mensagemErro = 'Usuário ou senha inválida! Verifique novamente';
+                }
+                
+                Toast.show({ type: 'erro', text1: 'ERRO', text2: mensagemErro });
+            }); 
+    }
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -29,10 +54,10 @@ export default function LoginScreen() {
                 </Animatable.View>
 
                 <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
-                    <Text style={styles.titulo}> Bem-Vindo(a) </Text>                    
-                    <Text style={styles.texto}> Entre ou cadastre-se no App Primo </Text>
-                    
                     <ScrollView showsVerticalScrollIndicator={false}>
+                        <Text style={styles.titulo}> Bem-Vindo(a) </Text>                    
+                        <Text style={styles.texto}> Entre ou cadastre-se no App Primo </Text>
+                    
                         <Input
                             control={control}
                             name='email'
@@ -55,7 +80,7 @@ export default function LoginScreen() {
                         />
                     
                         <Animatable.View animation='fadeInLeft' delay={700}>
-                            <BotaoPrincipal label="Entrar" onPress={() => navigation.navigate("tabs")} />
+                            <BotaoPrincipal label="Entrar" onPress={handleSubmit(entrar)} />
                         </Animatable.View>
 
                         <Divider texto="OU" />
