@@ -57,6 +57,7 @@ export default function CadastroPrestadorScreen() {
                             maxLength={15}
                             nomeIconeEsquerda='phone'
                             errosValidacao={errors.telefone?.message}
+                            tipoTeclado='numeric'
                         />
 
                         <Input
@@ -89,6 +90,7 @@ export default function CadastroPrestadorScreen() {
                             maxLength={18}
                             nomeIconeEsquerda='lock-outline'
                             errosValidacao={errors.cnpj?.message}
+                            tipoTeclado='numeric'
                         />
 
                         <Input
@@ -102,7 +104,7 @@ export default function CadastroPrestadorScreen() {
 
                         <Input
                             control={control}
-                            name='endereco'
+                            name='tipoServico'
                             label='Tipo Serviço'
                             maxLength={50}
                             nomeIconeEsquerda='lock-outline'
@@ -111,11 +113,12 @@ export default function CadastroPrestadorScreen() {
 
                         <Input
                             control={control}
-                            name='endereco'
+                            name='valorServico'
                             label='Valor Serviço'
                             maxLength={6}
                             nomeIconeEsquerda='lock-outline'
                             errosValidacao={errors.valorServico?.message}
+                            tipoTeclado='numeric'
                         />
 
                         <Animatable.View animation='fadeInLeft' delay={700}>

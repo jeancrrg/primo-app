@@ -29,9 +29,14 @@ export default function Input(props: PropsInput) {
                     <TextInput
                         label={props.label}
                         value={value}
-                        onChangeText={onChange}
+                        onChangeText={(textoDigitado) => {
+                            const apenasNumeros: string = textoDigitado.replace(/\D/g, "");
+                            const textoFormatado: string = props.mascara ? props.mascara(apenasNumeros) : textoDigitado;
+                            onChange(textoFormatado);
+                        }}
                         mode="outlined"
                         style={styles.input}
+                        keyboardType={props.tipoTeclado || 'default'}
                         maxLength={props.maxLength}
                         outlineColor={Colors.cinzaClaro}
                         activeOutlineColor={Colors.cinzaEscuro2}

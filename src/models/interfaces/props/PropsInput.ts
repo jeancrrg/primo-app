@@ -1,3 +1,5 @@
+import { KeyboardTypeOptions } from "react-native";
+
 export type PropsInput = {
     control: any;
     name: string;
@@ -8,4 +10,6 @@ export type PropsInput = {
     mostrarValor?: boolean;
     maxLength: number;
     errosValidacao?: string;
+    mascara?: (valor: string) => string;
+    tipoTeclado?: KeyboardTypeOptions;
 }

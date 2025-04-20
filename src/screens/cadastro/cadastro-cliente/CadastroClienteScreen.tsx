@@ -14,6 +14,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioCliente } from "../../../validations/ClienteValidation";
 import { RotaStack } from "../../../models/types/RotaStack";
 import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente";
+import { formatarTelefone } from "../../../utils/FormatterUtil";
 
 export default function CadastroClienteScreen() {
 
@@ -58,6 +59,8 @@ export default function CadastroClienteScreen() {
                             maxLength={15}
                             nomeIconeEsquerda='phone'
                             errosValidacao={errors.telefone?.message}
+                            mascara={formatarTelefone}
+                            tipoTeclado='numeric'
                         />
 
                         <Input
@@ -99,6 +102,7 @@ export default function CadastroClienteScreen() {
                             maxLength={4}
                             nomeIconeEsquerda='calendar-range'
                             errosValidacao={errors.anoVeiculo?.message}
+                            tipoTeclado='numeric'
                         />
 
                         <Animatable.View animation='fadeInLeft' delay={700}>
