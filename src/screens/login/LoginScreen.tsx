@@ -34,14 +34,21 @@ export default function LoginScreen() {
                 }
             })
             .catch(error => {
-                console.log('erro: ', error);
-
                 let mensagemErro: string = '';
-
-                if (error.code == 'auth/invalid-login-credentials') {
-                    mensagemErro = 'Usuário ou senha inválida! Verifique novamente';
+                switch (error.code) {
+                    case 'auth/invalid-login-credentials':
+                        mensagemErro = 'Usuário ou senha inválida! Verifique novamente';
+                        break;
+                    case 'auth/user-not-found':
+                        mensagemErro = 'Usuário não encontrado. Verifique o email digitado';
+                        break;
+                    case 'auth/too-many-requests':
+                        mensagemErro = 'Muitas tentativas de login. Tente novamente mais tarde';
+                        break;
+                    default:
+                        mensagemErro = 'Ocorreu um erro inesperado! Entre em contato com o suporte';
+                        break;
                 }
-                
                 Toast.show({ type: 'erro', text1: 'ERRO', text2: mensagemErro });
             }); 
     }
