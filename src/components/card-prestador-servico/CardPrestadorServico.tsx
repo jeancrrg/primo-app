@@ -2,7 +2,7 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./CardPrestadorServicoStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../assets/styles/Colors";
-import { PropsCardPrestadorServico } from "../../models/interfaces/Interface";
+import { PropsCardPrestadorServico } from "../../models/interfaces/props/PropsCardPrestadorServico";
 
 export default function CardPrestadorServico(props: PropsCardPrestadorServico) {
     

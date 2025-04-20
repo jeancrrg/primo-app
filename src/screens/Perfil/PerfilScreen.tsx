@@ -4,11 +4,11 @@ import { styles } from "./PerfilScreenStyle";
 import CardSmall from "../../components/card-small/CardSmall";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-import { RotasStack } from "../../models/interfaces/Interface";
+import { RotaStack } from "../../models/types/RotaStack";
 
 export default function PerfilScreen() {
 
-    const navigation = useNavigation<NativeStackNavigationProp<RotasStack>>();
+    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
     function confirmarSaidaAplicativo(): void {
         Alert.alert(

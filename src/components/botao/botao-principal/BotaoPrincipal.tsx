@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./BotaoPrincipalStyle";
-import { PropsBotao } from "../../../models/interfaces/Interface";
+import { PropsBotao } from "../../../models/interfaces/props/PropsBotao";
 
 export default function BotaoPrincipal(props: PropsBotao) {
     return (

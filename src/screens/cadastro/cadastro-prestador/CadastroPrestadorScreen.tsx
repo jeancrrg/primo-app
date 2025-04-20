@@ -4,7 +4,6 @@ import * as Animatable from 'react-native-animatable';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../../assets/styles/Colors";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RotasStack } from "../../../models/interfaces/Interface";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import BotaoPrincipal from "../../../components/botao/botao-principal/BotaoPrincipal";
@@ -13,11 +12,12 @@ import Divider from "../../../components/divider/Divider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioPrestador } from "../../../validations/PrestadorValidation";
+import { RotaStack } from "../../../models/types/RotaStack";
 
 export default function CadastroPrestadorScreen() {
 
     const [mostrarSenha, setMostrarSenha] = useState(false);
-    const navigation = useNavigation<NativeStackNavigationProp<RotasStack>>();
+    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(validacoesFormularioPrestador)
     });

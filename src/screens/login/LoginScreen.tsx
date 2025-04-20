@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import * as Animatable from 'react-native-animatable'; 
 import { useState } from "react";
-import { RotasStack } from "../../models/interfaces/Interface";
 import Divider from "../../components/divider/Divider";
 import BotaoPrincipal from "../../components/botao/botao-principal/BotaoPrincipal";
 import BotaoSecundario from "../../components/botao/botao-secundario/BotaoSecundario";
@@ -12,11 +11,12 @@ import Input from "../../components/input/Input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioLogin } from "../../validations/LoginValidation";
+import { RotaStack } from "../../models/types/RotaStack";
 
 export default function LoginScreen() {
 
     const [mostrarSenha, setMostrarSenha] = useState(false);
-    const navigation = useNavigation<NativeStackNavigationProp<RotasStack>>();
+    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(validacoesFormularioLogin)
     });

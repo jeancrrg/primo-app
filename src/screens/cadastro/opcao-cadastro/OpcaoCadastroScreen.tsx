@@ -5,14 +5,14 @@ import Divider from "../../../components/divider/Divider";
 import { Colors } from "../../../../assets/styles/Colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RotasStack } from "../../../models/interfaces/Interface";
 import { useNavigation } from "@react-navigation/native";
 import BotaoPrincipal from "../../../components/botao/botao-principal/BotaoPrincipal";
 import BotaoSecundario from "../../../components/botao/botao-secundario/BotaoSecundario";
+import { RotaStack } from "../../../models/types/RotaStack";
 
 export default function OpcaoCadastroScreen() {
 
-    const navigation = useNavigation<NativeStackNavigationProp<RotasStack>>();
+    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
     return (
         <View style={styles.container}>

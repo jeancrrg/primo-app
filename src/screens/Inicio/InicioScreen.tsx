@@ -1,12 +1,13 @@
 import { Image, Text, View } from "react-native";
 import CardTipoServico from "../../components/card-tipo-servico/CardTipoServico";
-import { RotasTabBar, TipoServico } from "../../models/interfaces/Interface";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { styles } from "./InicioScreenStyle";
+import { TipoServico } from "../../models/TipoServico";
+import { RotaTabBar } from "../../models/types/RotaTabBar";
 
 export default function InicioScreen() {
 
-    const navigation = useNavigation<NavigationProp<RotasTabBar>>();
+    const navigation = useNavigation<NavigationProp<RotaTabBar>>();
 
     const listaTiposServico: TipoServico[] = [
         { nome: "Borracheiro", icone: "tire" },

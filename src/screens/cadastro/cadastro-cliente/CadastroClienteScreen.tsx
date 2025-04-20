@@ -3,7 +3,6 @@ import * as Animatable from 'react-native-animatable';
 import { styles } from "./CadastroClienteScreenStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FormularioCadastroCliente, RotasStack } from "../../../models/interfaces/Interface";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../../assets/styles/Colors";
 import { useState } from "react";
@@ -13,11 +12,13 @@ import Input from "../../../components/input/Input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioCliente } from "../../../validations/ClienteValidation";
+import { RotaStack } from "../../../models/types/RotaStack";
+import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente";
 
 export default function CadastroClienteScreen() {
 
     const [mostrarSenha, setMostrarSenha] = useState(false);
-    const navigation = useNavigation<NativeStackNavigationProp<RotasStack>>();
+    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
     const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroCliente>({
         resolver: yupResolver(validacoesFormularioCliente)
     });
