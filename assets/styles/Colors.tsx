@@ -12,4 +12,6 @@ export const Colors = {
 
     azulClaroTransparente: 'rgba(96, 165, 250, 0.2)',
     azulEscuroTransparente: 'rgba(59, 130, 246, 0.6)',
+
+    vermelho: '#DC1637'
 }

@@ -1,27 +1,30 @@
-import { Image, Keyboard, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Image, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from 'react-native-animatable'; 
 import { styles } from "./CadastroClienteScreenStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RotasStack } from "../../../models/interfaces/Interface";
+import { FormularioCadastroCliente, RotasStack } from "../../../models/interfaces/Interface";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../../assets/styles/Colors";
 import { useState } from "react";
 import Divider from "../../../components/divider/Divider";
 import BotaoPrincipal from "../../../components/botao/botao-principal/BotaoPrincipal";
 import Input from "../../../components/input/Input";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { validacoesFormularioCliente } from "../../../validations/ClienteValidation";
 
 export default function CadastroClienteScreen() {
 
-    const [nome, setNome] = useState<string>('');
-    const [telefone, setTelefone] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [senha, setSenha] = useState<string>('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
-    const [modeloVeiculo, setModeloVeiculo] = useState<string>('');
-    const [anoVeiculo, setAnoVeiculo] = useState<string>('');
-
     const navigation = useNavigation<NativeStackNavigationProp<RotasStack>>();
+    const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroCliente>({
+        resolver: yupResolver(validacoesFormularioCliente)
+    });
+
+    function cadastrar(formulario: FormularioCadastroCliente): void {
+        console.log('Dados: ', formulario)
+    }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -35,66 +38,73 @@ export default function CadastroClienteScreen() {
                 </Animatable.View>
 
                 <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
-                    <Text style={styles.titulo}> Cadastro Cliente </Text>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <Text style={styles.titulo}> Cadastro Cliente </Text>
+                    
+                        <Input
+                            control={control}
+                            name='nome'
+                            label='Nome'
+                            maxLength={15}
+                            nomeIconeEsquerda='clipboard-text-outline'
+                            errosValidacao={errors.nome?.message}
+                        />
 
-                    <Input
-                        label='Nome'
-                        valor={nome}
-                        onChangeText={setNome}
-                        maxLength={100}
-                        nomeIconeEsquerda='clipboard-text-outline'
-                    />
+                        <Input
+                            control={control}
+                            name='telefone'
+                            label='Telefone'
+                            maxLength={15}
+                            nomeIconeEsquerda='phone'
+                            errosValidacao={errors.telefone?.message}
+                        />
 
-                    <Input
-                        label='Telefone'
-                        valor={telefone}
-                        onChangeText={setTelefone}
-                        maxLength={15}
-                        nomeIconeEsquerda='phone'
-                    />
+                        <Input
+                            control={control}
+                            name='email'
+                            label='Email'
+                            maxLength={50}
+                            nomeIconeEsquerda='email-outline'
+                            errosValidacao={errors.email?.message}
+                        />
 
-                    <Input
-                        label='Email'
-                        valor={email}
-                        onChangeText={setEmail}
-                        maxLength={50}
-                        nomeIconeEsquerda='email-outline'
-                    />
+                        <Input
+                            control={control}
+                            name='senha'
+                            label='Senha'
+                            maxLength={15}
+                            nomeIconeEsquerda='lock-outline'
+                            nomeIconeDireita={mostrarSenha ? 'eye' : 'eye-off'}
+                            onPressIconeDireita={() => setMostrarSenha(!mostrarSenha)}
+                            mostrarValor={!mostrarSenha}
+                            errosValidacao={errors.senha?.message}
+                        />
 
-                    <Input
-                        label='Senha'
-                        valor={senha}
-                        onChangeText={setSenha}
-                        maxLength={100}
-                        nomeIconeEsquerda='lock-outline'
-                        nomeIconeDireita={mostrarSenha ? 'eye' : 'eye-off'}
-                        onPressIconeDireita={() => setMostrarSenha(!mostrarSenha)}
-                        mostrarValor={!mostrarSenha}
-                    />
+                        <Divider texto="Veículo"/>
 
-                    <Divider texto="Veículo"/>
+                        <Input
+                            control={control}
+                            name='modeloVeiculo'
+                            label='Modelo Veículo'
+                            maxLength={50}
+                            nomeIconeEsquerda='car-outline'
+                            errosValidacao={errors.modeloVeiculo?.message}
+                        />
 
-                    <Input
-                        label='Modelo Veículo'
-                        valor={modeloVeiculo}
-                        onChangeText={setModeloVeiculo}
-                        maxLength={100}
-                        nomeIconeEsquerda='car-outline'
-                    />
+                        <Input
+                            control={control}
+                            name='anoVeiculo'
+                            label='Ano Veículo'
+                            maxLength={4}
+                            nomeIconeEsquerda='calendar-range'
+                            errosValidacao={errors.anoVeiculo?.message}
+                        />
 
-                    <Input
-                        label='Ano Veículo'
-                        valor={anoVeiculo}
-                        onChangeText={setAnoVeiculo}
-                        maxLength={4}
-                        nomeIconeEsquerda='calendar-range'
-                    />
-
-                    <Animatable.View animation='fadeInLeft' delay={700}>
-                        <BotaoPrincipal label="Cadastrar" onPress={() => navigation.navigate("tabs")} />
-                    </Animatable.View>
+                        <Animatable.View animation='fadeInLeft' delay={700}>
+                            <BotaoPrincipal label="Cadastrar" onPress={handleSubmit(cadastrar)} />
+                        </Animatable.View>
+                    </ScrollView>
                 </Animatable.View>
-
             </View>
         </TouchableWithoutFeedback>
     );

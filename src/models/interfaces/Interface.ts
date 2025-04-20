@@ -44,13 +44,23 @@ export interface PropsBotao {
     onPress: () => void;
 }
 
-export interface PropsInput {
+export type PropsInput = {
+    control: any;
+    name: string;
     label: string;
-    valor: any;
-    onChangeText: (text: string) => void;
     nomeIconeEsquerda?: string;
     nomeIconeDireita?: string;
     onPressIconeDireita?: () => void;
     mostrarValor?: boolean;
     maxLength: number;
+    errosValidacao?: string;
+}
+
+export interface FormularioCadastroCliente {
+    nome: string;
+    telefone: string;
+    email: string;
+    senha: string;
+    modeloVeiculo: string;
+    anoVeiculo: string;
 }
