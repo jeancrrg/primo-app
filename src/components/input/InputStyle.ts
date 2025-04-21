@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         height: 55,
         backgroundColor: Colors.cinzaClaro,
         paddingLeft: 8,
-        marginTop: 10
+        marginVertical: 5
     },
     mensagemErro: {
         color: Colors.vermelhoErro

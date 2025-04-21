@@ -31,6 +31,7 @@ export default function CadastroClienteScreen() {
         cadastrarUsuario(formulario.email, formulario.senha)
             .then((usuario: User) => {
                 Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso!'});
+                navigation.navigate('login');
             })
             .catch(error => {
                 Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
@@ -48,8 +49,8 @@ export default function CadastroClienteScreen() {
                     <Image source={require("../../../../assets/logo-primo.png")} style={styles.logo} />
                 </Animatable.View>
 
-                <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
                         <Text style={styles.titulo}> Cadastro Cliente </Text>
                     
                         <Input
@@ -114,11 +115,11 @@ export default function CadastroClienteScreen() {
                             tipoTeclado='numeric'
                         />
 
-                        <Animatable.View animation='fadeInLeft' delay={700}>
+                        <Animatable.View animation='fadeInLeft' delay={700} style={styles.containerBotaoCadastro}>
                             <BotaoPrincipal label="Cadastrar" onPress={handleSubmit(cadastrar)} />
                         </Animatable.View>
-                    </ScrollView>
-                </Animatable.View>
+                    </Animatable.View>
+                </ScrollView>
             </View>
         </TouchableWithoutFeedback>
     );

@@ -14,8 +14,8 @@ export const styles = StyleSheet.create({
         paddingLeft: 25
     },
     logo: {
-        height: 120,
-        width: 120,
+        height: 110,
+        width: 110,
         marginLeft: 70
     },
     containerFormulario: {
@@ -23,13 +23,16 @@ export const styles = StyleSheet.create({
         backgroundColor: Colors.branco,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        paddingVertical: 15,
+        paddingVertical: 16,
         paddingHorizontal: 40
     },
     titulo: {
         color: Colors.corPrimaria,
         fontSize: 28,
         fontWeight: 'bold',
-        marginBottom: 10
+        marginBottom: 11
+    },
+    containerBotaoCadastro: {
+        marginVertical: 10
     }
 })

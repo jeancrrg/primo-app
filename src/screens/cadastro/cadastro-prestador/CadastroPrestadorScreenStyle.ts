@@ -14,8 +14,8 @@ export const styles = StyleSheet.create({
         paddingLeft: 25
     },
     logo: {
-        height: 120,
-        width: 120,
+        height: 110,
+        width: 110,
         marginLeft: 70
     },
     containerFormulario: {

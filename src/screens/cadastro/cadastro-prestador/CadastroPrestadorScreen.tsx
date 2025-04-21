@@ -37,8 +37,8 @@ export default function CadastroPrestadorScreen() {
                     <Image source={require("../../../../assets/logo-primo.png")} style={styles.logo} />
                 </Animatable.View>
 
-                <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
                         <Text style={styles.titulo}> Cadastro Prestador </Text>
 
                         <Input
@@ -124,8 +124,8 @@ export default function CadastroPrestadorScreen() {
                         <Animatable.View animation='fadeInLeft' delay={700}>
                             <BotaoPrincipal label="Cadastrar" onPress={() => navigation.navigate("tabs")} />
                         </Animatable.View>
-                    </ScrollView>
-                </Animatable.View>
+                    </Animatable.View>
+                </ScrollView>
             </View>
         </TouchableWithoutFeedback>
     );

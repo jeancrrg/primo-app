@@ -18,7 +18,8 @@ export const styles = StyleSheet.create({
         backgroundColor: Colors.branco,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        padding: 40
+        paddingHorizontal: 40,
+        paddingVertical: 30
     },
     titulo: {
         color: Colors.corPrimaria,
@@ -31,6 +32,9 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 15,
         marginBottom: 25
+    },
+    containerBotaoEntrar: {
+        marginTop: 25
     },
     infoCadastro: {
         textAlign: 'center'
