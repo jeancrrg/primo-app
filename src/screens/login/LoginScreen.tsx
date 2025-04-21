@@ -60,8 +60,8 @@ export default function LoginScreen() {
                     <Image source={require("../../../assets/logo-primo.png")} style={styles.logo} />
                 </Animatable.View>
 
-                <ScrollView showsVerticalScrollIndicator={false} style={styles.containerFormulario}>
-                    <Animatable.View animation='fadeInUp' delay={500}>
+                <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <Text style={styles.titulo}> Bem-Vindo(a) </Text>                    
                         <Text style={styles.texto}> Entre ou cadastre-se no App Primo </Text>
                     
@@ -97,8 +97,8 @@ export default function LoginScreen() {
                         <Animatable.View animation='fadeInRight' delay={700}>
                             <BotaoSecundario label="Cadastrar" onPress={() => navigation.navigate("opcaoCadastro")} />
                         </Animatable.View>
-                    </Animatable.View>
-                </ScrollView>
+                    </ScrollView>
+                </Animatable.View>
             </View>
         </TouchableWithoutFeedback>
     );

@@ -21,11 +21,11 @@ export const styles = StyleSheet.create({
         elevation: 6,
     },
     iconeBarraPesquisa: {
-        fontSize: 16
+        fontSize: 20
     },
     inputBarraPesquisa: {
         paddingHorizontal: 10,
-        fontSize: 22,
+        fontSize: 20,
         color: Colors.cinzaEscuro
     },
     containerAnimacao: {

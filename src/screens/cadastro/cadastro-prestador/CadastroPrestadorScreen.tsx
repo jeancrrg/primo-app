@@ -37,8 +37,8 @@ export default function CadastroPrestadorScreen() {
                     <Image source={require("../../../../assets/logo-primo.png")} style={styles.logo} />
                 </Animatable.View>
 
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
+                <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <Text style={styles.titulo}> Cadastro Prestador </Text>
 
                         <Input
@@ -88,7 +88,7 @@ export default function CadastroPrestadorScreen() {
                             name='cnpj'
                             label='Cnpj'
                             maxLength={18}
-                            nomeIconeEsquerda='lock-outline'
+                            nomeIconeEsquerda='briefcase-check-outline'
                             errosValidacao={errors.cnpj?.message}
                             tipoTeclado='numeric'
                         />
@@ -98,7 +98,7 @@ export default function CadastroPrestadorScreen() {
                             name='endereco'
                             label='Endereço'
                             maxLength={120}
-                            nomeIconeEsquerda='lock-outline'
+                            nomeIconeEsquerda='map-marker-outline'
                             errosValidacao={errors.endereco?.message}
                         />
 
@@ -107,7 +107,7 @@ export default function CadastroPrestadorScreen() {
                             name='tipoServico'
                             label='Tipo Serviço'
                             maxLength={50}
-                            nomeIconeEsquerda='lock-outline'
+                            nomeIconeEsquerda='car-wrench'
                             errosValidacao={errors.tipoServico?.message}
                         />
 
@@ -116,7 +116,7 @@ export default function CadastroPrestadorScreen() {
                             name='valorServico'
                             label='Valor Serviço'
                             maxLength={6}
-                            nomeIconeEsquerda='lock-outline'
+                            nomeIconeEsquerda='currency-usd'
                             errosValidacao={errors.valorServico?.message}
                             tipoTeclado='numeric'
                         />
@@ -124,8 +124,8 @@ export default function CadastroPrestadorScreen() {
                         <Animatable.View animation='fadeInLeft' delay={700}>
                             <BotaoPrincipal label="Cadastrar" onPress={() => navigation.navigate("tabs")} />
                         </Animatable.View>
-                    </Animatable.View>
-                </ScrollView>
+                    </ScrollView>
+                </Animatable.View>
             </View>
         </TouchableWithoutFeedback>
     );

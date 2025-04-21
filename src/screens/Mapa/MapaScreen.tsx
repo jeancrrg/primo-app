@@ -1,4 +1,4 @@
-import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./MapaScreenStyle";
 import MapView, { Circle, Marker } from "react-native-maps";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -9,6 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Surface } from "react-native-paper"
 import { PrestadorServico } from "../../models/PrestadorServico";
 import { buscarPrestadoresServico } from "../../services/PrestadorServico.service";
+import Loading from "../../components/loading/Loading";
 
 export default function MapaScreen() {
 
@@ -120,7 +121,7 @@ export default function MapaScreen() {
                     ))}
                 </MapView>
             ) : (
-                <ActivityIndicator style={styles.loading} size="large" color={Colors.corPrimaria} />
+                <Loading/>
             )}
 
             {prestadorServicoSelecionado && (

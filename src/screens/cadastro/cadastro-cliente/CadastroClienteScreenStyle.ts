@@ -34,5 +34,10 @@ export const styles = StyleSheet.create({
     },
     containerBotaoCadastro: {
         marginVertical: 10
+    },
+    loading: {
+        position: "absolute",
+        top: 500,
+        left: 200
     }
 })
