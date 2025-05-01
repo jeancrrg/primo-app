@@ -5,17 +5,29 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginBottom: 120,
-        paddingHorizontal: 24
+        position: 'relative'
+    },
+    containerFundoAzul: {
+        backgroundColor: Colors.corPrimaria,
+        height: 150,
+        padding: 20,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        position: 'relative'
     },
     titulo: {
         fontSize: 34,
         fontFamily: "Mulish-Medium",
-        color: Colors.corPrimaria,
-        marginVertical: 30
+        color: Colors.branco,
     },
     containerCard: {
         height: 240,
-        marginBottom: 20
+        marginBottom: 20,
+        position: 'absolute',
+        top: 90,
+        left: 24,
+        right: 24,
+        zIndex: 10
     },
     card: {
         flex: 1,
@@ -32,9 +44,10 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     containerTexto: {
-        width: '55%',
-        padding: 15,
-        alignItems: "center"
+        width: '50%',
+        padding: 10,
+        alignItems: "center",
+        justifyContent: "center"
     },
     tituloTexto: {
         fontSize: 23,
@@ -51,11 +64,12 @@ export const styles = StyleSheet.create({
         marginBottom: 8
     },
     containerImagem: {
-        paddingVertical: 24
+        width: '50%',
+        justifyContent: "center"
     },
     imagem: {
         height: 180,
-        width: 180,
+        width: 150,
         resizeMode: "contain"
     },
     containerTiposServicos: {
@@ -66,7 +80,8 @@ export const styles = StyleSheet.create({
     textoTipoServico: {
         flex: 1,
         fontSize: 18,
-        fontFamily: "Mulish-Medium"
+        fontFamily: "Mulish-Medium",
+        marginTop: 220
     },
     tiposServico: {
         flexDirection: "row",

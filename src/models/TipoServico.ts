@@ -1,4 +1,4 @@
 export class TipoServico {
-    nome?: string;
-    icone?: string;
+    codigo?: number;
+    descricao?: string;
 }

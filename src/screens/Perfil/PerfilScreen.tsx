@@ -31,7 +31,9 @@ export default function PerfilScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titulo}> Perfil </Text>
+            <View style={styles.containerFundoAzul}>
+                <Text style={styles.titulo}> Perfil </Text>
+            </View>
 
             <View style={styles.containerPerfil}>
                 <View style={styles.cardUsuario}>

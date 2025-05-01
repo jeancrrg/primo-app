@@ -3,6 +3,8 @@ export const Colors = {
     
     branco: '#FFFFFF',
     preto: '#000000',
+
+    sombraPreta: 'rgba(0,0,0,0.5)',
     
     cinzaClaro: '#E0E0E0',
     cinzaMedio: '#d1cfcf',

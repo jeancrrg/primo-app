@@ -4,7 +4,7 @@ import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import AppRoute from './src/routes/AppRoute.routes';
 import FlashMessage from "react-native-flash-message";
-import { StatusBar, Text, View } from "react-native";
+import { StatusBar, View } from "react-native";
 import { styles } from "./Styles";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Colors } from "./assets/styles/Colors";

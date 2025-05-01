@@ -1,8 +1,8 @@
 import { View } from "react-native";
-import { styles } from "./LoadingStyle";
+import { styles } from "./LoaderStyle";
 import LottieView from 'lottie-react-native';
 
-export default function Loading() {
+export default function Loader(): JSX.Element {
     return (
         <View style={styles.container}>
             <LottieView

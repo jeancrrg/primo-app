@@ -9,7 +9,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Surface } from "react-native-paper"
 import { PrestadorServico } from "../../models/PrestadorServico";
 import { buscarPrestadoresServico } from "../../services/PrestadorServico.service";
-import Loading from "../../components/loading/Loading";
+import Loader from "../../components/loader/Loader";
 
 export default function MapaScreen() {
 
@@ -121,7 +121,7 @@ export default function MapaScreen() {
                     ))}
                 </MapView>
             ) : (
-                <Loading/>
+                <Loader/>
             )}
 
             {prestadorServicoSelecionado && (

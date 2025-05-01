@@ -1,6 +1,5 @@
-import { TipoServico } from "../../TipoServico";
-
 export interface PropsCardTipoServico {
-    tipoServico: TipoServico;
+    descricaoTipoServico: string;
+    icone: string;
     onPress: () => void;
 }

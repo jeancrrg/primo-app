@@ -18,7 +18,7 @@ import { formatarTelefone } from "../../../utils/FormatterUtil";
 import { cadastrarUsuario } from "../../../services/Autenticacao.service";
 import { User } from "firebase/auth";
 import Toast from "react-native-toast-message";
-import Loading from "../../../components/loading/Loading";
+import Loader from "../../../components/loader/Loader";
 
 export default function CadastroClienteScreen() {
 
@@ -44,7 +44,10 @@ export default function CadastroClienteScreen() {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            {!loading ? (
+
+            {loading ? (
+                <Loader/>
+            ) : (
                 <View style={styles.container}>
                     <Animatable.View animation='fadeInLeft' delay={500} style={styles.containerLogo}>
                         <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
@@ -126,8 +129,6 @@ export default function CadastroClienteScreen() {
                         </ScrollView>
                     </Animatable.View>
                 </View>
-            ) : (
-                <Loading/>
             )}
         </TouchableWithoutFeedback>
     );

@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Colors } from "../../../../assets/styles/Colors";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BotaoPrincipal from "../../../components/botao/botao-principal/BotaoPrincipal";
 import Input from "../../../components/input/Input";
 import Divider from "../../../components/divider/Divider";
@@ -13,14 +13,37 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioPrestador } from "../../../validations/PrestadorValidation";
 import { RotaStack } from "../../../models/types/RotaStack";
+import { TipoServico } from "../../../models/TipoServico";
+import Loader from "../../../components/loader/Loader";
+import { buscarTiposServico } from "../../../services/TipoServico.service";
+import Picker from "../../../components/picker/Picker";
 
 export default function CadastroPrestadorScreen() {
 
-    const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);
+
+    const [tipoSelecionado, setTipoSelecionado] = useState<TipoServico | null>(null);
+    const [listaTiposServico, setListaTiposServico] = useState<TipoServico[]>([])
+
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
+
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(validacoesFormularioPrestador)
     });
+
+    useEffect(() => {
+        carregarTiposServico();
+    }, []);
+
+    async function carregarTiposServico(): Promise<void> {
+        const listaTiposServico: TipoServico[] = await buscarTiposServico();
+        setListaTiposServico(listaTiposServico);
+
+        console.log('Tipos: ', listaTiposServico);
+
+        setLoading(false);
+    }
 
     function cadastrar(dados: any): void {
         console.log('Dados: ', dados)
@@ -28,105 +51,110 @@ export default function CadastroPrestadorScreen() {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={styles.container}>
-                <Animatable.View animation='fadeInLeft' delay={500} style={styles.containerLogo}>
-                    <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
-                        <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={38} />
-                    </TouchableOpacity>
 
-                    <Image source={require("../../../../assets/logo-primo.png")} style={styles.logo} />
-                </Animatable.View>
+            {loading ? (
+                <Loader/>
+            ) : (
+                <View style={styles.container}>
+                    <Animatable.View animation='fadeInLeft' delay={500} style={styles.containerLogo}>
+                        <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
+                            <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={38} />
+                        </TouchableOpacity>
 
-                <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        <Text style={styles.titulo}> Cadastro Prestador </Text>
+                        <Image source={require("../../../../assets/logo-primo.png")} style={styles.logo} />
+                    </Animatable.View>
 
-                        <Input
-                            control={control}
-                            name='nome'
-                            label='Nome'
-                            maxLength={15}
-                            nomeIconeEsquerda='clipboard-text-outline'
-                            errosValidacao={errors.nome?.message}
-                        />
+                    <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
+                        <ScrollView showsVerticalScrollIndicator={false}>
+                            <Text style={styles.titulo}> Cadastro Prestador </Text>
 
-                        <Input
-                            control={control}
-                            name='telefone'
-                            label='Telefone'
-                            maxLength={15}
-                            nomeIconeEsquerda='phone'
-                            errosValidacao={errors.telefone?.message}
-                            tipoTeclado='numeric'
-                        />
+                            <Input
+                                control={control}
+                                name='nome'
+                                label='Nome'
+                                maxLength={15}
+                                nomeIconeEsquerda='clipboard-text-outline'
+                                errosValidacao={errors.nome?.message}
+                            />
 
-                        <Input
-                            control={control}
-                            name='email'
-                            label='Email'
-                            maxLength={50}
-                            nomeIconeEsquerda='email-outline'
-                            errosValidacao={errors.email?.message}
-                        />
+                            <Input
+                                control={control}
+                                name='telefone'
+                                label='Telefone'
+                                maxLength={15}
+                                nomeIconeEsquerda='phone'
+                                errosValidacao={errors.telefone?.message}
+                                tipoTeclado='numeric'
+                            />
 
-                        <Input
-                            control={control}
-                            name='senha'
-                            label='Senha'
-                            maxLength={15}
-                            nomeIconeEsquerda='lock-outline'
-                            nomeIconeDireita={mostrarSenha ? 'eye' : 'eye-off'}
-                            onPressIconeDireita={() => setMostrarSenha(!mostrarSenha)}
-                            mostrarValor={!mostrarSenha}
-                            errosValidacao={errors.senha?.message}
-                        />
+                            <Input
+                                control={control}
+                                name='email'
+                                label='Email'
+                                maxLength={50}
+                                nomeIconeEsquerda='email-outline'
+                                errosValidacao={errors.email?.message}
+                            />
 
-                        <Divider texto="Serviço"/>
+                            <Input
+                                control={control}
+                                name='senha'
+                                label='Senha'
+                                maxLength={15}
+                                nomeIconeEsquerda='lock-outline'
+                                nomeIconeDireita={mostrarSenha ? 'eye' : 'eye-off'}
+                                onPressIconeDireita={() => setMostrarSenha(!mostrarSenha)}
+                                mostrarValor={!mostrarSenha}
+                                errosValidacao={errors.senha?.message}
+                            />
 
-                        <Input
-                            control={control}
-                            name='cnpj'
-                            label='Cnpj'
-                            maxLength={18}
-                            nomeIconeEsquerda='briefcase-check-outline'
-                            errosValidacao={errors.cnpj?.message}
-                            tipoTeclado='numeric'
-                        />
+                            <Divider texto="Serviço"/>
 
-                        <Input
-                            control={control}
-                            name='endereco'
-                            label='Endereço'
-                            maxLength={120}
-                            nomeIconeEsquerda='map-marker-outline'
-                            errosValidacao={errors.endereco?.message}
-                        />
+                            <Input
+                                control={control}
+                                name='cnpj'
+                                label='Cnpj'
+                                maxLength={18}
+                                nomeIconeEsquerda='briefcase-check-outline'
+                                errosValidacao={errors.cnpj?.message}
+                                tipoTeclado='numeric'
+                            />
 
-                        <Input
-                            control={control}
-                            name='tipoServico'
-                            label='Tipo Serviço'
-                            maxLength={50}
-                            nomeIconeEsquerda='car-wrench'
-                            errosValidacao={errors.tipoServico?.message}
-                        />
+                            <Input
+                                control={control}
+                                name='endereco'
+                                label='Endereço'
+                                maxLength={120}
+                                nomeIconeEsquerda='map-marker-outline'
+                                errosValidacao={errors.endereco?.message}
+                            />
 
-                        <Input
-                            control={control}
-                            name='valorServico'
-                            label='Valor Serviço'
-                            maxLength={6}
-                            nomeIconeEsquerda='currency-usd'
-                            errosValidacao={errors.valorServico?.message}
-                            tipoTeclado='numeric'
-                        />
+                            <Picker
+                                label='Tipos Serviço'
+                                icone='car-wrench'
+                                valorSelecionado={tipoSelecionado}
+                                listaDados={listaTiposServico}
+                                getLabel={(item) => item.descricao || ''}
+                                onSelecionar={(item) => setTipoSelecionado(item)}
+                            />
 
-                        <Animatable.View animation='fadeInLeft' delay={700}>
-                            <BotaoPrincipal label="Cadastrar" onPress={() => navigation.navigate("tabs")} />
-                        </Animatable.View>
-                    </ScrollView>
-                </Animatable.View>
-            </View>
+                            <Input
+                                control={control}
+                                name='valorServico'
+                                label='Valor Serviço'
+                                maxLength={6}
+                                nomeIconeEsquerda='currency-usd'
+                                errosValidacao={errors.valorServico?.message}
+                                tipoTeclado='numeric'
+                            />
+
+                            <Animatable.View animation='fadeInLeft' delay={700}>
+                                <BotaoPrincipal label="Cadastrar" onPress={() => navigation.navigate("tabs")} />
+                            </Animatable.View>
+                        </ScrollView>
+                    </Animatable.View>
+                </View>
+            )}
         </TouchableWithoutFeedback>
     );
 }

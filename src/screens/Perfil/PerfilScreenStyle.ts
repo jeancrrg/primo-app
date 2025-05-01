@@ -5,16 +5,27 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginBottom: 120,
-        paddingHorizontal: 24
+        position: 'relative'
+    },
+    containerFundoAzul: {
+        backgroundColor: Colors.corPrimaria,
+        height: 150,
+        padding: 20,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        position: 'relative'
     },
     titulo: {
         fontSize: 34,
         fontFamily: "Mulish-Medium",
-        color: Colors.corPrimaria,
-        marginVertical: 30
+        color: Colors.branco
     },
     containerPerfil: {
-        flex: 1
+        position: 'absolute',
+        top: 90,
+        left: 24,
+        right: 24,
+        zIndex: 10
     },
     cardUsuario: {
         flexDirection: "row",
