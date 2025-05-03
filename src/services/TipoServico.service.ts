@@ -1,5 +1,5 @@
 import Api from "../config/api/Api";
-import { TipoServico } from "../models/TipoServico";
+import { TipoServico } from "../models/cadastro/TipoServico";
 
 export async function buscarTiposServico(): Promise<TipoServico[]> {
     try {

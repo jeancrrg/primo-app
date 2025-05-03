@@ -16,6 +16,7 @@ export const Colors = {
     azulEscuroTransparente: 'rgba(59, 130, 246, 0.6)',
 
     azulInfo: '#2f86eb',
+    amareloAviso: '#FBBF24',
     verdeSucesso: '#4BB543',
     vermelhoErro: '#DC1637'
 }

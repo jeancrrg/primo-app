@@ -15,31 +15,55 @@ import { validacoesFormularioCliente } from "../../../validations/ClienteValidat
 import { RotaStack } from "../../../models/types/RotaStack";
 import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente";
 import { formatarTelefone } from "../../../utils/FormatterUtil";
-import { cadastrarUsuario } from "../../../services/Autenticacao.service";
+import { cadastrarCliente, cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
 import { User } from "firebase/auth";
 import Toast from "react-native-toast-message";
 import Loader from "../../../components/loader/Loader";
+import { CadastroClienteDTO } from "../../../models/dto/CadastroClienteDTO";
 
 export default function CadastroClienteScreen() {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);
+
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
+
     const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroCliente>({
         resolver: yupResolver(validacoesFormularioCliente)
     });
 
     async function cadastrar(formulario: FormularioCadastroCliente): Promise<void> {
         setLoading(true);
-        cadastrarUsuario(formulario.email, formulario.senha)
-            .then((usuario: User) => {
-                setLoading(false);
-                Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso!'});
-                navigation.navigate('tabs');
-            })
-            .catch(error => {
-                Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
-            });
+        await cadastrarUsuario(formulario.email, formulario.senha);
+        
+        const cadastroClienteDTO: CadastroClienteDTO = await criarDtoCadastroCliente(formulario);
+        await cadastrarCliente(cadastroClienteDTO);
+
+        setLoading(false);
+        navigation.navigate('login');
+    }
+
+    async function cadastrarUsuario(email: string, senha: string): Promise<void> {
+        cadastrarUsuarioAutenticacao(email, senha)
+        .then((usuario: User) => {
+            setLoading(false);
+            Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
+        })
+        .catch(error => {
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+        });
+    }
+
+    async function criarDtoCadastroCliente(formulario: any): Promise<CadastroClienteDTO> {
+        const cadastroClienteDTO: CadastroClienteDTO = {
+            nome: formulario.nome,
+            telefone: formulario.telefone,
+            email: formulario.email,
+            senha: formulario.senha,
+            modeloVeiculo: formulario.modeloVeiculo,
+            anoVeiculo: formulario.anoVeiculo
+        };
+        return cadastroClienteDTO;
     }
 
     return (

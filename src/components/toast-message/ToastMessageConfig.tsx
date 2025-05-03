@@ -10,6 +10,13 @@ export const ToastMessageConfig: ToastConfig = {
             text2={text2}
         />
     ),
+    aviso: ({ text1, text2 }: ToastConfigParams<any>) => (
+        <ToastMessage
+            type={'aviso'}
+            text1={text1}
+            text2={text2}
+        />
+    ),
     sucesso: ({ text1, text2 }: ToastConfigParams<any>) => (
         <ToastMessage
             type={'successo'}

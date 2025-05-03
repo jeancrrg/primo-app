@@ -8,8 +8,9 @@ export default function ToastMessage({ type, text1, text2 }: PropsToastMessage) 
 
     const iconesToast = {
         info: { nome: 'information', cor: Colors.azulInfo },
+        aviso: { nome: 'alert', cor: Colors.amareloAviso },
         successo: { nome: 'check-circle', cor: Colors.verdeSucesso },
-        erro: { nome: 'alert-circle', cor: Colors.vermelhoErro },
+        erro: { nome: 'alert-circle', cor: Colors.vermelhoErro }
     };
 
     const icone = iconesToast[type];

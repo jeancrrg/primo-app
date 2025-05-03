@@ -13,17 +13,22 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioPrestador } from "../../../validations/PrestadorValidation";
 import { RotaStack } from "../../../models/types/RotaStack";
-import { TipoServico } from "../../../models/TipoServico";
 import Loader from "../../../components/loader/Loader";
 import { buscarTiposServico } from "../../../services/TipoServico.service";
 import Picker from "../../../components/picker/Picker";
+import { cadastrarPrestador, cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
+import { User } from "firebase/auth";
+import Toast from "react-native-toast-message";
+import { isEmpty } from "../../../utils/ValidationUtil";
+import { formatarCNPJ, formatarTelefone } from "../../../utils/FormatterUtil";
+import { TipoServico } from "../../../models/cadastro/TipoServico";
+import { CadastroPrestadorDTO } from "../../../models/dto/CadastroPrestadorDTO";
 
 export default function CadastroPrestadorScreen() {
 
     const [loading, setLoading] = useState<boolean>(true);
     const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);
-
-    const [tipoSelecionado, setTipoSelecionado] = useState<TipoServico | null>(null);
+    const [tipoServicoSelecionado, setTipoServicoSelecionado] = useState<TipoServico | null>(null);
     const [listaTiposServico, setListaTiposServico] = useState<TipoServico[]>([])
 
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
@@ -39,14 +44,46 @@ export default function CadastroPrestadorScreen() {
     async function carregarTiposServico(): Promise<void> {
         const listaTiposServico: TipoServico[] = await buscarTiposServico();
         setListaTiposServico(listaTiposServico);
-
-        console.log('Tipos: ', listaTiposServico);
-
         setLoading(false);
     }
 
-    function cadastrar(dados: any): void {
-        console.log('Dados: ', dados)
+    async function cadastrar(formulario: any): Promise<void> {
+        setLoading(true);
+        if (isEmpty(tipoServicoSelecionado)) {
+            Toast.show({ type: 'aviso', text1: 'AVISO', text2: 'Tipo de serviço não informado! Informe o tipo de serviço!'});
+        }
+        await cadastrarUsuario(formulario.email, formulario.senha);
+
+        const cadastroPrestadorDTO: CadastroPrestadorDTO = await criarDtoCadastroPrestador(formulario);
+        await cadastrarPrestador(cadastroPrestadorDTO);
+
+        setLoading(false);
+        navigation.navigate('login');
+    }
+
+    async function cadastrarUsuario(email: string, senha: string): Promise<void> {
+        cadastrarUsuarioAutenticacao(email, senha)
+        .then((usuario: User) => {
+            setLoading(false);
+            Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
+        })
+        .catch(error => {
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+        });
+    }
+
+    async function criarDtoCadastroPrestador(formulario: any): Promise<CadastroPrestadorDTO> {
+        const cadastroPrestadorDTO: CadastroPrestadorDTO = {
+            nome: formulario.nome,
+            telefone: formulario.telefone,
+            email: formulario.email,
+            senha: formulario.senha,
+            cnpj: formulario.cnpj,
+            endereco: formulario.endereco,
+            codigoTipoServico: tipoServicoSelecionado?.codigo,
+            valorServico: formulario.valorServico
+        };
+        return cadastroPrestadorDTO;
     }
 
     return (
@@ -72,7 +109,7 @@ export default function CadastroPrestadorScreen() {
                                 control={control}
                                 name='nome'
                                 label='Nome'
-                                maxLength={15}
+                                maxLength={100}
                                 nomeIconeEsquerda='clipboard-text-outline'
                                 errosValidacao={errors.nome?.message}
                             />
@@ -84,6 +121,7 @@ export default function CadastroPrestadorScreen() {
                                 maxLength={15}
                                 nomeIconeEsquerda='phone'
                                 errosValidacao={errors.telefone?.message}
+                                mascara={formatarTelefone}
                                 tipoTeclado='numeric'
                             />
 
@@ -117,6 +155,7 @@ export default function CadastroPrestadorScreen() {
                                 maxLength={18}
                                 nomeIconeEsquerda='briefcase-check-outline'
                                 errosValidacao={errors.cnpj?.message}
+                                mascara={formatarCNPJ}
                                 tipoTeclado='numeric'
                             />
 
@@ -132,10 +171,10 @@ export default function CadastroPrestadorScreen() {
                             <Picker
                                 label='Tipos Serviço'
                                 icone='car-wrench'
-                                valorSelecionado={tipoSelecionado}
+                                valorSelecionado={tipoServicoSelecionado}
                                 listaDados={listaTiposServico}
                                 getLabel={(item) => item.descricao || ''}
-                                onSelecionar={(item) => setTipoSelecionado(item)}
+                                onSelecionar={(item) => setTipoServicoSelecionado(item)}
                             />
 
                             <Input
@@ -149,7 +188,7 @@ export default function CadastroPrestadorScreen() {
                             />
 
                             <Animatable.View animation='fadeInLeft' delay={700}>
-                                <BotaoPrincipal label="Cadastrar" onPress={() => navigation.navigate("tabs")} />
+                                <BotaoPrincipal label="Cadastrar" onPress={handleSubmit(cadastrar)} />
                             </Animatable.View>
                         </ScrollView>
                     </Animatable.View>
