@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import CardPrestadorServico from "../../components/card-prestador-servico/CardPrestadorServico";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { PrestadorServico } from "../../models/PrestadorServico";
-import { buscarPrestadoresServico } from "../../services/PrestadorServico.service";
+import { buscarPrestadoresServico } from "../../services/Prestador.service";
 import LottieView from 'lottie-react-native';
 import { isNotEmpty } from "../../utils/ValidationUtil";
 import { Feather } from "@expo/vector-icons";

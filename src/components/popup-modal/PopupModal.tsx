@@ -6,6 +6,7 @@ import { styles } from "./PopupModalStyle";
 import Divider from "../divider/Divider";
 import { Checkbox } from "react-native-paper";
 import { useState } from "react";
+import { isEmpty, isNotEmpty } from "../../utils/ValidationUtil";
 
 export default function PopupModal<T>(props: PropsPopupModal<T>) {
 
@@ -29,35 +30,39 @@ export default function PopupModal<T>(props: PropsPopupModal<T>) {
                             <Divider/>
 
                             <View>
-                                <FlatList
-                                    data={props.listaDados}
-                                    keyExtractor={(_, index) => index.toString()}
-                                    renderItem={({ item, index }) => {
-                                        const estaSelecionado: boolean = indexValorSelecionado === index;
-
-                                        return (
-                                            <TouchableOpacity
-                                                style={styles.item}
-                                                onPress={() => {
-                                                    setIndexValorSelecionado(index);
-                                                    props.onSelecionar(item);
-                                                }}>
-
-                                                <View style={styles.checkbox}>
-                                                    <Checkbox
-                                                        color={Colors.corPrimaria}
-                                                        status={estaSelecionado  ? 'checked' : 'unchecked'}
-                                                        onPress={() => {
-                                                            setIndexValorSelecionado(index);
-                                                            props.onSelecionar(item);
-                                                        }}
-                                                    />
-                                                </View>
-                                                <Text style={styles.descricaoItem}> {props.getLabel(item)} </Text>
-                                            </TouchableOpacity>
-                                        );
-                                    }}
-                                />
+                                {isEmpty(props.listaDados) ? (
+                                    <Text style={styles.textoRegistroNaoEncontrado}> Nenhum registro encontrado! </Text>
+                                ) : (
+                                    <FlatList
+                                        data={props.listaDados}
+                                        keyExtractor={(_, index) => index.toString()}
+                                        renderItem={({ item, index }) => {
+                                            const estaSelecionado: boolean = indexValorSelecionado === index;
+    
+                                            return (
+                                                <TouchableOpacity
+                                                    style={styles.item}
+                                                    onPress={() => {
+                                                        setIndexValorSelecionado(index);
+                                                        props.onSelecionar(item);
+                                                    }}>
+    
+                                                    <View style={styles.checkbox}>
+                                                        <Checkbox
+                                                            color={Colors.corPrimaria}
+                                                            status={estaSelecionado  ? 'checked' : 'unchecked'}
+                                                            onPress={() => {
+                                                                setIndexValorSelecionado(index);
+                                                                props.onSelecionar(item);
+                                                            }}
+                                                        />
+                                                    </View>
+                                                    <Text style={styles.descricaoItem}> {props.getLabel(item)} </Text>
+                                                </TouchableOpacity>
+                                            );
+                                        }}
+                                    />
+                                )}
                             </View>
                         </View>
 

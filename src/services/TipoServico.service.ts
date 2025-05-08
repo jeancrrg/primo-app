@@ -7,6 +7,6 @@ export async function buscarTiposServico(): Promise<TipoServico[]> {
         return response.data;
     } catch (error: any) {
         console.error('Erro ao buscar os tipos de serviço! - ', error);
-        return [];
+        throw new Error('Erro ao buscar os tipos de serviço!');
     }
 }

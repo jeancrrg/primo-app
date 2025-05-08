@@ -7,6 +7,6 @@ export async function buscarPrestadoresServico(): Promise<PrestadorServico[]> {
         return response.data;
     } catch (error: any) {
         console.error('Erro ao buscar os prestadores de serviço! - ', error);
-        return [];
+        throw new Error('Erro ao buscar os prestadores de serviço!');
     }
 }

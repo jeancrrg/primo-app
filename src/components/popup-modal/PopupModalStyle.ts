@@ -34,5 +34,10 @@ export const styles = StyleSheet.create({
     },
     descricaoItem: {
         fontSize: 16
+    },
+    textoRegistroNaoEncontrado: {
+        textAlign: 'center',
+        fontSize: 16,
+        paddingVertical: 15
     }
 })

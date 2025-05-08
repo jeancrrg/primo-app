@@ -12,45 +12,37 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioLogin } from "../../validations/LoginValidation";
 import { RotaStack } from "../../models/types/RotaStack";
-import { FormularioLogin } from "../../models/interfaces/formularios/FormularioLogin";
 import { User } from "firebase/auth";
-import { realizarLogin } from "../../services/Autenticacao.service";
+import { realizarLogin, autenticarUsuario } from "../../services/Autenticacao.service";
+import { LoginDTO } from "../../models/dto/LoginDTO";
 import { isNotEmpty } from "../../utils/ValidationUtil";
 import Toast from "react-native-toast-message";
+import { atribuirTokenAcesso } from "../../services/TokenAcesso.service";
 
 export default function LoginScreen() {
 
     const [mostrarSenha, setMostrarSenha] = useState(false);
+
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
-    const { control, handleSubmit, formState: { errors } } = useForm({
+
+    const { control, handleSubmit, formState: { errors } } = useForm<LoginDTO>({
         resolver: yupResolver(validacoesFormularioLogin)
     });
 
-    function entrar(formulario: FormularioLogin): void {   
-        realizarLogin(formulario.email, formulario.senha)
-            .then((usuario: User) => {
-                if (isNotEmpty(usuario)) {
-                    navigation.navigate('tabs');
-                }
-            })
-            .catch(error => {
-                let mensagemErro: string = '';
-                switch (error.code) {
-                    case 'auth/invalid-login-credentials':
-                        mensagemErro = 'Usuário ou senha inválida! Verifique novamente';
-                        break;
-                    case 'auth/user-not-found':
-                        mensagemErro = 'Usuário não encontrado. Verifique o email digitado';
-                        break;
-                    case 'auth/too-many-requests':
-                        mensagemErro = 'Muitas tentativas de login. Tente novamente mais tarde';
-                        break;
-                    default:
-                        mensagemErro = 'Ocorreu um erro inesperado! Entre em contato com o suporte';
-                        break;
-                }
-                Toast.show({ type: 'erro', text1: 'ERRO', text2: mensagemErro });
-            });
+    async function entrar(loginDTO: LoginDTO): Promise<void> {
+        try {
+            const usuario: User = await autenticarUsuario(loginDTO.login, loginDTO.senha);
+            const token: string = await realizarLogin(loginDTO);
+            atribuirTokenAcesso(token);
+            
+            console.log('token: ', token);
+
+            if (isNotEmpty(usuario) && isNotEmpty(token)) {
+                navigation.navigate('tabs');
+            }
+        } catch (error: any) {
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message });
+        }
     }
 
     return (
@@ -67,11 +59,11 @@ export default function LoginScreen() {
                     
                         <Input
                             control={control}
-                            name='email'
+                            name='login'
                             label='Email'
                             maxLength={50}
                             nomeIconeEsquerda='email-outline'
-                            errosValidacao={errors.email?.message}
+                            errosValidacao={errors.login?.message}
                         />
 
                         <Input

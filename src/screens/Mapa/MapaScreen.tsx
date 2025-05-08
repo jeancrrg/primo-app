@@ -8,7 +8,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Surface } from "react-native-paper"
 import { PrestadorServico } from "../../models/PrestadorServico";
-import { buscarPrestadoresServico } from "../../services/PrestadorServico.service";
+import { buscarPrestadoresServico } from "../../services/Prestador.service";
 import Loader from "../../components/loader/Loader";
 
 export default function MapaScreen() {
