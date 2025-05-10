@@ -74,8 +74,28 @@ export const styles = StyleSheet.create({
         color: Colors.branco,
         marginLeft: 5,
         fontSize: 16,
-        
         fontFamily: "Mulish-Medium",
         fontWeight: 'bold'
+    },
+    containerMarcadorLocalizacao: {
+        width: 100,
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    circuloExterno: {
+        height: 80,
+        width: 80,
+        backgroundColor: Colors.azulClaroTransparente,
+        borderRadius: 40
+    },
+    marcadorLocalizacao: {
+        height: 25,
+        width: 25,
+        backgroundColor: Colors.corPrimaria,
+        borderColor: Colors.branco,
+        borderWidth: 4,
+        borderRadius: 15,
+        position: 'absolute'
     }
 });

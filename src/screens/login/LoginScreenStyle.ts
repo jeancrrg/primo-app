@@ -10,16 +10,22 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     logo: {
-        height: 200,
-        width: 200
+        height: 160,
+        width: 160
+    },
+    versao: {
+        color: Colors.branco,
+        marginBottom: 10
     },
     containerFormulario: {
         flex: 1,
         backgroundColor: Colors.branco,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        paddingHorizontal: 40,
         paddingVertical: 30
+    },
+    formulario: {
+        paddingHorizontal: 40
     },
     titulo: {
         color: Colors.corPrimaria,
@@ -34,7 +40,7 @@ export const styles = StyleSheet.create({
         marginBottom: 25
     },
     containerBotaoEntrar: {
-        marginTop: 25
+        marginTop: 10
     },
     infoCadastro: {
         textAlign: 'center'

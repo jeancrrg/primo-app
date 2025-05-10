@@ -18,11 +18,11 @@ export default function OpcaoCadastroScreen() {
         <View style={styles.container}>
             <Animatable.View animation='fadeInLeft' delay={500}>
                 <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
-                    <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={38} />
+                    <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={40} />
                 </TouchableOpacity>
 
                 <View style={styles.containerLogo}>
-                    <Image source={require("../../../../assets/logo-primo.png")} style={styles.logo} />
+                    <Image source={require("../../../../assets/images/logos/logo-primo-branco.png")} style={styles.logo} />
                 </View>
             </Animatable.View> 
 

@@ -95,101 +95,103 @@ export default function CadastroPrestadorScreen() {
                 <View style={styles.container}>
                     <Animatable.View animation='fadeInLeft' delay={500} style={styles.containerLogo}>
                         <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
-                            <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={38} />
+                            <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={40} />
                         </TouchableOpacity>
 
-                        <Image source={require("../../../../assets/logo-primo.png")} style={styles.logo} />
+                        <Image source={require("../../../../assets/images/logos/logo-primo-branco.png")} style={styles.logo} />
                     </Animatable.View>
 
                     <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
                         <ScrollView showsVerticalScrollIndicator={false}>
-                            <Text style={styles.titulo}> Cadastro Prestador </Text>
+                            <View style={styles.formulario}>
+                                <Text style={styles.titulo}> Cadastro Prestador </Text>
 
-                            <Input
-                                control={control}
-                                name='nome'
-                                label='Nome'
-                                maxLength={100}
-                                nomeIconeEsquerda='clipboard-text-outline'
-                                errosValidacao={errors.nome?.message}
-                            />
+                                <Input
+                                    control={control}
+                                    name='nome'
+                                    label='Nome'
+                                    maxLength={100}
+                                    nomeIconeEsquerda='clipboard-text-outline'
+                                    errosValidacao={errors.nome?.message}
+                                />
 
-                            <Input
-                                control={control}
-                                name='telefone'
-                                label='Telefone'
-                                maxLength={15}
-                                nomeIconeEsquerda='phone'
-                                errosValidacao={errors.telefone?.message}
-                                mascara={formatarTelefone}
-                                tipoTeclado='numeric'
-                            />
+                                <Input
+                                    control={control}
+                                    name='telefone'
+                                    label='Telefone'
+                                    maxLength={15}
+                                    nomeIconeEsquerda='phone'
+                                    errosValidacao={errors.telefone?.message}
+                                    mascara={formatarTelefone}
+                                    tipoTeclado='numeric'
+                                />
 
-                            <Input
-                                control={control}
-                                name='email'
-                                label='Email'
-                                maxLength={50}
-                                nomeIconeEsquerda='email-outline'
-                                errosValidacao={errors.email?.message}
-                            />
+                                <Input
+                                    control={control}
+                                    name='email'
+                                    label='Email'
+                                    maxLength={50}
+                                    nomeIconeEsquerda='email-outline'
+                                    errosValidacao={errors.email?.message}
+                                />
 
-                            <Input
-                                control={control}
-                                name='senha'
-                                label='Senha'
-                                maxLength={15}
-                                nomeIconeEsquerda='lock-outline'
-                                nomeIconeDireita={mostrarSenha ? 'eye' : 'eye-off'}
-                                onPressIconeDireita={() => setMostrarSenha(!mostrarSenha)}
-                                mostrarValor={!mostrarSenha}
-                                errosValidacao={errors.senha?.message}
-                            />
+                                <Input
+                                    control={control}
+                                    name='senha'
+                                    label='Senha'
+                                    maxLength={15}
+                                    nomeIconeEsquerda='lock-outline'
+                                    nomeIconeDireita={mostrarSenha ? 'eye' : 'eye-off'}
+                                    onPressIconeDireita={() => setMostrarSenha(!mostrarSenha)}
+                                    mostrarValor={!mostrarSenha}
+                                    errosValidacao={errors.senha?.message}
+                                />
 
-                            <Divider texto="Serviço"/>
+                                <Divider texto="Serviço"/>
 
-                            <Input
-                                control={control}
-                                name='cnpj'
-                                label='Cnpj'
-                                maxLength={18}
-                                nomeIconeEsquerda='briefcase-check-outline'
-                                errosValidacao={errors.cnpj?.message}
-                                mascara={formatarCNPJ}
-                                tipoTeclado='numeric'
-                            />
+                                <Input
+                                    control={control}
+                                    name='cnpj'
+                                    label='Cnpj'
+                                    maxLength={18}
+                                    nomeIconeEsquerda='briefcase-check-outline'
+                                    errosValidacao={errors.cnpj?.message}
+                                    mascara={formatarCNPJ}
+                                    tipoTeclado='numeric'
+                                />
 
-                            <Input
-                                control={control}
-                                name='endereco'
-                                label='Endereço'
-                                maxLength={120}
-                                nomeIconeEsquerda='map-marker-outline'
-                                errosValidacao={errors.endereco?.message}
-                            />
+                                <Input
+                                    control={control}
+                                    name='endereco'
+                                    label='Endereço'
+                                    maxLength={120}
+                                    nomeIconeEsquerda='map-marker-outline'
+                                    errosValidacao={errors.endereco?.message}
+                                />
 
-                            <Picker
-                                label='Tipos Serviço'
-                                icone='car-wrench'
-                                valorSelecionado={tipoServicoSelecionado}
-                                listaDados={listaTiposServico}
-                                getLabel={(item) => item.descricao || ''}
-                                onSelecionar={(item) => setTipoServicoSelecionado(item)}
-                            />
+                                <Picker
+                                    label='Tipos Serviço'
+                                    icone='car-wrench'
+                                    valorSelecionado={tipoServicoSelecionado}
+                                    listaDados={listaTiposServico}
+                                    getLabel={(item) => item.descricao || ''}
+                                    onSelecionar={(item) => setTipoServicoSelecionado(item)}
+                                />
 
-                            <Input
-                                control={control}
-                                name='valorServico'
-                                label='Valor Serviço'
-                                maxLength={6}
-                                nomeIconeEsquerda='currency-usd'
-                                errosValidacao={errors.valorServico?.message}
-                                tipoTeclado='numeric'
-                            />
+                                <Input
+                                    control={control}
+                                    name='valorServico'
+                                    label='Valor Serviço'
+                                    maxLength={6}
+                                    nomeIconeEsquerda='currency-usd'
+                                    errosValidacao={errors.valorServico?.message}
+                                    tipoTeclado='numeric'
+                                />
 
-                            <Animatable.View animation='fadeInLeft' delay={700}>
-                                <BotaoPrincipal label="Cadastrar" onPress={handleSubmit(cadastrar)} />
-                            </Animatable.View>
+                                <Animatable.View animation='fadeInLeft' delay={700}>
+                                    <BotaoPrincipal label="Cadastrar" onPress={handleSubmit(cadastrar)} />
+                                </Animatable.View>
+                            </View>
                         </ScrollView>
                     </Animatable.View>
                 </View>

@@ -1,15 +1,15 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./MapaScreenStyle";
-import MapView, { Circle, Marker } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Colors } from "../../../assets/styles/Colors";
 import * as Location from "expo-location";
 import BottomSheet from "@gorhom/bottom-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Surface } from "react-native-paper"
-import { PrestadorServico } from "../../models/PrestadorServico";
 import { buscarPrestadoresServico } from "../../services/Prestador.service";
 import Loader from "../../components/loader/Loader";
+import { PrestadorServico } from "../../models/cadastro/PrestadorServico";
 
 export default function MapaScreen() {
 
@@ -92,20 +92,16 @@ export default function MapaScreen() {
                     }}
                     loadingIndicatorColor={Colors.corPrimaria}
                     userLocationUpdateInterval={1000}
-                    showsUserLocation={true}
+                    showsUserLocation={false}
                     showsMyLocationButton={true}
                     onPress={() => onPressMapa()}>
 
-                    <Circle
-                        center={{ 
-                            latitude: localizacaoAtual.coords.latitude,
-                            longitude: localizacaoAtual.coords.longitude 
-                        }}
-                        radius={2000}
-                        strokeWidth={2}
-                        strokeColor={Colors.azulEscuroTransparente}
-                        fillColor={Colors.azulClaroTransparente} 
-                    />
+                    <Marker coordinate={{latitude: localizacaoAtual.coords.latitude, longitude: localizacaoAtual.coords.longitude}}>
+                        <View style={styles.containerMarcadorLocalizacao}>
+                            <View style={styles.circuloExterno} />
+                            <View style={styles.marcadorLocalizacao} />
+                        </View>
+                    </Marker>  
 
                     {listaPrestadoresServico.map((prestadorServico) => (
                         <Marker
@@ -117,7 +113,7 @@ export default function MapaScreen() {
                             title={prestadorServico.nome}
                             description={prestadorServico.descricaoTipoServico}
                             onPress={() => onPressMarker(prestadorServico)}
-                        />
+                            anchor={{ x: 0.5, y: 0.5 }} />
                     ))}
                 </MapView>
             ) : (

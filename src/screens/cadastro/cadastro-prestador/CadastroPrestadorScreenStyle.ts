@@ -23,7 +23,9 @@ export const styles = StyleSheet.create({
         backgroundColor: Colors.branco,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        paddingVertical: 15,
+        paddingVertical: 15
+    },
+    formulario: {
         paddingHorizontal: 40
     },
     titulo: {

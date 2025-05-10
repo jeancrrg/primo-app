@@ -4,11 +4,11 @@
         "slug": "primo-app",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/icone-primo.png",
+        "icon": "./assets/images/logos/logo-primo.png",
         "userInterfaceStyle": "light",
         "newArchEnabled": false,
         "splash": {
-            "image": "./assets/splash-primo.png",
+            "image": "./assets/images/logos/splash-primo.png",
             "resizeMode": "contain",
             "backgroundColor": "#ffffff"
         },
@@ -16,14 +16,14 @@
         "ios": {
             "supportsTablet": true,
             "splash": {
-                "image": "./assets/splash-primo.png",
+                "image": "./assets/images/logos/splash-primo.png",
                 "resizeMode": "cover",
                 "backgroundColor": "#ffffff"
             }
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./assets/splash-primo.png",
+                "image": "./assets/images/logos/splash-primo.png",
                 "backgroundColor": "#ffffff"
             },
             "permissions": ["ACCESS_FINE_LOCATION"]

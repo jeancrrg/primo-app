@@ -16,8 +16,8 @@ export const styles = StyleSheet.create({
         marginBottom: 40
     },
     logo: {
-        height: 200,
-        width: 200
+        height: 160,
+        width: 160
     },
     containerFormulario: {
         flex: 1,

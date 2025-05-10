@@ -75,81 +75,83 @@ export default function CadastroClienteScreen() {
                 <View style={styles.container}>
                     <Animatable.View animation='fadeInLeft' delay={500} style={styles.containerLogo}>
                         <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
-                            <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={38} />
+                            <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={40} />
                         </TouchableOpacity>
 
-                        <Image source={require("../../../../assets/logo-primo.png")} style={styles.logo} />
+                        <Image source={require("../../../../assets/images/logos/logo-primo-branco.png")} style={styles.logo} />
                     </Animatable.View>
 
                     <Animatable.View animation='fadeInUp' delay={500} style={styles.containerFormulario}>
                         <ScrollView showsVerticalScrollIndicator={false}>
-                            <Text style={styles.titulo}> Cadastro Cliente </Text>
-                        
-                            <Input
-                                control={control}
-                                name='nome'
-                                label='Nome'
-                                maxLength={50}
-                                nomeIconeEsquerda='clipboard-text-outline'
-                                errosValidacao={errors.nome?.message}
-                            />
+                            <View style={styles.formulario}>
+                                <Text style={styles.titulo}> Cadastro Cliente </Text>
+                            
+                                <Input
+                                    control={control}
+                                    name='nome'
+                                    label='Nome'
+                                    maxLength={50}
+                                    nomeIconeEsquerda='clipboard-text-outline'
+                                    errosValidacao={errors.nome?.message}
+                                />
 
-                            <Input
-                                control={control}
-                                name='telefone'
-                                label='Telefone'
-                                maxLength={15}
-                                nomeIconeEsquerda='phone'
-                                errosValidacao={errors.telefone?.message}
-                                mascara={formatarTelefone}
-                                tipoTeclado='numeric'
-                            />
+                                <Input
+                                    control={control}
+                                    name='telefone'
+                                    label='Telefone'
+                                    maxLength={15}
+                                    nomeIconeEsquerda='phone'
+                                    errosValidacao={errors.telefone?.message}
+                                    mascara={formatarTelefone}
+                                    tipoTeclado='numeric'
+                                />
 
-                            <Input
-                                control={control}
-                                name='email'
-                                label='Email'
-                                maxLength={50}
-                                nomeIconeEsquerda='email-outline'
-                                errosValidacao={errors.email?.message}
-                            />
+                                <Input
+                                    control={control}
+                                    name='email'
+                                    label='Email'
+                                    maxLength={50}
+                                    nomeIconeEsquerda='email-outline'
+                                    errosValidacao={errors.email?.message}
+                                />
 
-                            <Input
-                                control={control}
-                                name='senha'
-                                label='Senha'
-                                maxLength={15}
-                                nomeIconeEsquerda='lock-outline'
-                                nomeIconeDireita={mostrarSenha ? 'eye' : 'eye-off'}
-                                onPressIconeDireita={() => setMostrarSenha(!mostrarSenha)}
-                                mostrarValor={!mostrarSenha}
-                                errosValidacao={errors.senha?.message}
-                            />
+                                <Input
+                                    control={control}
+                                    name='senha'
+                                    label='Senha'
+                                    maxLength={15}
+                                    nomeIconeEsquerda='lock-outline'
+                                    nomeIconeDireita={mostrarSenha ? 'eye' : 'eye-off'}
+                                    onPressIconeDireita={() => setMostrarSenha(!mostrarSenha)}
+                                    mostrarValor={!mostrarSenha}
+                                    errosValidacao={errors.senha?.message}
+                                />
 
-                            <Divider texto="Veículo"/>
+                                <Divider texto="Veículo"/>
 
-                            <Input
-                                control={control}
-                                name='modeloVeiculo'
-                                label='Modelo Veículo'
-                                maxLength={50}
-                                nomeIconeEsquerda='car-outline'
-                                errosValidacao={errors.modeloVeiculo?.message}
-                            />
+                                <Input
+                                    control={control}
+                                    name='modeloVeiculo'
+                                    label='Modelo Veículo'
+                                    maxLength={50}
+                                    nomeIconeEsquerda='car-outline'
+                                    errosValidacao={errors.modeloVeiculo?.message}
+                                />
 
-                            <Input
-                                control={control}
-                                name='anoVeiculo'
-                                label='Ano Veículo'
-                                maxLength={4}
-                                nomeIconeEsquerda='calendar-range'
-                                errosValidacao={errors.anoVeiculo?.message}
-                                tipoTeclado='numeric'
-                            />
+                                <Input
+                                    control={control}
+                                    name='anoVeiculo'
+                                    label='Ano Veículo'
+                                    maxLength={4}
+                                    nomeIconeEsquerda='calendar-range'
+                                    errosValidacao={errors.anoVeiculo?.message}
+                                    tipoTeclado='numeric'
+                                />
 
-                            <Animatable.View animation='fadeInLeft' delay={700} style={styles.containerBotaoCadastro}>
-                                <BotaoPrincipal label="Cadastrar" onPress={handleSubmit(cadastrar)} />
-                            </Animatable.View>
+                                <Animatable.View animation='fadeInLeft' delay={700} style={styles.containerBotaoCadastro}>
+                                    <BotaoPrincipal label="Cadastrar" onPress={handleSubmit(cadastrar)} />
+                                </Animatable.View>
+                            </View>
                         </ScrollView>
                     </Animatable.View>
                 </View>
