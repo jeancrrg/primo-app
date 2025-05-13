@@ -1,4 +1,4 @@
-import { Image, Keyboard, ScrollView, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Image, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./LoginScreenStyle";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -85,8 +85,14 @@ export default function LoginScreen() {
                                     mostrarValor={!mostrarSenha}
                                     errosValidacao={errors.senha?.message}
                                 />
+
+                                <View style={styles.containerEsqueciSenha}>
+                                    <TouchableOpacity onPress={() => navigation.navigate("esqueciSenha")}>
+                                        <Text style={styles.esqueciSenha}> Esqueci minha senha </Text>
+                                    </TouchableOpacity>
+                                </View>
                             
-                                <Animatable.View animation='fadeInLeft' delay={700} style={styles.containerBotaoEntrar}>
+                                <Animatable.View animation='fadeInLeft' delay={700}>
                                     <BotaoPrincipal label="Entrar" onPress={handleSubmit(entrar)} />
                                 </Animatable.View>
 

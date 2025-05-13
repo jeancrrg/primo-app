@@ -18,7 +18,9 @@ export default function MapaScreen() {
     const [listaPrestadoresServico, setListaPrestadoresServico] = useState<PrestadorServico[]>([]);
     const [prestadorServicoSelecionado, setPrestadorServicoSelecionado] = useState<PrestadorServico | null>(null);
 
-    const bottomSheetRef = useRef<BottomSheet>(null)
+    const bottomSheetRef = useRef<BottomSheet>(null);
+    const referenciaMapa = useRef<MapView>(null);
+
     const snapPoints = useMemo(() => ['20%', '33%'], []);
 
     useEffect(() => {
@@ -42,6 +44,24 @@ export default function MapaScreen() {
         if (concedeuPermissaoLocalizacao) {
             const localizacao: Location.LocationObject = await Location.getCurrentPositionAsync();
             setLocalizacaoAtual(localizacao);
+
+            // Mostrar mapa sem zoom
+            referenciaMapa.current?.animateToRegion({
+                latitude: localizacao.coords.latitude,
+                longitude: localizacao.coords.longitude,
+                latitudeDelta: 0.08,
+                longitudeDelta: 0.08,
+            }, 1000);
+
+            // Depois de 1s, da zoom na localização atual
+            setTimeout(() => {
+                referenciaMapa.current?.animateToRegion({
+                    latitude: localizacao.coords.latitude,
+                    longitude: localizacao.coords.longitude,
+                    latitudeDelta: 0.05,
+                    longitudeDelta: 0.05,
+                }, 1000);
+            }, 1200);
         }
     }
 
@@ -82,14 +102,9 @@ export default function MapaScreen() {
 
             {localizacaoAtual && !loading ? (
                 <MapView
+                    ref={referenciaMapa}
                     style={styles.mapa}
                     provider="google"
-                    initialRegion={{
-                        latitude: localizacaoAtual.coords.latitude,
-                        longitude: localizacaoAtual.coords.longitude,
-                        latitudeDelta: 0.050,
-                        longitudeDelta: 0.050
-                    }}
                     loadingIndicatorColor={Colors.corPrimaria}
                     userLocationUpdateInterval={1000}
                     showsUserLocation={false}

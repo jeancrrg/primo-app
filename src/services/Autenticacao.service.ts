@@ -3,7 +3,7 @@ import Api from "../config/api/Api";
 import { auth } from "../config/firebase/FirebaseConfig";
 import { CadastroPrestadorDTO } from "../models/dto/CadastroPrestadorDTO";
 import { CadastroClienteDTO } from '../models/dto/CadastroClienteDTO';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
 
 export async function autenticarUsuario(email: string, senha: string): Promise<User> {
     try {
@@ -34,6 +34,15 @@ export async function cadastrarUsuarioAutenticacao(email: string, senha: string)
     } catch (error: any) {
         console.error('Erro ao cadastrar o usuário de autenticação! - ', error);
         throw new Error('Erro ao cadastrar o usuário de autenticação!');
+    }
+}
+
+export async function redefinirSenha(email: string): Promise<void> {
+    try {
+        await sendPasswordResetEmail(auth, email);
+    } catch (error: any) {
+        console.error('Erro ao redefinir a senha! - ', error);
+        throw new Error('Erro ao redefinir a senha!');
     }
 }
 

@@ -1,31 +1,32 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../../assets/styles/Colors";
+import { Colors } from "../../../../assets/styles/Colors";
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.corPrimaria
     },
+    botaoVoltar: {
+        paddingTop: 20,
+        paddingLeft: 25
+    },
     containerLogo: {
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 20,
+        marginBottom: 40
     },
     logo: {
         height: 160,
         width: 160
     },
-    versao: {
-        color: Colors.branco,
-        marginBottom: 10
-    },
     containerFormulario: {
         flex: 1,
         backgroundColor: Colors.branco,
         borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        paddingTop: 30
+        borderTopRightRadius: 30
     },
     formulario: {
-        paddingHorizontal: 40
+        padding: 40
     },
     titulo: {
         color: Colors.corPrimaria,
@@ -35,20 +36,11 @@ export const styles = StyleSheet.create({
     },
     texto: {
         fontSize: 18,
-        textAlign: 'center',
+        paddingHorizontal: 20,
         marginTop: 15,
-        marginBottom: 25
+        marginBottom: 30
     },
-    containerEsqueciSenha: {
-        alignItems: 'flex-end'
-    },
-    esqueciSenha: {
-        color: Colors.corPrimaria,
-        fontSize: 16,
-        marginTop: 10,
-        textDecorationLine: 'underline'
-    },
-    infoCadastro: {
-        textAlign: 'center'
+    containerBotao: {
+        marginTop: 110
     }
 })
