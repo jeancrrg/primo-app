@@ -8,10 +8,10 @@ export default function CardPrestadorServico(props: PropsCardPrestadorServico) {
     
     const prestadorImages: { [key: string]: any } = {
         '1': require('../../../assets/images/avatares/avatar-5.png'),
-        //'2': require('../../../assets/images/avatares/avatar-2.png'),
-        //'3': require('../../../assets/images/avatares/avatar-3.png'),
-        //'4': require('../../../assets/images/avatares/avatar-4.png'),
-        //'5': require('../../../assets/images/avatares/sem-avatar.png'),
+        '2': require('../../../assets/images/avatares/avatar-2.png'),
+        '3': require('../../../assets/images/avatares/avatar-3.png'),
+        '4': require('../../../assets/images/avatares/avatar-4.png'),
+        '5': require('../../../assets/images/avatares/avatar-1.png'),
     };
     
     return (

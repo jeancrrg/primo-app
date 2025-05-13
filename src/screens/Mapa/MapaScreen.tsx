@@ -49,11 +49,11 @@ export default function MapaScreen() {
             referenciaMapa.current?.animateToRegion({
                 latitude: localizacao.coords.latitude,
                 longitude: localizacao.coords.longitude,
-                latitudeDelta: 0.08,
-                longitudeDelta: 0.08,
+                latitudeDelta: 0.2,
+                longitudeDelta: 0.2,
             }, 1000);
 
-            // Depois de 1s, da zoom na localização atual
+            // Depois de 1s, realizar zoom na localização atual
             setTimeout(() => {
                 referenciaMapa.current?.animateToRegion({
                     latitude: localizacao.coords.latitude,

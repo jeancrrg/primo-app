@@ -34,7 +34,7 @@ export default function CadastroPrestadorScreen(): JSX.Element {
 
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroPrestador>({
         resolver: yupResolver(validacoesFormularioPrestador)
     });
 

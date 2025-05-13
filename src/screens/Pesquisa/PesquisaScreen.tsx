@@ -3,14 +3,14 @@ import { styles } from "./PesquisaScreenStyle";
 import { useEffect, useState } from "react";
 import CardPrestadorServico from "../../components/card-prestador-servico/CardPrestadorServico";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { PrestadorServico } from "../../models/PrestadorServico";
 import { buscarPrestadoresServico } from "../../services/Prestador.service";
 import LottieView from 'lottie-react-native';
 import { isNotEmpty } from "../../utils/ValidationUtil";
 import { Feather } from "@expo/vector-icons";
 import { RotaTabBar } from "../../models/types/RotaTabBar";
+import { PrestadorServico } from "../../models/cadastro/PrestadorServico";
 
-export default function PesquisaScreen() {
+export default function PesquisaScreen(): JSX.Element {
 
     const [listaPrestadoresServico, setListaPrestadoresServico] = useState<PrestadorServico[]>([]);
 
@@ -29,7 +29,7 @@ export default function PesquisaScreen() {
         return isNotEmpty(listaPrestadoresServico);
     }
 
-    function renderCardPrestadorServico(prestador: PrestadorServico) {
+    function renderCardPrestadorServico(prestador: PrestadorServico): JSX.Element {
         return (
             <CardPrestadorServico
                 codigo={prestador.codigo ?? 0}
@@ -73,7 +73,6 @@ export default function PesquisaScreen() {
                         </View>
                     )
                 }
-                
             </View>
         </TouchableWithoutFeedback>
     );
