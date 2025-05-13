@@ -5,10 +5,36 @@ import CardSmall from "../../components/card-small/CardSmall";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RotaStack } from "../../models/types/RotaStack";
+import { useEffect, useState } from "react";
+import { UsuarioCliente } from "../../models/cadastro/UsuarioCliente";
+import { buscarUsuarioCliente } from "../../services/Usuario.service";
+import Toast from "react-native-toast-message";
+import { obterCodigoUsuarioLogado, removerCodigoUsuarioLogado } from "../../services/Autenticacao.service";
+import { removerTokenAcesso } from "../../services/TokenAcesso.service";
 
 export default function PerfilScreen() {
 
+    const [usuario, setUsuario] = useState<UsuarioCliente>();
+
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
+
+    useEffect(() => {
+        buscarInformacoesUsuario();
+    }, []);
+
+    async function buscarInformacoesUsuario(): Promise<void> {
+        try {
+            const codigoUsuario: number | null = await obterCodigoUsuarioLogado();
+            if (codigoUsuario === null) {
+                Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Código do usuário não encontrado!'});
+            } else {
+                const usuarioCliente: UsuarioCliente = await buscarUsuarioCliente(codigoUsuario);
+                setUsuario(usuarioCliente);
+            }
+        } catch (error: any) {
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+        }
+    }
 
     function confirmarSaidaAplicativo(): void {
         Alert.alert(
@@ -17,16 +43,22 @@ export default function PerfilScreen() {
             [
                 {
                     text: "SIM",
-                    onPress: () => navigation.replace('login'),
+                    onPress: () => sairAplicativo(),
                 },
                 {
                     text: "NÃO",
-                    onPress: () => {},
                     style: "cancel",
+                    onPress: () => {}
                 }
             ],
             {cancelable: true}
         );
+    }
+
+    function sairAplicativo(): void {
+        removerTokenAcesso();
+        removerCodigoUsuarioLogado();
+        navigation.replace('login');
     }
 
     return (
@@ -38,7 +70,7 @@ export default function PerfilScreen() {
             <View style={styles.containerPerfil}>
                 <View style={styles.cardUsuario}>
                     <View style={styles.containerNome}>
-                        <Text style={styles.nome}> Jean Carlo Rabelo Garcia </Text>
+                        <Text style={styles.nome}> {usuario?.nome} </Text>
                     </View>
 
                     <View style={styles.containerAvatar}>
@@ -46,13 +78,13 @@ export default function PerfilScreen() {
                     </View>
                 </View>
 
-                <CardSmall nomeIcone="phone" tipoInformacao="Telefone:" informacao="(34) 9 9196 - 8327" />
+                <CardSmall nomeIcone="phone" tipoInformacao="Telefone:" informacao={usuario?.telefone} />
 
-                <CardSmall nomeIcone="email-outline" tipoInformacao="Email:" informacao="jeancrg@gmail.com" />
+                <CardSmall nomeIcone="email-outline" tipoInformacao="Email:" informacao={usuario?.email} />
 
-                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo Veículo:" informacao="Astra GL" />
+                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo Veículo:" informacao={usuario?.modeloVeiculo} />
 
-                <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano Veículo:" informacao="2001" />
+                <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano Veículo:" informacao={usuario?.anoVeiculo?.toString()} />
 
                 <View style={styles.containerLogo}>
                     <Text style={styles.logo}> Primo </Text>

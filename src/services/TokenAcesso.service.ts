@@ -10,7 +10,7 @@ export async function obterTokenAcesso(): Promise<string | null> {
     return token;
 }
 
-export function atribuirTokenAcesso(tokenAcesso: string): void {
+export function salvarTokenAcesso(tokenAcesso: string): void {
     AsyncStorage.setItem(CHAVE_TOKEN, tokenAcesso);
 }
 

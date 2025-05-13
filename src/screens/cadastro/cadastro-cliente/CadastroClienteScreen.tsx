@@ -16,10 +16,9 @@ import { RotaStack } from "../../../models/types/RotaStack";
 import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente";
 import { formatarTelefone } from "../../../utils/FormatterUtil";
 import { cadastrarCliente, cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
-import { User } from "firebase/auth";
 import Toast from "react-native-toast-message";
 import Loader from "../../../components/loader/Loader";
-import { CadastroClienteDTO } from "../../../models/dto/CadastroClienteDTO";
+import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
 
 export default function CadastroClienteScreen() {
 
@@ -33,37 +32,18 @@ export default function CadastroClienteScreen() {
     });
 
     async function cadastrar(formulario: FormularioCadastroCliente): Promise<void> {
-        setLoading(true);
-        await cadastrarUsuario(formulario.email, formulario.senha);
-        
-        const cadastroClienteDTO: CadastroClienteDTO = await criarDtoCadastroCliente(formulario);
-        await cadastrarCliente(cadastroClienteDTO);
-
-        setLoading(false);
-        navigation.navigate('login');
-    }
-
-    async function cadastrarUsuario(email: string, senha: string): Promise<void> {
-        cadastrarUsuarioAutenticacao(email, senha)
-        .then((usuario: User) => {
+        try {
+            setLoading(true);
+            removerTokenAcesso();
+            await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
+            await cadastrarCliente(formulario);
             setLoading(false);
             Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
-        })
-        .catch(error => {
+            navigation.navigate('login');
+        } catch (error: any) {
+            setLoading(false);
             Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
-        });
-    }
-
-    async function criarDtoCadastroCliente(formulario: any): Promise<CadastroClienteDTO> {
-        const cadastroClienteDTO: CadastroClienteDTO = {
-            nome: formulario.nome,
-            telefone: formulario.telefone,
-            email: formulario.email,
-            senha: formulario.senha,
-            modeloVeiculo: formulario.modeloVeiculo,
-            anoVeiculo: formulario.anoVeiculo
-        };
-        return cadastroClienteDTO;
+        }
     }
 
     return (

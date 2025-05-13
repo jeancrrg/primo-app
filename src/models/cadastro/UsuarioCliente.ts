@@ -1,8 +1,8 @@
-export class CadastroClienteDTO {
+export class UsuarioCliente {
+    codigoUsuario?: number;
     nome?: string;
     telefone?: string;
     email?: string;
-    senha?: string;
     modeloVeiculo?: string;
-    anoVeiculo?: string;
+    anoVeiculo?: number;
 }

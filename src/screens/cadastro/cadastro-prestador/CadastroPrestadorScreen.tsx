@@ -21,11 +21,13 @@ import Toast from "react-native-toast-message";
 import { isEmpty } from "../../../utils/ValidationUtil";
 import { formatarCNPJ, formatarTelefone } from "../../../utils/FormatterUtil";
 import { TipoServico } from "../../../models/cadastro/TipoServico";
+import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
 import { CadastroPrestadorDTO } from "../../../models/dto/CadastroPrestadorDTO";
+import { FormularioCadastroPrestador } from "../../../models/interfaces/formularios/FormularioCadastroPrestador";
 
-export default function CadastroPrestadorScreen() {
+export default function CadastroPrestadorScreen(): JSX.Element {
 
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
     const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);
     const [tipoServicoSelecionado, setTipoServicoSelecionado] = useState<TipoServico | null>(null);
     const [listaTiposServico, setListaTiposServico] = useState<TipoServico[]>([])
@@ -42,6 +44,7 @@ export default function CadastroPrestadorScreen() {
 
     async function carregarTiposServico(): Promise<void> {
         try {
+            setLoading(true);
             const listaTiposServico: TipoServico[] = await buscarTiposServico()
             setListaTiposServico(listaTiposServico);
             setLoading(false);
@@ -51,27 +54,29 @@ export default function CadastroPrestadorScreen() {
         }
     }
 
-    async function cadastrar(formulario: any): Promise<void> {
+    async function cadastrar(formulario: FormularioCadastroPrestador): Promise<void> {
         try {
             setLoading(true);
             if (isEmpty(tipoServicoSelecionado)) {
                 Toast.show({ type: 'aviso', text1: 'AVISO', text2: 'Tipo de serviço não informado! Informe o tipo de serviço!'});
+
+            } else {
+                removerTokenAcesso();
+                await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
+                const cadastroPrestadorDTO: CadastroPrestadorDTO = await criarDtoCadastroPrestador(formulario);
+                await cadastrarPrestador(cadastroPrestadorDTO);
+        
+                Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
+                navigation.navigate('login');
             }
-            await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
-    
-            const cadastroPrestadorDTO: CadastroPrestadorDTO = await criarDtoCadastroPrestador(formulario);
-            await cadastrarPrestador(cadastroPrestadorDTO);
-    
             setLoading(false);
-            Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
-            navigation.navigate('login');
         } catch (error: any) {
             setLoading(false);
             Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
         }
     }
 
-    async function criarDtoCadastroPrestador(formulario: any): Promise<CadastroPrestadorDTO> {
+    async function criarDtoCadastroPrestador(formulario: FormularioCadastroPrestador): Promise<CadastroPrestadorDTO> {
         const cadastroPrestadorDTO: CadastroPrestadorDTO = {
             nome: formulario.nome,
             telefone: formulario.telefone,

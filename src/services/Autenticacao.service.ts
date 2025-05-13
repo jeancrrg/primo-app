@@ -1,9 +1,13 @@
 import { LoginDTO } from './../models/dto/LoginDTO';
 import Api from "../config/api/Api";
 import { auth } from "../config/firebase/FirebaseConfig";
-import { CadastroPrestadorDTO } from "../models/dto/CadastroPrestadorDTO";
-import { CadastroClienteDTO } from '../models/dto/CadastroClienteDTO';
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
+import { CHAVE_CODIGO_USUARIO } from '../constants/ChaveAsyncStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { isNotEmpty } from '../utils/ValidationUtil';
+import { FormularioLogin } from '../models/interfaces/formularios/FormularioLogin';
+import { FormularioCadastroCliente } from '../models/interfaces/formularios/FormularioCadastroCliente';
+import { CadastroPrestadorDTO } from '../models/dto/CadastroPrestadorDTO';
 
 export async function autenticarUsuario(email: string, senha: string): Promise<User> {
     try {
@@ -33,7 +37,12 @@ export async function cadastrarUsuarioAutenticacao(email: string, senha: string)
         return credencialUsuario.user;
     } catch (error: any) {
         console.error('Erro ao cadastrar o usuário de autenticação! - ', error);
-        throw new Error('Erro ao cadastrar o usuário de autenticação!');
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                throw new Error('Email já possui cadastro! Realize o login');
+            default:
+                throw new Error('Erro ao cadastrar o usuário de autenticação');
+        }
     }
 }
 
@@ -46,20 +55,19 @@ export async function redefinirSenha(email: string): Promise<void> {
     }
 }
 
-export async function realizarLogin(loginDTO: LoginDTO): Promise<string> {
+export async function realizarLogin(formulario: FormularioLogin): Promise<LoginDTO> {
     try {
-        const response = await Api.post('/autenticacao/login', loginDTO);
-        const token: string = response.data.token;
-        return token;
+        const response = await Api.post('/autenticacoes/login', formulario);
+        return response.data;
     } catch (error: any) {
         console.error('Erro ao realizar o login! - ', error);
         throw new Error('Erro ao realizar o login!');
     }
 }
 
-export async function cadastrarCliente(cadastroClienteDTO: CadastroClienteDTO): Promise<void> {
+export async function cadastrarCliente(formularioCadastroCliente: FormularioCadastroCliente): Promise<void> {
     try {
-        await Api.post('/autenticacao/cadastro/cliente', cadastroClienteDTO);
+        await Api.post('/autenticacoes/cadastro/cliente', formularioCadastroCliente);
     } catch (error: any) {
         console.error('Erro ao cadastrar o cliente! - ', error);
         throw new Error('Erro ao cadastrar o cliente!');
@@ -68,7 +76,7 @@ export async function cadastrarCliente(cadastroClienteDTO: CadastroClienteDTO): 
 
 export async function cadastrarPrestador(cadastroPrestadorDTO: CadastroPrestadorDTO): Promise<void> {
     try {
-        await Api.post('/autenticacao/cadastro/prestador', cadastroPrestadorDTO);
+        await Api.post('/autenticacoes/cadastro/prestador', cadastroPrestadorDTO);
     } catch (error: any) {
         console.error('Erro ao cadastrar o prestador de serviço! - ', error);
         throw new Error('Erro ao realizar o prestador de serviço!');
@@ -77,4 +85,23 @@ export async function cadastrarPrestador(cadastroPrestadorDTO: CadastroPrestador
 
 export async function sair(): Promise<void> {
     await signOut(auth);
+}
+
+export async function salvarCodigoUsuarioLogado(codigoUsuario: number): Promise<void> {
+    AsyncStorage.setItem(CHAVE_CODIGO_USUARIO, codigoUsuario.toString());
+}
+
+export async function obterCodigoUsuarioLogado(): Promise<number | null> {
+    let codigoUsuario: number | null = null;
+    await AsyncStorage.getItem(CHAVE_CODIGO_USUARIO)
+        .then(async valor => {
+            if (isNotEmpty(valor)) {
+                codigoUsuario = Number(valor);
+            }
+        });
+    return codigoUsuario;
+}
+
+export async function removerCodigoUsuarioLogado(): Promise<void> {
+    await AsyncStorage.removeItem(CHAVE_CODIGO_USUARIO);
 }

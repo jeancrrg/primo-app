@@ -13,12 +13,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioLogin } from "../../validations/LoginValidation";
 import { RotaStack } from "../../models/types/RotaStack";
 import { User } from "firebase/auth";
-import { realizarLogin, autenticarUsuario } from "../../services/Autenticacao.service";
+import { realizarLogin, autenticarUsuario, salvarCodigoUsuarioLogado } from "../../services/Autenticacao.service";
 import { LoginDTO } from "../../models/dto/LoginDTO";
 import { isNotEmpty } from "../../utils/ValidationUtil";
 import Toast from "react-native-toast-message";
-import { atribuirTokenAcesso } from "../../services/TokenAcesso.service";
+import { salvarTokenAcesso } from "../../services/TokenAcesso.service";
 import Loader from "../../components/loader/Loader";
+import { FormularioLogin } from "../../models/interfaces/formularios/FormularioLogin";
 
 export default function LoginScreen() {
 
@@ -27,17 +28,18 @@ export default function LoginScreen() {
 
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
-    const { control, handleSubmit, formState: { errors } } = useForm<LoginDTO>({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormularioLogin>({
         resolver: yupResolver(validacoesFormularioLogin)
     });
 
-    async function entrar(loginDTO: LoginDTO): Promise<void> {
+    async function entrar(formulario: FormularioLogin): Promise<void> {
         try {
             setLoading(true);
-            const usuario: User = await autenticarUsuario(loginDTO.login, loginDTO.senha);
-            const token: string = await realizarLogin(loginDTO);
-            atribuirTokenAcesso(token);
-            if (isNotEmpty(usuario) && isNotEmpty(token)) {
+            const usuario: User = await autenticarUsuario(formulario.login, formulario.senha);
+            const loginDTO: LoginDTO = await realizarLogin(formulario);
+            salvarTokenAcesso(loginDTO.token);
+            salvarCodigoUsuarioLogado(loginDTO.codigoUsuario);
+            if (isNotEmpty(usuario) && isNotEmpty(loginDTO.token)) {
                 setLoading(false);
                 navigation.navigate('tabs');
             }

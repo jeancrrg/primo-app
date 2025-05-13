@@ -6,5 +6,5 @@ export class CadastroPrestadorDTO {
     cnpj?: string;
     endereco?: string;
     codigoTipoServico?: number;
-    valorServico?: number;
+    valorServico?: string;
 }
