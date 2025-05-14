@@ -13,15 +13,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioLogin } from "../../validations/LoginValidation";
 import { RotaStack } from "../../models/types/RotaStack";
 import { User } from "firebase/auth";
-import { realizarLogin, autenticarUsuario, salvarCodigoUsuarioLogado } from "../../services/Autenticacao.service";
+import { realizarLogin, autenticarUsuario, salvarCodigoUsuarioLogado, removerCodigoUsuarioLogado } from "../../services/Autenticacao.service";
 import { LoginDTO } from "../../models/dto/LoginDTO";
 import { isNotEmpty } from "../../utils/ValidationUtil";
 import Toast from "react-native-toast-message";
-import { salvarTokenAcesso } from "../../services/TokenAcesso.service";
+import { removerTokenAcesso, salvarTokenAcesso } from "../../services/TokenAcesso.service";
 import Loader from "../../components/loader/Loader";
 import { FormularioLogin } from "../../models/interfaces/formularios/FormularioLogin";
 
-export default function LoginScreen() {
+export default function LoginScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -35,6 +35,8 @@ export default function LoginScreen() {
     async function entrar(formulario: FormularioLogin): Promise<void> {
         try {
             setLoading(true);
+            removerTokenAcesso();
+            removerCodigoUsuarioLogado();
             const usuario: User = await autenticarUsuario(formulario.login, formulario.senha);
             const loginDTO: LoginDTO = await realizarLogin(formulario);
             salvarTokenAcesso(loginDTO.token);

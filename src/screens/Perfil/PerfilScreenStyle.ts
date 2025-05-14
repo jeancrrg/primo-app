@@ -4,8 +4,7 @@ import { Colors } from "../../../assets/styles/Colors";
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginBottom: 120,
-        position: 'relative'
+        marginBottom: 120
     },
     containerFundoAzul: {
         backgroundColor: Colors.corPrimaria,
@@ -37,7 +36,7 @@ export const styles = StyleSheet.create({
     containerNome: {
         flex: 1,
         justifyContent: "center",
-        paddingHorizontal:16
+        paddingHorizontal: 16
     },
     nome: {
         fontSize: 21,
@@ -48,16 +47,16 @@ export const styles = StyleSheet.create({
         borderRadius: 50,
         overflow: "hidden",
         width: 72,
-        height: 72
+        height: 72,
     },
     avatar: {
+        height: 72,
+        width: 72,
         marginRight: 16,
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 50,
-        overflow: "hidden",
-        width: 72,
-        height: 72
+        overflow: "hidden"
     },
     containerLogo: {
         flex: 1,
@@ -82,5 +81,37 @@ export const styles = StyleSheet.create({
         color: Colors.preto,
         fontSize: 24,
         padding: 2
+    },
+    containerBottomSheet: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 10,
+        elevation: 100
+    },
+    containerEscolhaAvatares: {
+        flex: 1,
+        height: 110,
+        backgroundColor: Colors.branco,
+        padding: 10,
+        marginHorizontal: 20,
+        marginBottom: 120,
+        borderRadius: 20
+    },
+    tituloEscolhaAvatar: {
+        fontSize: 20,
+        marginLeft: 10,
+        marginBottom: 20
+    },
+    avatarOpcao: {
+        width: 72,
+        height: 72,
+        borderRadius: 50
+    },
+    sombraBottomSheet: {
+        flex: 1,
+        backgroundColor: Colors.sombraPreta
     }
 });

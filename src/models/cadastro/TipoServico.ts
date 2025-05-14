@@ -6,5 +6,4 @@ export class TipoServico {
         this.codigo = codigo;
         this.descricao = descricao;
     }
-
 }
