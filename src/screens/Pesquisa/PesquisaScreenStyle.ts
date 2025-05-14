@@ -6,26 +6,26 @@ export const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 24
     },
-    containerBarraPesquisa: {
-        marginVertical: 30
-    },
     barraPesquisa: {
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: Colors.branco,
         padding: 10,
+        marginVertical: 30,
         borderRadius: 20,
         shadowColor: Colors.cinzaEscuro,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
-        elevation: 6,
+        elevation: 6
     },
     iconeBarraPesquisa: {
-        fontSize: 20
+        fontSize: 20,
+        marginRight: 10,
+        color: Colors.cinzaEscuro
     },
     inputBarraPesquisa: {
-        paddingHorizontal: 10,
-        fontSize: 20,
+        flex: 1,
+        fontSize: 18,
         color: Colors.cinzaEscuro
     },
     containerAnimacao: {

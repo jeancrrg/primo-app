@@ -40,7 +40,8 @@ export const styles = StyleSheet.create({
         marginBottom: 25
     },
     containerEsqueciSenha: {
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        marginBottom: 20
     },
     esqueciSenha: {
         color: Colors.corPrimaria,

@@ -1,17 +1,21 @@
-import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { FlatList, Keyboard, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./PesquisaScreenStyle";
 import { useEffect, useState } from "react";
 import CardPrestadorServico from "../../components/card-prestador-servico/CardPrestadorServico";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { buscarPrestadoresServico } from "../../services/Prestador.service";
 import LottieView from 'lottie-react-native';
-import { isNotEmpty } from "../../utils/ValidationUtil";
+import { isEmpty, isNotEmpty } from "../../utils/ValidationUtil";
 import { Feather } from "@expo/vector-icons";
 import { RotaTabBar } from "../../models/types/RotaTabBar";
 import { PrestadorServico } from "../../models/cadastro/PrestadorServico";
+import Toast from "react-native-toast-message";
+import Loader from "../../components/loader/Loader";
 
 export default function PesquisaScreen(): JSX.Element {
 
+    const [loading, setLoading] = useState<boolean>(false);
+    const [termoPesquisa, setTermoPesquisa] = useState<string>('');
     const [listaPrestadoresServico, setListaPrestadoresServico] = useState<PrestadorServico[]>([]);
 
     const navigation = useNavigation<NavigationProp<RotaTabBar>>();
@@ -21,8 +25,15 @@ export default function PesquisaScreen(): JSX.Element {
     }, []);
 
     async function buscarPrestadores(): Promise<void> {
-        const listaPrestadoresServico: PrestadorServico[] = await buscarPrestadoresServico();
-        setListaPrestadoresServico(listaPrestadoresServico);
+        try {
+            setLoading(true);
+            const listaPrestadoresServico: PrestadorServico[] = await buscarPrestadoresServico();
+            setListaPrestadoresServico(listaPrestadoresServico);
+            setLoading(false);
+        } catch (error: any) {
+            setLoading(false);
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+        }
     }
 
     function validarPossuiPrestadores(): boolean {
@@ -42,38 +53,59 @@ export default function PesquisaScreen(): JSX.Element {
         );
     }
 
+    async function pesquisar(termoPesquisa: string): Promise<void> {
+        try {
+            const prestadoresServico: PrestadorServico[] = await buscarPrestadoresServico(termoPesquisa);
+            if (isEmpty(prestadoresServico)) {
+                Toast.show({ type: 'info', text1: 'INFORMAÇÃO', text2: 'Nenhum prestador de serviço encontrado!' });
+            }
+            setListaPrestadoresServico(prestadoresServico);
+        } catch (error: any) {
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+        }
+    }
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={styles.container}>
-                <View style={styles.containerBarraPesquisa}>
-                    <TouchableOpacity style={styles.barraPesquisa}>
+            {loading ? (
+                <Loader/>
+            ) : (
+                <View style={styles.container}>
+                    <View style={styles.barraPesquisa}>
                         <Feather name='search' style={styles.iconeBarraPesquisa} />
-                        <TextInput style={styles.inputBarraPesquisa} placeholder='Pesquisar' />
-                    </TouchableOpacity>
-                </View>
+                        <TextInput 
+                            placeholder='Pesquisar' 
+                            returnKeyType="search" 
+                            value={termoPesquisa}
+                            onChangeText={setTermoPesquisa}
+                            style={styles.inputBarraPesquisa}
+                            onSubmitEditing={() => pesquisar(termoPesquisa)}
+                        />
+                    </View>
 
-                {validarPossuiPrestadores() ?
-                    (
-                        <View>
-                            <FlatList
-                                data={listaPrestadoresServico}
-                                renderItem={({ item }) => renderCardPrestadorServico(item)}
-                                keyExtractor={(item) => item.codigo!.toString()}
-                                showsVerticalScrollIndicator={false}
-                            />
-                        </View>
-                    ) : (
-                        <View style={styles.containerAnimacao}>
-                            <LottieView
-                                source={require('./../../../assets/animations/nenhum-resultado-encontrado.json')}
-                                autoPlay={true}
-                                style={styles.animacao}
-                            />
-                            <Text style={styles.textoAnimacao}> Opss! Nenhum resultado encontrado! </Text>
-                        </View>
-                    )
-                }
-            </View>
+                    {validarPossuiPrestadores() ?
+                        (
+                            <View>
+                                <FlatList
+                                    data={listaPrestadoresServico}
+                                    renderItem={({ item }) => renderCardPrestadorServico(item)}
+                                    keyExtractor={(item) => item.codigo!.toString()}
+                                    showsVerticalScrollIndicator={false}
+                                />
+                            </View>
+                        ) : (
+                            <View style={styles.containerAnimacao}>
+                                <LottieView
+                                    source={require('./../../../assets/animations/nenhum-resultado-encontrado.json')}
+                                    autoPlay={true}
+                                    style={styles.animacao}
+                                />
+                                <Text style={styles.textoAnimacao}> Opss! Nenhum resultado encontrado! </Text>
+                            </View>
+                        )
+                    }
+                </View>
+            )}
         </TouchableWithoutFeedback>
     );
 }
