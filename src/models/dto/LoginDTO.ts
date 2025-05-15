@@ -1,9 +1,9 @@
 export class LoginDTO {
-    codigoUsuario: number;
+    codigoPessoa: number;
     token: string;
 
-    constructor(codigoUsuario: number, token: string) {
-        this.codigoUsuario = codigoUsuario;
+    constructor(codigoPessoa: number, token: string) {
+        this.codigoPessoa = codigoPessoa;
         this.token = token;
     }
 }

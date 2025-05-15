@@ -35,8 +35,8 @@ export default function CadastroClienteScreen() {
         try {
             setLoading(true);
             removerTokenAcesso();
-            await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
             await cadastrarCliente(formulario);
+            await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
             setLoading(false);
             Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
             navigation.navigate('login');

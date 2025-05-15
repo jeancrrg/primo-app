@@ -2,7 +2,7 @@ import { LoginDTO } from './../models/dto/LoginDTO';
 import Api from "../config/api/Api";
 import { auth } from "../config/firebase/FirebaseConfig";
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
-import { CHAVE_CODIGO_USUARIO } from '../constants/ChaveAsyncStorage';
+import { CHAVE_CODIGO_PESSOA } from '../constants/ChaveAsyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isNotEmpty } from '../utils/ValidationUtil';
 import { FormularioLogin } from '../models/interfaces/formularios/FormularioLogin';
@@ -87,21 +87,21 @@ export async function sair(): Promise<void> {
     await signOut(auth);
 }
 
-export async function salvarCodigoUsuarioLogado(codigoUsuario: number): Promise<void> {
-    AsyncStorage.setItem(CHAVE_CODIGO_USUARIO, codigoUsuario.toString());
+export async function salvarCodigoPessoaLogado(codigoPessoa: number): Promise<void> {
+    AsyncStorage.setItem(CHAVE_CODIGO_PESSOA, codigoPessoa.toString());
 }
 
-export async function obterCodigoUsuarioLogado(): Promise<number | null> {
-    let codigoUsuario: number | null = null;
-    await AsyncStorage.getItem(CHAVE_CODIGO_USUARIO)
+export async function obterCodigoPessoaLogado(): Promise<number | null> {
+    let codigoPessoa: number | null = null;
+    await AsyncStorage.getItem(CHAVE_CODIGO_PESSOA)
         .then(async valor => {
             if (isNotEmpty(valor)) {
-                codigoUsuario = Number(valor);
+                codigoPessoa = Number(valor);
             }
         });
-    return codigoUsuario;
+    return codigoPessoa;
 }
 
-export async function removerCodigoUsuarioLogado(): Promise<void> {
-    await AsyncStorage.removeItem(CHAVE_CODIGO_USUARIO);
+export async function removerCodigoPessoaLogado(): Promise<void> {
+    await AsyncStorage.removeItem(CHAVE_CODIGO_PESSOA);
 }

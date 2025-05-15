@@ -4,11 +4,11 @@ import { isNotEmpty } from "../utils/ValidationUtil";
 
 export async function buscarPrestadoresServico(termoPesquisa?: string): Promise<PrestadorServico[]> {
     try {
-        const params: any = {};
+        const parametros: any = {};
         if (isNotEmpty(termoPesquisa)) {
-            params.termoPesquisa = termoPesquisa;
+            parametros.termoPesquisa = termoPesquisa;
         }
-        const response = await Api.get('/prestadores-servico', { params });
+        const response = await Api.get('/prestadores-servico', { params: parametros });
         return response.data;
     } catch (error: any) {
         if (error.response?.status == 404) {
