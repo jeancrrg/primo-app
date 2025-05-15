@@ -4,7 +4,7 @@ import { PropsToastMessage } from "../../models/interfaces/props/PropsToastMessa
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../assets/styles/Colors";
 
-export default function ToastMessage({ type, text1, text2 }: PropsToastMessage) {
+export default function ToastMessage({ type, text1, text2 }: PropsToastMessage): JSX.Element {
 
     const iconesToast = {
         info: { nome: 'information', cor: Colors.azulInfo },

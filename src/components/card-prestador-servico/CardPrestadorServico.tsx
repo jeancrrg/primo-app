@@ -3,21 +3,13 @@ import { styles } from "./CardPrestadorServicoStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../assets/styles/Colors";
 import { PropsCardPrestadorServico } from "../../models/interfaces/props/PropsCardPrestadorServico";
+import { obterImagemAvatar } from "../../services/Avatar.service";
 
-export default function CardPrestadorServico(props: PropsCardPrestadorServico) {
-    
-    const prestadorImages: { [key: string]: any } = {
-        '1': require('../../../assets/images/avatares/avatar-5.png'),
-        '2': require('../../../assets/images/avatares/avatar-2.png'),
-        '3': require('../../../assets/images/avatares/avatar-3.png'),
-        '4': require('../../../assets/images/avatares/avatar-4.png'),
-        '5': require('../../../assets/images/avatares/avatar-1.png'),
-    };
-    
+export default function CardPrestadorServico(props: PropsCardPrestadorServico): JSX.Element {
     return (
         <View style={styles.container}>
             <View style={styles.containerCard}>
-                <Image source={prestadorImages[props.codigo]} style={styles.imagem} />
+                <Image source={obterImagemAvatar(props.codigoAvatar)} style={styles.imagem} />
 
                 <View style={styles.containerDescricao}>
                     <View style={styles.containerTitulo}>

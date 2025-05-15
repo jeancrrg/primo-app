@@ -7,7 +7,7 @@ import { PropsPicker } from "../../models/interfaces/props/PropsPicker";
 import { Colors } from "../../../assets/styles/Colors";
 import { isNotEmpty } from "../../utils/ValidationUtil";
 
-export default function Picker<T>(props: PropsPicker<T>) {
+export default function Picker<T>(props: PropsPicker<T>): JSX.Element {
 
     const [exibirModal, setExibirModal] = useState<boolean>(false);
 

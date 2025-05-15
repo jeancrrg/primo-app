@@ -10,7 +10,7 @@ import BotaoPrincipal from "../../../components/botao/botao-principal/BotaoPrinc
 import BotaoSecundario from "../../../components/botao/botao-secundario/BotaoSecundario";
 import { RotaStack } from "../../../models/types/RotaStack";
 
-export default function OpcaoCadastroScreen() {
+export default function OpcaoCadastroScreen(): JSX.Element {
 
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 

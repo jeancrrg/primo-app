@@ -46,8 +46,9 @@ export default function PesquisaScreen(): JSX.Element {
                 codigo={prestador.codigo ?? 0}
                 nome={prestador.nome ?? 'Desconhecido'}
                 descricaoTipoServico={prestador.descricaoTipoServico ?? 'Não informado'}
-                logradouro={prestador.endereco?.logradouro || ''}
-                nomeBairro={prestador.endereco?.nomeBairro || ''}
+                logradouro={prestador.endereco.logradouro || ''}
+                nomeBairro={prestador.endereco.nomeBairro || ''}
+                codigoAvatar={prestador.codigoAvatar}
                 onSelect={() => navigation.navigate('mapa')}
             />
         );

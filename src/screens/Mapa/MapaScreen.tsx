@@ -10,8 +10,9 @@ import { Surface } from "react-native-paper"
 import { buscarPrestadoresServico } from "../../services/Prestador.service";
 import Loader from "../../components/loader/Loader";
 import { PrestadorServico } from "../../models/cadastro/PrestadorServico";
+import { obterImagemAvatar } from "../../services/Avatar.service";
 
-export default function MapaScreen() {
+export default function MapaScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(true);
     const [localizacaoAtual, setLocalizacaoAtual] = useState<Location.LocationObject | null>(null);
@@ -145,7 +146,7 @@ export default function MapaScreen() {
 
                     <Surface elevation={5} style={styles.containerBottomSheet}>
                         <View style={styles.containerAvatar}>
-                            <Image source={require("../../../assets/images/avatares/avatar-5.png")} style={styles.avatar} />
+                            <Image source={obterImagemAvatar(prestadorServicoSelecionado?.codigoAvatar)} style={styles.avatar} />
                         </View>
 
                         <View style={styles.containerDescricao}>

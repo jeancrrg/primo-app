@@ -20,7 +20,7 @@ import Toast from "react-native-toast-message";
 import Loader from "../../../components/loader/Loader";
 import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
 
-export default function CadastroClienteScreen() {
+export default function CadastroClienteScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);

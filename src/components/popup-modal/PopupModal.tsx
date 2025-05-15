@@ -6,9 +6,9 @@ import { styles } from "./PopupModalStyle";
 import Divider from "../divider/Divider";
 import { Checkbox } from "react-native-paper";
 import { useState } from "react";
-import { isEmpty, isNotEmpty } from "../../utils/ValidationUtil";
+import { isEmpty } from "../../utils/ValidationUtil";
 
-export default function PopupModal<T>(props: PropsPopupModal<T>) {
+export default function PopupModal<T>(props: PropsPopupModal<T>): JSX.Element {
 
     const [indexValorSelecionado, setIndexValorSelecionado] = useState<number | null>(null);
 

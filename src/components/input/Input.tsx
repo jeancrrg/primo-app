@@ -6,7 +6,7 @@ import { isNotEmpty } from "../../utils/ValidationUtil";
 import { Controller } from "react-hook-form";
 import { PropsInput } from "../../models/interfaces/props/PropsInput";
 
-export default function Input(props: PropsInput) {
+export default function Input(props: PropsInput): JSX.Element {
 
     function renderIcone(nomeIcone: string, onPressIconeDireita?: () => void) {
         if (isNotEmpty(nomeIcone)) {

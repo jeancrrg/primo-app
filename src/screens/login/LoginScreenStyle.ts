@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     },
     containerEsqueciSenha: {
         alignItems: 'flex-end',
-        marginBottom: 20
+        marginBottom: 10
     },
     esqueciSenha: {
         color: Colors.corPrimaria,

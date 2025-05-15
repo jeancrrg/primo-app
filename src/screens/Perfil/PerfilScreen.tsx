@@ -14,8 +14,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import { Colors } from "../../../assets/styles/Colors";
 import { Avatar } from "../../models/cadastro/Avatar";
 import { Surface } from "react-native-paper";
-import { buscarAvatares } from "../../services/Avatar.service";
-import { isNotEmpty } from "../../utils/ValidationUtil";
+import { buscarAvatares, obterImagemAvatar } from "../../services/Avatar.service";
 import { atualizarAvatarCliente, buscarCliente } from "../../services/Cliente.service";
 
 export default function PerfilScreen(): JSX.Element {
@@ -23,16 +22,6 @@ export default function PerfilScreen(): JSX.Element {
     const [cliente, setCliente] = useState<Cliente>();
     const [mostrarOpcoesAvatares, setMostrarOpcoesAvatares] = useState<boolean>(false);
     const [listaAvatares, setListaAvatares] = useState<Avatar[]>();
-
-    const imagensAvatares: { [key: string]: any } = {
-        'sem-avatar.png': require('../../../assets/images/avatares/sem-avatar.png'),
-        'avatar-jean.png': require('../../../assets/images/avatares/avatar-jean.png'),
-        'avatar-1.png': require('../../../assets/images/avatares/avatar-1.png'),
-        'avatar-2.png': require('../../../assets/images/avatares/avatar-2.png'),
-        'avatar-3.png': require('../../../assets/images/avatares/avatar-3.png'),
-        'avatar-4.png': require('../../../assets/images/avatares/avatar-4.png'),
-        'avatar-5.png': require('../../../assets/images/avatares/avatar-5.png'),
-    };
 
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
@@ -79,10 +68,9 @@ export default function PerfilScreen(): JSX.Element {
     }
 
     function renderAvatar(avatar: Avatar): JSX.Element {
-        const imagem = imagensAvatares[avatar.urlImagem];
         return (
             <TouchableOpacity onPress={() => selecionarAvatar(avatar)}>
-                <Image source={imagem} style={styles.avatarOpcao} />
+                <Image source={obterImagemAvatar(avatar.codigo)} style={styles.avatarOpcao} />
             </TouchableOpacity>
         );
     }
@@ -91,14 +79,6 @@ export default function PerfilScreen(): JSX.Element {
         cliente!.codigoAvatar = avatar.codigo;
         await atualizarAvatarCliente(cliente!.codigoPessoa, cliente!.codigoAvatar);
         fecharOpcoesAvatares();
-    }
-
-    function obterImagemPeloCodigoAvatar(codigoAvatar: number | undefined): any {
-        const avatar: Avatar | undefined = listaAvatares?.find(avatar => avatar.codigo === codigoAvatar);
-        if (isNotEmpty(avatar)) {
-            return imagensAvatares[avatar!.urlImagem];
-        }
-        return imagensAvatares['sem-avatar.png'];
     }
 
     function confirmarSaidaAplicativo(): void {
@@ -141,7 +121,7 @@ export default function PerfilScreen(): JSX.Element {
 
                         <View style={styles.containerAvatar}>
                             <TouchableOpacity onPress={() => abrirOpcoesAvatares()}>
-                                <Image source={obterImagemPeloCodigoAvatar(cliente?.codigoAvatar)} style={styles.avatar} />
+                                <Image source={obterImagemAvatar(cliente?.codigoAvatar)} style={styles.avatar} />
                             </TouchableOpacity>
                         </View>
                     </View>

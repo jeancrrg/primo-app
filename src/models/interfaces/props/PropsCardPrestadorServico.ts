@@ -4,5 +4,6 @@ export interface PropsCardPrestadorServico {
     descricaoTipoServico: string;
     logradouro: string;
     nomeBairro: string;
+    codigoAvatar: number;
     onSelect: () => void;
 }
