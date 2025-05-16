@@ -6,5 +6,5 @@ export default function ServicoPrestadorScreen(): JSX.Element {
         <View style={styles.container}>
             <Image source={require("../../../../assets/images/ilustracoes/servico-indisponivel.png")} style={styles.imagem} />
         </View>
-    )
+    );
 }

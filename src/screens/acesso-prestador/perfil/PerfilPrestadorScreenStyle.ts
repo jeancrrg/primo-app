@@ -61,6 +61,9 @@ export const styles = StyleSheet.create({
         borderRadius: 50,
         overflow: "hidden"
     },
+    containerBotaoSegmentado: {
+        alignItems: 'center'
+    },
     containerLogo: {
         flex: 1,
         alignItems: "center"

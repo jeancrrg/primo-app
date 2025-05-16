@@ -1,21 +1,16 @@
-import { Alert, FlatList, Image, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { styles } from "./PerfilClienteScreenStyle";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
-import BottomSheet from "@gorhom/bottom-sheet";
-import { Surface } from "react-native-paper";
 import { Cliente } from "../../../models/cadastro/Cliente";
-import { Avatar } from "../../../models/cadastro/Avatar";
 import { RotaStack } from "../../../models/types/RotaStack";
-import { obterCodigoPessoaLogado, removerCodigoPessoaLogado, removerTipoPessoaLogado, sairAplicativo } from "../../../services/Autenticacao.service";
+import { obterCodigoPessoaLogado, sairAplicativo } from "../../../services/Autenticacao.service";
 import { atualizarAvatarCliente, buscarCliente } from "../../../services/Cliente.service";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
-import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
 import CardSmall from "../../../components/card-small/CardSmall";
-import { Colors } from "../../../../assets/styles/Colors";
 import ModalAvatar from "../../../components/modal-avatar/ModalAvatar";
 
 export default function PerfilClienteScreen(): JSX.Element {
@@ -45,7 +40,7 @@ export default function PerfilClienteScreen(): JSX.Element {
 
     async function selecionarAvatar(codigoAvatar: number): Promise<void> {
         cliente!.codigoAvatar = codigoAvatar;
-        await atualizarAvatarCliente(cliente!.codigoPessoa, cliente!.codigoAvatar);
+        await atualizarAvatarCliente(cliente!.codigo, cliente!.codigoAvatar);
     }
 
     function confirmarSaidaAplicativo(): void {

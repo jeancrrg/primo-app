@@ -65,7 +65,6 @@ export default function CadastroPrestadorScreen(): JSX.Element {
                 const cadastroPrestadorDTO: CadastroPrestadorDTO = await criarDtoCadastroPrestador(formulario);
                 await cadastrarPrestador(cadastroPrestadorDTO);
                 await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
-        
                 Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
                 navigation.navigate('login');
             }

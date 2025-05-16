@@ -18,3 +18,27 @@ export async function buscarPrestadoresServico(termoPesquisa?: string): Promise<
         throw new Error('Erro ao buscar os prestadores de serviço!');
     }
 }
+
+export async function buscarPrestadorServico(codigoPessoa: number): Promise<PrestadorServico> {
+    try {
+        const response = await Api.get('/prestadores-servico/unico', {
+            params: { codigoPessoa }
+        });
+        return response.data;
+    } catch (error: any) {
+        console.error('Erro ao buscar o prestador de serviço! - ', error);
+        throw new Error('Erro ao buscar o prestador de serviço!');
+    }
+}
+
+export async function atualizarAvatarPrestador(codigoPessoa: number, codigoAvatar: number): Promise<void> {
+    try {
+        const response = await Api.put('/prestadores-servico/avatar', null, {
+            params: { codigoPessoa, codigoAvatar }
+        });
+        return response.data;
+    } catch (error: any) {
+        console.error('Erro ao atualizar o avatar do prestador de serviço! - ', error);
+        throw new Error('Erro ao atualizar o avatar do prestador de serviço!');
+    }
+}

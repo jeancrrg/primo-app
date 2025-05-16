@@ -1,5 +1,5 @@
 export class Cliente {
-    codigoPessoa: number;
+    codigo: number;
     nome: string;
     telefone: string;
     email: string;
@@ -7,8 +7,8 @@ export class Cliente {
     anoVeiculo: number;
     codigoAvatar: number;
 
-    constructor(codigoPessoa: number, nome: string, telefone: string, email: string, modeloVeiculo: string, anoVeiculo: number, codigoAvatar: number) {
-        this.codigoPessoa = codigoPessoa;
+    constructor(codigo: number, nome: string, telefone: string, email: string, modeloVeiculo: string, anoVeiculo: number, codigoAvatar: number) {
+        this.codigo = codigo;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
