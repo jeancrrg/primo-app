@@ -9,6 +9,10 @@ import { FormularioLogin } from '../models/interfaces/formularios/FormularioLogi
 import { FormularioCadastroCliente } from '../models/interfaces/formularios/FormularioCadastroCliente';
 import { CadastroPrestadorDTO } from '../models/dto/CadastroPrestadorDTO';
 import { TipoPessoaEnum } from '../models/enum/TipoPessoa.enum';
+import { removerTokenAcesso } from './TokenAcesso.service';
+import { RotaStack } from '../models/types/RotaStack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 export async function autenticarUsuario(email: string, senha: string): Promise<User> {
     try {
@@ -84,8 +88,11 @@ export async function cadastrarPrestador(cadastroPrestadorDTO: CadastroPrestador
     }
 }
 
-export async function sair(): Promise<void> {
+export async function sairAplicativo(): Promise<void> {
     await signOut(auth);
+    removerTokenAcesso();
+    removerCodigoPessoaLogado();
+    removerTipoPessoaLogado();
 }
 
 export async function salvarCodigoPessoaLogado(codigoPessoa: number): Promise<void> {

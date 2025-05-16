@@ -3,35 +3,30 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { styles } from "./PerfilClienteScreenStyle";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Surface } from "react-native-paper";
 import { Cliente } from "../../../models/cadastro/Cliente";
 import { Avatar } from "../../../models/cadastro/Avatar";
 import { RotaStack } from "../../../models/types/RotaStack";
-import { obterCodigoPessoaLogado, removerCodigoPessoaLogado } from "../../../services/Autenticacao.service";
+import { obterCodigoPessoaLogado, removerCodigoPessoaLogado, removerTipoPessoaLogado, sairAplicativo } from "../../../services/Autenticacao.service";
 import { atualizarAvatarCliente, buscarCliente } from "../../../services/Cliente.service";
-import { buscarAvatares, obterImagemAvatar } from "../../../services/Avatar.service";
+import { obterImagemAvatar } from "../../../services/Avatar.service";
 import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
 import CardSmall from "../../../components/card-small/CardSmall";
 import { Colors } from "../../../../assets/styles/Colors";
+import ModalAvatar from "../../../components/modal-avatar/ModalAvatar";
 
 export default function PerfilClienteScreen(): JSX.Element {
 
     const [cliente, setCliente] = useState<Cliente>();
-    const [mostrarOpcoesAvatares, setMostrarOpcoesAvatares] = useState<boolean>(false);
-    const [listaAvatares, setListaAvatares] = useState<Avatar[]>();
+    const [mostrarModalAvatar, setMostrarModalAvatar] = useState<boolean>(false);
 
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
-    const bottomSheetRef = useRef<BottomSheet>(null);
-
-    const snapPoints = useMemo(() => ['50%'], []);
-
     useEffect(() => {
         buscarInformacoesUsuario();
-        carregarAvatares();
     }, []);
 
     async function buscarInformacoesUsuario(): Promise<void> {
@@ -48,37 +43,9 @@ export default function PerfilClienteScreen(): JSX.Element {
         }
     }
 
-    async function carregarAvatares(): Promise<void> {
-        try {
-            const avatares: Avatar[] = await buscarAvatares();
-            setListaAvatares(avatares.reverse());
-        } catch(error: any) {
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
-        }
-    }
-
-    function abrirOpcoesAvatares(): void {
-        setMostrarOpcoesAvatares(true);
-        bottomSheetRef.current?.expand();
-    }
-
-    function fecharOpcoesAvatares(): void {
-        setMostrarOpcoesAvatares(false);
-        bottomSheetRef.current?.close();   
-    }
-
-    function renderAvatar(avatar: Avatar): JSX.Element {
-        return (
-            <TouchableOpacity onPress={() => selecionarAvatar(avatar)}>
-                <Image source={obterImagemAvatar(avatar.codigo)} style={styles.avatarOpcao} />
-            </TouchableOpacity>
-        );
-    }
-
-    async function selecionarAvatar(avatar: Avatar): Promise<void> {
-        cliente!.codigoAvatar = avatar.codigo;
+    async function selecionarAvatar(codigoAvatar: number): Promise<void> {
+        cliente!.codigoAvatar = codigoAvatar;
         await atualizarAvatarCliente(cliente!.codigoPessoa, cliente!.codigoAvatar);
-        fecharOpcoesAvatares();
     }
 
     function confirmarSaidaAplicativo(): void {
@@ -88,7 +55,7 @@ export default function PerfilClienteScreen(): JSX.Element {
             [
                 {
                     text: "SIM",
-                    onPress: () => sairAplicativo(),
+                    onPress: () => sair(),
                 },
                 {
                     text: "NÃO",
@@ -100,15 +67,14 @@ export default function PerfilClienteScreen(): JSX.Element {
         );
     }
 
-    function sairAplicativo(): void {
-        removerTokenAcesso();
-        removerCodigoPessoaLogado();
+    function sair(): void {
+        sairAplicativo();
         navigation.replace('login');
     }
 
     return (
-        <View style={{ flex: 1 }}>
-            <View style={styles.container}>
+        <View style={styles.container}>
+            <View style={styles.containerConteudo}>
                 <View style={styles.containerFundoAzul}>
                     <Text style={styles.titulo}> Perfil </Text>
                 </View>
@@ -120,7 +86,7 @@ export default function PerfilClienteScreen(): JSX.Element {
                         </View>
 
                         <View style={styles.containerAvatar}>
-                            <TouchableOpacity onPress={() => abrirOpcoesAvatares()}>
+                            <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
                                 <Image source={obterImagemAvatar(cliente?.codigoAvatar)} style={styles.avatar} />
                             </TouchableOpacity>
                         </View>
@@ -145,36 +111,13 @@ export default function PerfilClienteScreen(): JSX.Element {
                 </View>
             </View>
 
-            {mostrarOpcoesAvatares && (
-                <View style={styles.containerBottomSheet}>
-
-                    {/* Fecha o Bottom Sheet ao clicar fora */}
-                    <TouchableWithoutFeedback onPress={fecharOpcoesAvatares}>
-                        <View style={styles.sombraBottomSheet} />
-                    </TouchableWithoutFeedback>
-
-                    <BottomSheet
-                        ref={bottomSheetRef}
-                        index={0}
-                        snapPoints={snapPoints}
-                        enablePanDownToClose={true}
-                        onClose={() => fecharOpcoesAvatares()}
-                        backgroundStyle={{ backgroundColor: Colors.cinzaClaro }}>
-
-                        <Surface elevation={5} style={styles.containerEscolhaAvatares}>
-                            <Text style={styles.tituloEscolhaAvatar}> Escolha seu avatar: </Text>
-
-                            <FlatList
-                                data={listaAvatares}
-                                numColumns={3}
-                                showsVerticalScrollIndicator={false}
-                                renderItem={({ item }) => renderAvatar(item)}
-                                keyExtractor={(avatar) => avatar.codigo!.toString()}
-                                columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 16 }}
-                            />
-                        </Surface>
-                    </BottomSheet>
-                </View>
+            {mostrarModalAvatar && (
+                <ModalAvatar
+                    onClose={() => setMostrarModalAvatar(false)}
+                    onSelecionarAvatar={(codigoAvatar) => {
+                        selecionarAvatar(codigoAvatar);
+                    }}
+                />
             )}
         </View>
     );

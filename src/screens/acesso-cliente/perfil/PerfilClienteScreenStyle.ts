@@ -3,6 +3,9 @@ import { Colors } from "../../../../assets/styles/Colors";
 
 export const styles = StyleSheet.create({
     container: {
+        flex: 1
+    },
+    containerConteudo: {
         flex: 1,
         marginBottom: 120
     },

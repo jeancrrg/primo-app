@@ -1,10 +1,10 @@
-import { Text, View } from "react-native";
+import { Image, View } from "react-native";
 import { styles } from "./ServicoPrestadorScreenStyle";
 
 export default function ServicoPrestadorScreen(): JSX.Element {
     return (
         <View style={styles.container}>
-            <Text> Tela de serviço do prestador </Text>
+            <Image source={require("../../../../assets/images/ilustracoes/servico-indisponivel.png")} style={styles.imagem} />
         </View>
     )
 }
