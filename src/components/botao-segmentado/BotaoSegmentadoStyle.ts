@@ -3,21 +3,19 @@ import { Colors } from "../../../assets/styles/Colors";
 
 export const styles = StyleSheet.create({
     container: {
-        height: 60,
+        height: 50,
         width: 220,
         flexDirection: 'row',
         backgroundColor: Colors.branco,
         borderRadius: 20,
-        marginBottom: 30
+        marginVertical: 20
     },
     botaoSelecionado: {
         position: 'absolute',
-        height: '80%',
-        width: 110,
-        marginHorizontal: 5,
-        top: '10%',
+        height: '100%',
+        width: 120,
         backgroundColor: Colors.corPrimaria,
-        borderRadius: 20
+        borderRadius: 18
     },
     botao: {
         width: 110,
@@ -25,9 +23,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textoBotao: {
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: "Mulish-Medium"
     },
     textoSelecionado: {
-        color: Colors.branco
+        color: Colors.branco,
+        fontWeight: 'bold'
     }
 })

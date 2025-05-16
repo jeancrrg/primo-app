@@ -1,12 +1,11 @@
 import { Image, Text, View } from "react-native";
 import { styles } from "./InicioPrestadorScreenStyle";
+import Header from "../../../components/header/Header";
 
 export default function InicioPrestadorScreen(): JSX.Element {
     return (
         <View style={styles.container}>
-            <View style={styles.containerFundoAzul}>
-                <Text style={styles.titulo}> Primo </Text>
-            </View>
+            <Header titulo="Início" />
 
             <View style={styles.containerCard}>
                 <View style={styles.card}>

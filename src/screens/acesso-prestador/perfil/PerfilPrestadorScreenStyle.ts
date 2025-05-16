@@ -5,36 +5,18 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    containerConteudo: {
-        flex: 1,
-        marginBottom: 120
-    },
-    containerFundoAzul: {
-        backgroundColor: Colors.corPrimaria,
-        height: 150,
-        padding: 20,
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
-        position: 'relative'
-    },
-    titulo: {
-        fontSize: 34,
-        fontFamily: "Mulish-Medium",
-        color: Colors.branco
-    },
     containerPerfil: {
         position: 'absolute',
-        top: 90,
-        left: 24,
-        right: 24,
+        top: 80,
+        left: 20,
+        right: 20,
         zIndex: 10
     },
     cardUsuario: {
         flexDirection: "row",
-        borderRadius: 20,
-        marginBottom: 25,
         backgroundColor: Colors.branco,
-        padding: 16
+        padding: 16,
+        borderRadius: 20
     },
     containerNome: {
         flex: 1,
@@ -46,11 +28,11 @@ export const styles = StyleSheet.create({
         fontFamily: "Mulish-Medium",
     },
     containerAvatar: {
+        height: 72,
+        width: 72,
         justifyContent: "center",
         borderRadius: 50,
-        overflow: "hidden",
-        width: 72,
-        height: 72,
+        overflow: "hidden"
     },
     avatar: {
         height: 72,
@@ -60,6 +42,12 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         borderRadius: 50,
         overflow: "hidden"
+    },
+    containerInformacoes: {
+        flex: 1,
+        paddingHorizontal: 20,
+        marginTop: 65,
+        marginBottom: 130
     },
     containerBotaoSegmentado: {
         alignItems: 'center'
@@ -87,5 +75,5 @@ export const styles = StyleSheet.create({
         color: Colors.preto,
         fontSize: 24,
         padding: 2
-    },
+    }
 })

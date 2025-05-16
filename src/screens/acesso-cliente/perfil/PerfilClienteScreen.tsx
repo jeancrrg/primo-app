@@ -12,6 +12,7 @@ import { atualizarAvatarCliente, buscarCliente } from "../../../services/Cliente
 import { obterImagemAvatar } from "../../../services/Avatar.service";
 import CardSmall from "../../../components/card-small/CardSmall";
 import ModalAvatar from "../../../components/modal-avatar/ModalAvatar";
+import Header from "../../../components/header/Header";
 
 export default function PerfilClienteScreen(): JSX.Element {
 
@@ -21,10 +22,10 @@ export default function PerfilClienteScreen(): JSX.Element {
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
     useEffect(() => {
-        buscarInformacoesUsuario();
+        carregarCliente();
     }, []);
 
-    async function buscarInformacoesUsuario(): Promise<void> {
+    async function carregarCliente(): Promise<void> {
         try {
             const codigoPessoa: number | null = await obterCodigoPessoaLogado();
             if (codigoPessoa === null) {
@@ -44,9 +45,7 @@ export default function PerfilClienteScreen(): JSX.Element {
     }
 
     function confirmarSaidaAplicativo(): void {
-        Alert.alert(
-            "Aviso",
-            "Deseja realmente sair do aplicativo?",
+        Alert.alert("Aviso", "Deseja realmente sair do aplicativo?",
             [
                 {
                     text: "SIM",
@@ -69,43 +68,37 @@ export default function PerfilClienteScreen(): JSX.Element {
 
     return (
         <View style={styles.container}>
-            <View style={styles.containerConteudo}>
-                <View style={styles.containerFundoAzul}>
-                    <Text style={styles.titulo}> Perfil </Text>
-                </View>
+            <Header titulo="Perfil" />
 
-                <View style={styles.containerPerfil}>
-                    <View style={styles.cardUsuario}>
-                        <View style={styles.containerNome}>
-                            <Text style={styles.nome}> {cliente?.nome} </Text>
-                        </View>
-
-                        <View style={styles.containerAvatar}>
-                            <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
-                                <Image source={obterImagemAvatar(cliente?.codigoAvatar)} style={styles.avatar} />
-                            </TouchableOpacity>
-                        </View>
+            <View style={styles.containerPerfil}>
+                <View style={styles.cardUsuario}>
+                    <View style={styles.containerNome}>
+                        <Text style={styles.nome}> {cliente?.nome} </Text>
                     </View>
 
-                    <CardSmall nomeIcone="phone" tipoInformacao="Telefone:" informacao={cliente?.telefone} />
-
-                    <CardSmall nomeIcone="email-outline" tipoInformacao="Email:" informacao={cliente?.email} />
-
-                    <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo Veículo:" informacao={cliente?.modeloVeiculo} />
-
-                    <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano Veículo:" informacao={cliente?.anoVeiculo?.toString()} />
-
-                    <View style={styles.containerLogo}>
-                        <Text style={styles.logo}> Primo </Text>
-
-                        <TouchableOpacity style={styles.containerSaidaApp} onPress={() => confirmarSaidaAplicativo()}>
-                            <Text style={styles.textoSaidaApp}> sair do aplicativo </Text>
-                            <MaterialCommunityIcons name='logout-variant' style={styles.iconeSaidaApp} />
+                    <View style={styles.containerAvatar}>
+                        <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
+                            <Image source={obterImagemAvatar(cliente?.codigoAvatar)} style={styles.avatar} />
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
 
+            <View style={styles.containerInformacoes}>
+                <CardSmall nomeIcone="phone" tipoInformacao="Telefone:" informacao={cliente?.telefone} />
+                <CardSmall nomeIcone="email-outline" tipoInformacao="Email:" informacao={cliente?.email} />
+                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo:" informacao={cliente?.modeloVeiculo} />
+                <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano:" informacao={cliente?.anoVeiculo.toString()} />
+                    
+                <View style={styles.containerLogo}>
+                    <Text style={styles.logo}> Primo </Text>
+                    <TouchableOpacity style={styles.containerSaidaApp} onPress={() => confirmarSaidaAplicativo()}>
+                        <Text style={styles.textoSaidaApp}> sair do aplicativo </Text>
+                        <MaterialCommunityIcons name='logout-variant' style={styles.iconeSaidaApp} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            
             {mostrarModalAvatar && (
                 <ModalAvatar
                     onClose={() => setMostrarModalAvatar(false)}

@@ -15,7 +15,8 @@ export const styles = StyleSheet.create({
     },
     versao: {
         color: Colors.branco,
-        marginBottom: 10
+        marginBottom: 10,
+        fontFamily: "Mulish-Medium"
     },
     containerFormulario: {
         flex: 1,

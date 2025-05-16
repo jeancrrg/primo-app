@@ -6,7 +6,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 export default function BotaoSegmentado(props: PropsBotaoSegmentado): JSX.Element {
     return (
         <View style={styles.container}>
-
             <View style={[
                 styles.botaoSelecionado, 
                 { left: 100 * props.opcoes.indexOf(props.opcaoSelecionada) }

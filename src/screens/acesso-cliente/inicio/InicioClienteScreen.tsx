@@ -3,6 +3,7 @@ import CardTipoServico from "../../../components/card-tipo-servico/CardTipoServi
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { styles } from "./InicioClienteScreenStyle";
 import { RotaTabBar } from "../../../models/types/RotaTabBar";
+import Header from "../../../components/header/Header";
 
 export default function InicioClienteScreen(): JSX.Element {
 
@@ -17,9 +18,7 @@ export default function InicioClienteScreen(): JSX.Element {
 
     return (
         <View style={styles.container}>
-            <View style={styles.containerFundoAzul}>
-                <Text style={styles.titulo}> Primo </Text>
-            </View>
+            <Header titulo="Início" />
 
             <View style={styles.containerCard}>
                 <View style={styles.card}>

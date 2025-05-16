@@ -7,26 +7,13 @@ export const styles = StyleSheet.create({
         marginBottom: 120,
         position: 'relative'
     },
-    containerFundoAzul: {
-        backgroundColor: Colors.corPrimaria,
-        height: 150,
-        padding: 20,
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
-        position: 'relative'
-    },
-    titulo: {
-        fontSize: 34,
-        fontFamily: "Mulish-Medium",
-        color: Colors.branco,
-    },
     containerCard: {
         height: 240,
         marginBottom: 20,
         position: 'absolute',
-        top: 90,
-        left: 24,
-        right: 24,
+        top: 80,
+        left: 20,
+        right: 20,
         zIndex: 10
     },
     card: {
@@ -74,19 +61,19 @@ export const styles = StyleSheet.create({
     },
     containerTiposServicos: {
         flex: 1,
-        paddingHorizontal: 24,
-        alignItems: "center"
+        alignItems: "center",
+        padding: 20,
+        marginTop: 200
     },
     textoTipoServico: {
         flex: 1,
         fontSize: 18,
         fontFamily: "Mulish-Medium",
-        marginTop: 220
+        marginTop: 20
     },
     tiposServico: {
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "center",
-        marginBottom: 15
+        justifyContent: "center"
     }
 });

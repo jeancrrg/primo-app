@@ -13,20 +13,22 @@ import BotaoSegmentado from "../../../components/botao-segmentado/BotaoSegmentad
 import Toast from "react-native-toast-message";
 import { atualizarAvatarPrestador, buscarPrestadorServico } from "../../../services/Prestador.service";
 import { PrestadorServico } from "../../../models/cadastro/PrestadorServico";
+import Header from "../../../components/header/Header";
 
 export default function PerfilPrestadorScreen(): JSX.Element {
 
     const [prestadorServico, setPrestadorServico] = useState<PrestadorServico>();
     const [mostrarModalAvatar, setMostrarModalAvatar] = useState<boolean>(false);
+    const [opcoesBotaoSegmentado, setOpcoesBotaoSegmentado] = useState<string[]>(['Dados', 'Serviço']);
     const [opcaoBotaoSelecionado, setOpcaoBotaoSelecionado] = useState<string>('Dados');
 
     const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
     useEffect(() => {
-        buscarInformacoesUsuario();
+        carregarPrestadorServico();
     }, []);
 
-    async function buscarInformacoesUsuario(): Promise<void> {
+    async function carregarPrestadorServico(): Promise<void> {
         try {
             const codigoPessoa: number | null = await obterCodigoPessoaLogado();
             if (codigoPessoa === null) {
@@ -46,9 +48,7 @@ export default function PerfilPrestadorScreen(): JSX.Element {
     }
 
     function confirmarSaidaAplicativo(): void {
-        Alert.alert(
-            "Aviso",
-            "Deseja realmente sair do aplicativo?",
+        Alert.alert("Aviso", "Deseja realmente sair do aplicativo?",
             [
                 {
                     text: "SIM",
@@ -71,61 +71,58 @@ export default function PerfilPrestadorScreen(): JSX.Element {
 
     return (
         <View style={styles.container}>
-            <View style={styles.containerConteudo}>
-                <View style={styles.containerFundoAzul}>
-                    <Text style={styles.titulo}> Perfil </Text>
-                </View>
+            <Header titulo="Perfil" />
 
-                <View style={styles.containerPerfil}>
-                    <View style={styles.cardUsuario}>
-                        <View style={styles.containerNome}>
-                            <Text style={styles.nome}> {prestadorServico?.nome} </Text>
-                        </View>
-
-                        <View style={styles.containerAvatar}>
-                            <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
-                                <Image source={obterImagemAvatar(prestadorServico?.codigoAvatar)} style={styles.avatar} />
-                            </TouchableOpacity>
-                        </View>
+            <View style={styles.containerPerfil}>
+                <View style={styles.cardUsuario}>
+                    <View style={styles.containerNome}>
+                        <Text style={styles.nome}> {prestadorServico?.nome} </Text>
                     </View>
 
-                    <View style={styles.containerBotaoSegmentado}>
-                        <BotaoSegmentado 
-                            opcoes={['Dados', 'Serviço']}
-                            opcaoSelecionada={opcaoBotaoSelecionado}
-                            onSelecionar={setOpcaoBotaoSelecionado}
-                        />
+                    <View style={styles.containerAvatar}>
+                        <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
+                            <Image source={obterImagemAvatar(prestadorServico?.codigoAvatar)} style={styles.avatar} />
+                        </TouchableOpacity>
                     </View>
-
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        <View>
-                            {opcaoBotaoSelecionado == 'Serviço' ? (
-                                <View>
-                                    <CardSmall nomeIcone="car-wrench" tipoInformacao="Serviço:" informacao={prestadorServico?.descricaoTipoServico} />
-                                    <CardSmall nomeIcone="currency-usd" tipoInformacao="Valor:" informacao={prestadorServico?.valorServico.toString()} />
-                                </View>
-                            ) : (
-                                <View>
-                                    <CardSmall nomeIcone="phone" tipoInformacao="Telefone:" informacao={prestadorServico?.telefone} />
-                                    <CardSmall nomeIcone="email-outline" tipoInformacao="Email:" informacao={prestadorServico?.email} />
-                                    <CardSmall nomeIcone="briefcase-check-outline" tipoInformacao="CNPJ:" informacao={prestadorServico?.cnpj} />
-                                    <CardSmall nomeIcone="map-marker-outline" tipoInformacao="Endereço:" informacao={prestadorServico?.endereco.logradouro} />
-                                </View>
-                            )}
-
-                            <View style={styles.containerLogo}>
-                                <Text style={styles.logo}> Primo </Text>
-
-                                <TouchableOpacity style={styles.containerSaidaApp} onPress={() => confirmarSaidaAplicativo()}>
-                                    <Text style={styles.textoSaidaApp}> sair do aplicativo </Text>
-                                    <MaterialCommunityIcons name='logout-variant' style={styles.iconeSaidaApp} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </ScrollView>
                 </View>
             </View>
 
+            <View style={styles.containerInformacoes}>
+                <View style={styles.containerBotaoSegmentado}>
+                    <BotaoSegmentado
+                        opcoes={opcoesBotaoSegmentado}
+                        opcaoSelecionada={opcaoBotaoSelecionado}
+                        onSelecionar={setOpcaoBotaoSelecionado}
+                    />
+                </View>
+
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View>
+                        {opcaoBotaoSelecionado == 'Serviço' ? (
+                            <View>
+                                <CardSmall nomeIcone="car-wrench" tipoInformacao="Serviço:" informacao={prestadorServico?.descricaoTipoServico} />
+                                <CardSmall nomeIcone="currency-usd" tipoInformacao="Valor:" informacao={prestadorServico?.valorServico.toString()} />
+                            </View>
+                        ) : (
+                            <View>
+                                <CardSmall nomeIcone="phone" tipoInformacao="Telefone:" informacao={prestadorServico?.telefone} />
+                                <CardSmall nomeIcone="email-outline" tipoInformacao="Email:" informacao={prestadorServico?.email} />
+                                <CardSmall nomeIcone="briefcase-check-outline" tipoInformacao="Cnpj:" informacao={prestadorServico?.cnpj} />
+                                <CardSmall nomeIcone="map-marker-outline" tipoInformacao="Endereço:" informacao={prestadorServico?.endereco.logradouro} />
+                            </View>
+                        )}
+
+                        <View style={styles.containerLogo}>
+                            <Text style={styles.logo}> Primo </Text>
+                            <TouchableOpacity style={styles.containerSaidaApp} onPress={() => confirmarSaidaAplicativo()}>
+                                <Text style={styles.textoSaidaApp}> sair do aplicativo </Text>
+                                <MaterialCommunityIcons name='logout-variant' style={styles.iconeSaidaApp} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ScrollView>
+            </View>
+            
             {mostrarModalAvatar && (
                 <ModalAvatar 
                     onClose={() => setMostrarModalAvatar(false)}

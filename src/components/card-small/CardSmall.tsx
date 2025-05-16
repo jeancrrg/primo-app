@@ -7,7 +7,6 @@ export default function CardSmall(props: PropsCardSmall): JSX.Element {
     return (
         <View style={styles.card}>
             <MaterialCommunityIcons name={props.nomeIcone} style={styles.icone} />
-
             <View style={styles.containerInfoCard}>
                 <Text style={styles.tipoInformacao}> {props.tipoInformacao} </Text>
                 <Text style={styles.informacao}> {props.informacao} </Text>
