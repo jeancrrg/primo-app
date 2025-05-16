@@ -13,7 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioLogin } from "../../validations/LoginValidation";
 import { RotaStack } from "../../models/types/RotaStack";
 import { User } from "firebase/auth";
-import { realizarLogin, autenticarUsuario, salvarCodigoPessoaLogado, removerCodigoPessoaLogado } from "../../services/Autenticacao.service";
+import { realizarLogin, autenticarUsuario, salvarCodigoPessoaLogado, removerCodigoPessoaLogado, salvarTipoPessoaLogado } from "../../services/Autenticacao.service";
 import { LoginDTO } from "../../models/dto/LoginDTO";
 import { isNotEmpty } from "../../utils/ValidationUtil";
 import Toast from "react-native-toast-message";
@@ -37,10 +37,14 @@ export default function LoginScreen(): JSX.Element {
             setLoading(true);
             removerTokenAcesso();
             removerCodigoPessoaLogado();
+            
             const usuario: User = await autenticarUsuario(formulario.login, formulario.senha);
             const loginDTO: LoginDTO = await realizarLogin(formulario);
+
             salvarTokenAcesso(loginDTO.token);
             salvarCodigoPessoaLogado(loginDTO.codigoPessoa);
+            salvarTipoPessoaLogado(loginDTO.tipoPessoa);
+
             if (isNotEmpty(usuario) && isNotEmpty(loginDTO.token)) {
                 setLoading(false);
                 navigation.navigate('tabs');

@@ -7,11 +7,14 @@ import { Feather } from "@expo/vector-icons";
 export const tabBar = ({ route }: {route: RouteProp<Record<string, object | undefined>, string>;}): BottomTabNavigationOptions => {
     return {
         tabBarIcon: ({ color }: { color: string }) => {
-            let nomeIcone: "home" | "search" | "tool" | "user" = "home";
+            let nomeIcone: "home" | "search" | "grid" | "tool" | "user" = "home";
 
             switch (route.name) {
                 case "pesquisa":
                     nomeIcone = "search";
+                    break;
+                case "estatistica":
+                    nomeIcone = "grid";
                     break;
                 case "servico":
                     nomeIcone = "tool";

@@ -1,10 +1,10 @@
 import { Image, Text, View } from "react-native";
-import CardTipoServico from "../../components/card-tipo-servico/CardTipoServico";
+import CardTipoServico from "../../../components/card-tipo-servico/CardTipoServico";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { styles } from "./InicioScreenStyle";
-import { RotaTabBar } from "../../models/types/RotaTabBar";
+import { styles } from "./InicioClienteScreenStyle";
+import { RotaTabBar } from "../../../models/types/RotaTabBar";
 
-export default function InicioScreen(): JSX.Element {
+export default function InicioClienteScreen(): JSX.Element {
 
     const navigation = useNavigation<NavigationProp<RotaTabBar>>();
 
@@ -30,7 +30,7 @@ export default function InicioScreen(): JSX.Element {
                     </View>            
 
                     <View style={styles.containerImagem}>
-                        <Image source={require("../../../assets/images/ilustracoes/prestador-servico.png")} style={styles.imagem} />
+                        <Image source={require("../../../../assets/images/ilustracoes/prestador-servico.png")} style={styles.imagem} />
                     </View>
                 </View>
             </View>

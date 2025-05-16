@@ -1,23 +1,23 @@
 import { Alert, FlatList, Image, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { styles } from "./PerfilScreenStyle";
-import CardSmall from "../../components/card-small/CardSmall";
+import { styles } from "./PerfilClienteScreenStyle";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-import { RotaStack } from "../../models/types/RotaStack";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Cliente } from "../../models/cadastro/Cliente";
 import Toast from "react-native-toast-message";
-import { obterCodigoPessoaLogado, removerCodigoPessoaLogado } from "../../services/Autenticacao.service";
-import { removerTokenAcesso } from "../../services/TokenAcesso.service";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { Colors } from "../../../assets/styles/Colors";
-import { Avatar } from "../../models/cadastro/Avatar";
 import { Surface } from "react-native-paper";
-import { buscarAvatares, obterImagemAvatar } from "../../services/Avatar.service";
-import { atualizarAvatarCliente, buscarCliente } from "../../services/Cliente.service";
+import { Cliente } from "../../../models/cadastro/Cliente";
+import { Avatar } from "../../../models/cadastro/Avatar";
+import { RotaStack } from "../../../models/types/RotaStack";
+import { obterCodigoPessoaLogado, removerCodigoPessoaLogado } from "../../../services/Autenticacao.service";
+import { atualizarAvatarCliente, buscarCliente } from "../../../services/Cliente.service";
+import { buscarAvatares, obterImagemAvatar } from "../../../services/Avatar.service";
+import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
+import CardSmall from "../../../components/card-small/CardSmall";
+import { Colors } from "../../../../assets/styles/Colors";
 
-export default function PerfilScreen(): JSX.Element {
+export default function PerfilClienteScreen(): JSX.Element {
 
     const [cliente, setCliente] = useState<Cliente>();
     const [mostrarOpcoesAvatares, setMostrarOpcoesAvatares] = useState<boolean>(false);

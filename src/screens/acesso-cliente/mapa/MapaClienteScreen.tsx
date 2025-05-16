@@ -1,18 +1,18 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { styles } from "./MapaScreenStyle";
+import { styles } from "./MapaClienteScreenStyle";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import { Colors } from "../../../../assets/styles/Colors";
 import * as Location from "expo-location";
 import BottomSheet from "@gorhom/bottom-sheet";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Surface } from "react-native-paper"
-import { buscarPrestadoresServico } from "../../services/Prestador.service";
-import Loader from "../../components/loader/Loader";
-import { PrestadorServico } from "../../models/cadastro/PrestadorServico";
-import { obterImagemAvatar } from "../../services/Avatar.service";
+import { buscarPrestadoresServico } from "../../../services/Prestador.service";
+import Loader from "../../../components/loader/Loader";
+import { PrestadorServico } from "../../../models/cadastro/PrestadorServico";
+import { obterImagemAvatar } from "../../../services/Avatar.service";
 
-export default function MapaScreen(): JSX.Element {
+export default function MapaClienteScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(true);
     const [localizacaoAtual, setLocalizacaoAtual] = useState<Location.LocationObject | null>(null);
@@ -50,8 +50,8 @@ export default function MapaScreen(): JSX.Element {
             referenciaMapa.current?.animateToRegion({
                 latitude: localizacao.coords.latitude,
                 longitude: localizacao.coords.longitude,
-                latitudeDelta: 0.2,
-                longitudeDelta: 0.2,
+                latitudeDelta: 0.02,
+                longitudeDelta: 0.02,
             }, 1000);
 
             // Depois de 1s, realizar zoom na localização atual

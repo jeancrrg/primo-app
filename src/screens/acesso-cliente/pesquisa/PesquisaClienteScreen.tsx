@@ -1,18 +1,18 @@
 import { FlatList, Keyboard, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
-import { styles } from "./PesquisaScreenStyle";
+import { styles } from "./PesquisaClienteScreenStyle";
 import { useEffect, useState } from "react";
-import CardPrestadorServico from "../../components/card-prestador-servico/CardPrestadorServico";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { buscarPrestadoresServico } from "../../services/Prestador.service";
 import LottieView from 'lottie-react-native';
-import { isEmpty, isNotEmpty } from "../../utils/ValidationUtil";
 import { Feather } from "@expo/vector-icons";
-import { RotaTabBar } from "../../models/types/RotaTabBar";
-import { PrestadorServico } from "../../models/cadastro/PrestadorServico";
 import Toast from "react-native-toast-message";
-import Loader from "../../components/loader/Loader";
+import { RotaTabBar } from "../../../models/types/RotaTabBar";
+import { PrestadorServico } from "../../../models/cadastro/PrestadorServico";
+import { buscarPrestadoresServico } from "../../../services/Prestador.service";
+import { isEmpty, isNotEmpty } from "../../../utils/ValidationUtil";
+import CardPrestadorServico from "../../../components/card-prestador-servico/CardPrestadorServico";
+import Loader from "../../../components/loader/Loader";
 
-export default function PesquisaScreen(): JSX.Element {
+export default function PesquisaClienteScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [termoPesquisa, setTermoPesquisa] = useState<string>('');
@@ -69,7 +69,7 @@ export default function PesquisaScreen(): JSX.Element {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             {loading ? (
-                <Loader/>
+                <Loader />
             ) : (
                 <View style={styles.container}>
                     <View style={styles.barraPesquisa}>
@@ -97,7 +97,7 @@ export default function PesquisaScreen(): JSX.Element {
                         ) : (
                             <View style={styles.containerAnimacao}>
                                 <LottieView
-                                    source={require('./../../../assets/animations/nenhum-resultado-encontrado.json')}
+                                    source={require('./../../../../assets/animations/nenhum-resultado-encontrado.json')}
                                     autoPlay={true}
                                     style={styles.animacao}
                                 />

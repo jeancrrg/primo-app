@@ -2,12 +2,13 @@ import { LoginDTO } from './../models/dto/LoginDTO';
 import Api from "../config/api/Api";
 import { auth } from "../config/firebase/FirebaseConfig";
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
-import { CHAVE_CODIGO_PESSOA } from '../constants/ChaveAsyncStorage';
+import { CHAVE_CODIGO_PESSOA, CHAVE_TIPO_PESSOA } from '../constants/ChaveAsyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isNotEmpty } from '../utils/ValidationUtil';
 import { FormularioLogin } from '../models/interfaces/formularios/FormularioLogin';
 import { FormularioCadastroCliente } from '../models/interfaces/formularios/FormularioCadastroCliente';
 import { CadastroPrestadorDTO } from '../models/dto/CadastroPrestadorDTO';
+import { TipoPessoaEnum } from '../models/enum/TipoPessoa.enum';
 
 export async function autenticarUsuario(email: string, senha: string): Promise<User> {
     try {
@@ -104,4 +105,23 @@ export async function obterCodigoPessoaLogado(): Promise<number | null> {
 
 export async function removerCodigoPessoaLogado(): Promise<void> {
     await AsyncStorage.removeItem(CHAVE_CODIGO_PESSOA);
+}
+
+export async function salvarTipoPessoaLogado(tipoPessoa: TipoPessoaEnum): Promise<void> {
+    AsyncStorage.setItem(CHAVE_TIPO_PESSOA, tipoPessoa.toString());
+}
+
+export async function obterTipoPessoaLogado(): Promise<TipoPessoaEnum | null> {
+    let tipoPessoa: TipoPessoaEnum | null = null;
+    await AsyncStorage.getItem(CHAVE_TIPO_PESSOA)
+        .then(async valor => {
+            if (isNotEmpty(valor)) {
+                tipoPessoa = TipoPessoaEnum[valor as keyof typeof TipoPessoaEnum];;
+            }
+        });
+    return tipoPessoa;
+}
+
+export async function removerTipoPessoaLogado(): Promise<void> {
+    await AsyncStorage.removeItem(CHAVE_TIPO_PESSOA);
 }
