@@ -85,10 +85,10 @@ export default function PerfilClienteScreen(): JSX.Element {
             </View>
 
             <View style={styles.containerInformacoes}>
-                <CardSmall nomeIcone="phone" tipoInformacao="Telefone:" informacao={cliente?.telefone} />
-                <CardSmall nomeIcone="email-outline" tipoInformacao="Email:" informacao={cliente?.email} />
-                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo:" informacao={cliente?.modeloVeiculo} />
-                <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano:" informacao={cliente?.anoVeiculo.toString()} />
+                <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={cliente?.telefone} />
+                <CardSmall nomeIcone="email-outline" tipoInformacao="Email" informacao={cliente?.email} />
+                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo" informacao={cliente?.modeloVeiculo} />
+                <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano" informacao={cliente?.anoVeiculo.toString()} />
                     
                 <View style={styles.containerLogo}>
                     <Text style={styles.logo}> Primo </Text>

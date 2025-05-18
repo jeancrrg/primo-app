@@ -14,7 +14,7 @@ import { obterImagemAvatar } from "../../../services/Avatar.service";
 
 export default function MapaClienteScreen(): JSX.Element {
 
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
     const [localizacaoAtual, setLocalizacaoAtual] = useState<Location.LocationObject | null>(null);
     const [listaPrestadoresServico, setListaPrestadoresServico] = useState<PrestadorServico[]>([]);
     const [prestadorServicoSelecionado, setPrestadorServicoSelecionado] = useState<PrestadorServico | null>(null);
@@ -25,12 +25,12 @@ export default function MapaClienteScreen(): JSX.Element {
     const snapPoints = useMemo(() => ['20%', '33%'], []);
 
     useEffect(() => {
+        setLoading(true);
         obterLocalizacaoAtual();
         buscarPrestadores();
     }, []);
 
-    // Atualiza a localização em tempo real
-    useEffect(() => {
+    useEffect(() => { 
         Location.watchPositionAsync({
             accuracy: Location.Accuracy.High,
             timeInterval: 1000,
@@ -46,7 +46,6 @@ export default function MapaClienteScreen(): JSX.Element {
             const localizacao: Location.LocationObject = await Location.getCurrentPositionAsync();
             setLocalizacaoAtual(localizacao);
 
-            // Mostrar mapa sem zoom
             referenciaMapa.current?.animateToRegion({
                 latitude: localizacao.coords.latitude,
                 longitude: localizacao.coords.longitude,
@@ -66,18 +65,18 @@ export default function MapaClienteScreen(): JSX.Element {
         }
     }
 
-    async function buscarPrestadores(): Promise<void> {
-        const listaPrestadoresServico: PrestadorServico[] = await buscarPrestadoresServico();
-        setListaPrestadoresServico(listaPrestadoresServico);
-        setLoading(false);
-    }
-
     async function solicitarPermissaoLocalizacao(): Promise<boolean> {
         const { granted } = await Location.requestForegroundPermissionsAsync();
         if (granted) {
             return true;
         }
         return false;
+    }
+
+    async function buscarPrestadores(): Promise<void> {
+        const listaPrestadoresServico: PrestadorServico[] = await buscarPrestadoresServico();
+        setListaPrestadoresServico(listaPrestadoresServico);
+        setLoading(false);
     }
 
     function onPressMarker(prestadorServico: PrestadorServico): void {
@@ -133,7 +132,7 @@ export default function MapaClienteScreen(): JSX.Element {
                     ))}
                 </MapView>
             ) : (
-                <Loader/>
+                <Loader />
             )}
 
             {prestadorServicoSelecionado && (

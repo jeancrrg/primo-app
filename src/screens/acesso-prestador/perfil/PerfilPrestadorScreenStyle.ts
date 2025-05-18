@@ -10,9 +10,7 @@ export const styles = StyleSheet.create({
         top: 80,
         left: 20,
         right: 20,
-        zIndex: 10
-    },
-    cardUsuario: {
+        zIndex: 10,
         flexDirection: "row",
         backgroundColor: Colors.branco,
         padding: 16,

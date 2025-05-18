@@ -21,16 +21,14 @@ export default function InicioClienteScreen(): JSX.Element {
             <Header titulo="Início" />
 
             <View style={styles.containerCard}>
-                <View style={styles.card}>
-                    <View style={styles.containerTexto}>
-                        <Text style={styles.tituloTexto}> Precisando de ajuda? </Text>
+                <View style={styles.containerTexto}>
+                    <Text style={styles.tituloTexto}> Precisando de ajuda? </Text>
 
-                        <Text style={styles.texto}> Encontre agora mesmo um técnico especializado perto de você! </Text>
-                    </View>            
+                    <Text style={styles.texto}> Encontre agora mesmo um técnico especializado perto de você! </Text>
+                </View>            
 
-                    <View style={styles.containerImagem}>
-                        <Image source={require("../../../../assets/images/ilustracoes/prestador-servico.png")} style={styles.imagem} />
-                    </View>
+                <View style={styles.containerImagem}>
+                    <Image source={require("../../../../assets/images/ilustracoes/prestador-servico.png")} style={styles.imagem} />
                 </View>
             </View>
 

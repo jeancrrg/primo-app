@@ -8,7 +8,11 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: Colors.branco,
         borderRadius: 20,
-        marginVertical: 20
+        marginVertical: 20,
+        elevation: 5,
+        shadowColor: Colors.preto,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1
     },
     botaoSelecionado: {
         position: 'absolute',

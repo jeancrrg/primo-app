@@ -14,30 +14,26 @@ export const styles = StyleSheet.create({
         top: 80,
         left: 20,
         right: 20,
-        zIndex: 10
-    },
-    card: {
-        flex: 1,
+        zIndex: 10,
         flexDirection: "row",
-        width: '100%',
-        height: 240,
         borderRadius: 20,
         backgroundColor: Colors.branco,
-        shadowColor: Colors.cinzaEscuro,
+        elevation: 4,
+        shadowColor: Colors.preto,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
-        elevation: 4,
         alignSelf: "flex-start",
         justifyContent: "space-between"
     },
     containerTexto: {
-        width: '50%',
+        flex: 1,
         padding: 10,
         alignItems: "center",
         justifyContent: "center"
     },
     tituloTexto: {
-        fontSize: 23,
+        fontSize: 21,
+        fontWeight: 'bold',
         fontFamily: "Mulish-Medium",
         color: Colors.corPrimaria,
         marginTop: 5,
@@ -51,7 +47,7 @@ export const styles = StyleSheet.create({
         marginBottom: 8
     },
     containerImagem: {
-        width: '50%',
+        flex: 1,
         justifyContent: "center"
     },
     imagem: {

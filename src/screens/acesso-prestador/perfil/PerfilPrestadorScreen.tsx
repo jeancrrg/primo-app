@@ -74,16 +74,14 @@ export default function PerfilPrestadorScreen(): JSX.Element {
             <Header titulo="Perfil" />
 
             <View style={styles.containerPerfil}>
-                <View style={styles.cardUsuario}>
-                    <View style={styles.containerNome}>
-                        <Text style={styles.nome}> {prestadorServico?.nome} </Text>
-                    </View>
+                <View style={styles.containerNome}>
+                    <Text style={styles.nome}> {prestadorServico?.nome} </Text>
+                </View>
 
-                    <View style={styles.containerAvatar}>
-                        <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
-                            <Image source={obterImagemAvatar(prestadorServico?.codigoAvatar)} style={styles.avatar} />
-                        </TouchableOpacity>
-                    </View>
+                <View style={styles.containerAvatar}>
+                    <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
+                        <Image source={obterImagemAvatar(prestadorServico?.codigoAvatar)} style={styles.avatar} />
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -100,15 +98,15 @@ export default function PerfilPrestadorScreen(): JSX.Element {
                     <View>
                         {opcaoBotaoSelecionado == 'Serviço' ? (
                             <View>
-                                <CardSmall nomeIcone="car-wrench" tipoInformacao="Serviço:" informacao={prestadorServico?.descricaoTipoServico} />
-                                <CardSmall nomeIcone="currency-usd" tipoInformacao="Valor:" informacao={prestadorServico?.valorServico.toString()} />
+                                <CardSmall nomeIcone="car-wrench" tipoInformacao="Serviço" informacao={prestadorServico?.descricaoTipoServico} />
+                                <CardSmall nomeIcone="currency-usd" tipoInformacao="Valor" informacao={prestadorServico?.valorServico.toString()} />
                             </View>
                         ) : (
                             <View>
-                                <CardSmall nomeIcone="phone" tipoInformacao="Telefone:" informacao={prestadorServico?.telefone} />
-                                <CardSmall nomeIcone="email-outline" tipoInformacao="Email:" informacao={prestadorServico?.email} />
-                                <CardSmall nomeIcone="briefcase-check-outline" tipoInformacao="Cnpj:" informacao={prestadorServico?.cnpj} />
-                                <CardSmall nomeIcone="map-marker-outline" tipoInformacao="Endereço:" informacao={prestadorServico?.endereco.logradouro} />
+                                <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={prestadorServico?.telefone} />
+                                <CardSmall nomeIcone="email-outline" tipoInformacao="Email" informacao={prestadorServico?.email} />
+                                <CardSmall nomeIcone="briefcase-check-outline" tipoInformacao="Cnpj" informacao={prestadorServico?.cnpj} />
+                                <CardSmall nomeIcone="map-marker-outline" tipoInformacao="Endereço" informacao={prestadorServico?.endereco.logradouro} />
                             </View>
                         )}
 

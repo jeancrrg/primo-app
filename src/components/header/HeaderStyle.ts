@@ -8,7 +8,12 @@ export const styles = StyleSheet.create({
         padding: 15,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        position: 'relative'
+        position: 'relative',
+        elevation: 4,
+        shadowColor: Colors.preto,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4
     },
     titulo: {
         fontSize: 34,

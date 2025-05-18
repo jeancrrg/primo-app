@@ -68,10 +68,10 @@ export const botaoCentralTabBar: React.FC<TabButtonProps> = ({ onPress }) => (
 
 const styles = StyleSheet.create({
     shadow: {
-        shadowColor: Colors.cinzaEscuro,
+        shadowColor: Colors.preto,
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
-        elevation: 5,
+        elevation: 4,
     }
 });
