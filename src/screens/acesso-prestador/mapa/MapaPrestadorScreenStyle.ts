@@ -5,9 +5,32 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1
     },
+    headerConexao: {
+        position: 'absolute',
+        height: 55,
+        width: '80%',
+        backgroundColor: Colors.branco,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        elevation: 4,
+        shadowColor: Colors.preto,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        zIndex: 10
+    },
+    textoHeaderConexao: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: Colors.cinzaEscuro,
+        marginLeft: 5
+    },
     mapa: {
-        height: '100%',
-        width: "100%"
+        flex: 1
     },
     containerMarcadorLocalizacao: {
         width: 100,

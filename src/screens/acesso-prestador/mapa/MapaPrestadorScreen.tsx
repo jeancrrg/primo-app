@@ -1,10 +1,11 @@
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { styles } from "./MapaPrestadorScreenStyle";
 import { useEffect, useRef, useState } from "react";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import Loader from "../../../components/loader/Loader";
 import { Colors } from "../../../../assets/styles/Colors";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function MapaPrestadorScreen(): JSX.Element {
 
@@ -66,6 +67,12 @@ export default function MapaPrestadorScreen(): JSX.Element {
 
     return (
         <View style={styles.container}>
+
+            <View style={styles.headerConexao}>
+                <MaterialCommunityIcons name='access-point' color={Colors.cinzaEscuro} size={30} />
+                <Text style={styles.textoHeaderConexao}> Você está conectado </Text>
+            </View>
+
             {localizacaoAtual && !loading ? (
                 <MapView
                     ref={referenciaMapa}

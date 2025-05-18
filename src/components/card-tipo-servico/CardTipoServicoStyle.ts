@@ -12,10 +12,10 @@ export const styles = StyleSheet.create({
         height: 102,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: Colors.cinzaEscuro,
+        elevation: 4,
+        shadowColor: Colors.preto,
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        elevation: 4
+        shadowOpacity: 0.1
     },
     icone: {
         flex: 1,
@@ -25,7 +25,8 @@ export const styles = StyleSheet.create({
     },
     texto: {
         color: Colors.corPrimaria,
-        fontSize: 16,
+        fontSize: 15,
+        fontWeight: 'bold',
         textAlign: "center"
     }
 });

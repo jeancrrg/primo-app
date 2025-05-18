@@ -18,12 +18,12 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         borderRadius: 20,
         backgroundColor: Colors.branco,
+        alignSelf: "flex-start",
+        justifyContent: "space-between",
         elevation: 4,
         shadowColor: Colors.preto,
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        alignSelf: "flex-start",
-        justifyContent: "space-between"
+        shadowOpacity: 0.1
     },
     containerTexto: {
         flex: 1,
