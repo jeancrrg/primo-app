@@ -1,24 +1,22 @@
 import { FlatList, Keyboard, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./PesquisaClienteScreenStyle";
 import { useEffect, useState } from "react";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import LottieView from 'lottie-react-native';
 import { Feather } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
-import { RotaTabBar } from "../../../models/types/RotaTabBar";
 import { PrestadorServico } from "../../../models/cadastro/PrestadorServico";
 import { buscarPrestadoresServico } from "../../../services/Prestador.service";
 import { isEmpty, isNotEmpty } from "../../../utils/ValidationUtil";
 import CardPrestadorServico from "../../../components/card-prestador-servico/CardPrestadorServico";
 import Loader from "../../../components/loader/Loader";
+import { navegarParaTela } from "../../../utils/NavigationUtil";
+import { RotaTabsEnum } from "../../../models/enum/RotaTabs.enum";
 
 export default function PesquisaClienteScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [termoPesquisa, setTermoPesquisa] = useState<string>('');
     const [listaPrestadoresServico, setListaPrestadoresServico] = useState<PrestadorServico[]>([]);
-
-    const navigation = useNavigation<NavigationProp<RotaTabBar>>();
 
     useEffect(() => {
         buscarPrestadores();
@@ -49,7 +47,7 @@ export default function PesquisaClienteScreen(): JSX.Element {
                 logradouro={prestador.endereco.logradouro || ''}
                 nomeBairro={prestador.endereco.nomeBairro || ''}
                 codigoAvatar={prestador.codigoAvatar}
-                onSelect={() => navigation.navigate('mapa')}
+                onSelect={() => navegarParaTela(RotaTabsEnum.MAPA)}
             />
         );
     }

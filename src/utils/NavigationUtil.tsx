@@ -1,8 +1,10 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { BottomTabBarButtonProps, BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
-import { RouteProp } from "@react-navigation/native";
+import { createNavigationContainerRef, RouteProp, StackActions } from "@react-navigation/native";
 import { Colors } from "../../assets/styles/Colors";
 import { Feather } from "@expo/vector-icons";
+import { RotaPrincipal } from "../models/types/RotaPrincipal";
+import { RotaTabBar } from "../models/types/RotaTabBar";
 
 export const tabBar = ({ route }: {route: RouteProp<Record<string, object | undefined>, string>;}): BottomTabNavigationOptions => {
     return {
@@ -75,3 +77,24 @@ const styles = StyleSheet.create({
         elevation: 4,
     }
 });
+
+export const navigationRef = createNavigationContainerRef<RotaPrincipal>();
+type RotasApp = RotaPrincipal & RotaTabBar;
+
+export function navegarParaTela<K extends keyof RotasApp>(rota: K, parametros?: RotasApp[K]): void {
+    if (navigationRef.isReady()) {
+        (navigationRef as any).navigate(rota, parametros);
+    }
+}
+
+export function substituirTela<K extends keyof RotasApp>(rota: K, parametros?: RotasApp[K]): void {
+    if (navigationRef.isReady()) {
+        navigationRef.dispatch(StackActions.replace(rota, parametros));
+    }
+}
+
+export function voltarTela(): void {
+    if (navigationRef.isReady() && navigationRef.canGoBack()) {
+        navigationRef.goBack();
+    }
+}

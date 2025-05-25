@@ -3,9 +3,6 @@ import { styles } from "./EsqueciSenhaScreenStyle";
 import * as Animatable from 'react-native-animatable';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../../assets/styles/Colors";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RotaStack } from "../../../models/types/RotaStack";
-import { useNavigation } from "@react-navigation/native";
 import BotaoPrincipal from "../../../components/botao/botao-principal/BotaoPrincipal";
 import Input from "../../../components/input/Input";
 import { useForm } from "react-hook-form";
@@ -16,12 +13,12 @@ import { FormularioEsqueciSenha } from "../../../models/interfaces/formularios/F
 import { redefinirSenha } from "../../../services/Autenticacao.service";
 import { useState } from "react";
 import Loader from "../../../components/loader/Loader";
+import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
+import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 
 export default function EsqueciSenhaScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
-
-    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
     const { control, handleSubmit, formState: { errors } } = useForm<FormularioEsqueciSenha>({
         resolver: yupResolver(validacaoEmail)
@@ -33,7 +30,7 @@ export default function EsqueciSenhaScreen(): JSX.Element {
             await redefinirSenha(formulario.email);
             setLoading(false);
             Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Email enviado com sucesso!' });
-            navigation.navigate('login');
+            navegarParaTela(RotaPrincipalEnum.LOGIN);
         } catch (error: any) {
             setLoading(false);
             Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message });
@@ -48,7 +45,7 @@ export default function EsqueciSenhaScreen(): JSX.Element {
             ) : (
                 <View style={styles.container}>
                     <Animatable.View animation='fadeInLeft' delay={500}>
-                        <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
+                        <TouchableOpacity style={styles.botaoVoltar} onPress={() => voltarTela()}>
                             <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={40} />
                         </TouchableOpacity>
 

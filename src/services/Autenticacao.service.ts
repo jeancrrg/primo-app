@@ -2,7 +2,6 @@ import { LoginDTO } from './../models/dto/LoginDTO';
 import Api from "../config/api/Api";
 import { auth } from "../config/firebase/FirebaseConfig";
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
-import { CHAVE_CODIGO_PESSOA, CHAVE_TIPO_PESSOA } from '../constants/ChaveAsyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isNotEmpty } from '../utils/ValidationUtil';
 import { FormularioLogin } from '../models/interfaces/formularios/FormularioLogin';
@@ -10,9 +9,7 @@ import { FormularioCadastroCliente } from '../models/interfaces/formularios/Form
 import { CadastroPrestadorDTO } from '../models/dto/CadastroPrestadorDTO';
 import { TipoPessoaEnum } from '../models/enum/TipoPessoa.enum';
 import { removerTokenAcesso } from './TokenAcesso.service';
-import { RotaStack } from '../models/types/RotaStack';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
+import { ChaveAsyncStorage } from '../constants/ChaveAsyncStorage';
 
 export async function autenticarUsuario(email: string, senha: string): Promise<User> {
     try {
@@ -96,12 +93,12 @@ export async function sairAplicativo(): Promise<void> {
 }
 
 export async function salvarCodigoPessoaLogado(codigoPessoa: number): Promise<void> {
-    AsyncStorage.setItem(CHAVE_CODIGO_PESSOA, codigoPessoa.toString());
+    AsyncStorage.setItem(ChaveAsyncStorage.CHAVE_CODIGO_PESSOA, codigoPessoa.toString());
 }
 
 export async function obterCodigoPessoaLogado(): Promise<number | null> {
     let codigoPessoa: number | null = null;
-    await AsyncStorage.getItem(CHAVE_CODIGO_PESSOA)
+    await AsyncStorage.getItem(ChaveAsyncStorage.CHAVE_CODIGO_PESSOA)
         .then(async valor => {
             if (isNotEmpty(valor)) {
                 codigoPessoa = Number(valor);
@@ -111,16 +108,16 @@ export async function obterCodigoPessoaLogado(): Promise<number | null> {
 }
 
 export async function removerCodigoPessoaLogado(): Promise<void> {
-    await AsyncStorage.removeItem(CHAVE_CODIGO_PESSOA);
+    await AsyncStorage.removeItem(ChaveAsyncStorage.CHAVE_CODIGO_PESSOA);
 }
 
 export async function salvarTipoPessoaLogado(tipoPessoa: TipoPessoaEnum): Promise<void> {
-    AsyncStorage.setItem(CHAVE_TIPO_PESSOA, tipoPessoa.toString());
+    AsyncStorage.setItem(ChaveAsyncStorage.CHAVE_TIPO_PESSOA, tipoPessoa.toString());
 }
 
 export async function obterTipoPessoaLogado(): Promise<TipoPessoaEnum | null> {
     let tipoPessoa: TipoPessoaEnum | null = null;
-    await AsyncStorage.getItem(CHAVE_TIPO_PESSOA)
+    await AsyncStorage.getItem(ChaveAsyncStorage.CHAVE_TIPO_PESSOA)
         .then(async valor => {
             if (isNotEmpty(valor)) {
                 tipoPessoa = TipoPessoaEnum[valor as keyof typeof TipoPessoaEnum];;
@@ -130,5 +127,5 @@ export async function obterTipoPessoaLogado(): Promise<TipoPessoaEnum | null> {
 }
 
 export async function removerTipoPessoaLogado(): Promise<void> {
-    await AsyncStorage.removeItem(CHAVE_TIPO_PESSOA);
+    await AsyncStorage.removeItem(ChaveAsyncStorage.CHAVE_TIPO_PESSOA);
 }

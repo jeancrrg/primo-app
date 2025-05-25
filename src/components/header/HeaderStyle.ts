@@ -4,7 +4,7 @@ import { Colors } from "../../../assets/styles/Colors";
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.corPrimaria,
-        height: 120,
+        height: 115,
         padding: 15,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,

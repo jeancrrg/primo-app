@@ -2,8 +2,6 @@ import { Image, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFe
 import * as Animatable from 'react-native-animatable'; 
 import { styles } from "./CadastroClienteScreenStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../../assets/styles/Colors";
 import { useState } from "react";
 import Divider from "../../../components/divider/Divider";
@@ -12,20 +10,19 @@ import Input from "../../../components/input/Input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioCliente } from "../../../validations/ClienteValidation";
-import { RotaStack } from "../../../models/types/RotaStack";
 import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente";
 import { formatarTelefone } from "../../../utils/FormatterUtil";
 import { cadastrarCliente, cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
 import Toast from "react-native-toast-message";
 import Loader from "../../../components/loader/Loader";
 import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
+import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
+import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
 
 export default function CadastroClienteScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);
-
-    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
     const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroCliente>({
         resolver: yupResolver(validacoesFormularioCliente)
@@ -39,7 +36,7 @@ export default function CadastroClienteScreen(): JSX.Element {
             await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
             setLoading(false);
             Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
-            navigation.navigate('login');
+            navegarParaTela(RotaPrincipalEnum.LOGIN);
         } catch (error: any) {
             setLoading(false);
             Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
@@ -54,7 +51,7 @@ export default function CadastroClienteScreen(): JSX.Element {
             ) : (
                 <View style={styles.container}>
                     <Animatable.View animation='fadeInLeft' delay={500} style={styles.containerLogo}>
-                        <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
+                        <TouchableOpacity style={styles.botaoVoltar} onPress={() => voltarTela()}>
                             <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={40} />
                         </TouchableOpacity>
 
@@ -82,6 +79,17 @@ export default function CadastroClienteScreen(): JSX.Element {
                                     maxLength={15}
                                     nomeIconeEsquerda='phone'
                                     errosValidacao={errors.telefone?.message}
+                                    mascara={formatarTelefone}
+                                    tipoTeclado='numeric'
+                                />
+
+                                <Input
+                                    control={control}
+                                    name='cpf'
+                                    label='Cpf'
+                                    maxLength={15}
+                                    nomeIconeEsquerda='card-account-details-outline'
+                                    errosValidacao={errors.cpf?.message}
                                     mascara={formatarTelefone}
                                     tipoTeclado='numeric'
                                 />

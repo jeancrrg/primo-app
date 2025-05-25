@@ -11,6 +11,7 @@ import { Colors } from "./assets/styles/Colors";
 import Fonts from "./assets/styles/Fonts";
 import Toast from "react-native-toast-message";
 import { ToastMessageConfig } from "./src/components/toast-message/ToastMessageConfig";
+import { navigationRef } from "./src/utils/NavigationUtil";
 
 export default function App() {
 
@@ -22,7 +23,7 @@ export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <MenuProvider>
-                <NavigationContainer>
+                <NavigationContainer ref={navigationRef}>
                     <View style={styles.container}>
                         <AppRoute />
                     </View>

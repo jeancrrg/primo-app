@@ -1,13 +1,11 @@
 import { Image, Text, View } from "react-native";
 import CardTipoServico from "../../../components/card-tipo-servico/CardTipoServico";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { styles } from "./InicioClienteScreenStyle";
-import { RotaTabBar } from "../../../models/types/RotaTabBar";
 import Header from "../../../components/header/Header";
+import { navegarParaTela } from "../../../utils/NavigationUtil";
+import { RotaTabsEnum } from "../../../models/enum/RotaTabs.enum";
 
 export default function InicioClienteScreen(): JSX.Element {
-
-    const navigation = useNavigation<NavigationProp<RotaTabBar>>();
 
     const tiposServico = [
         { descricaoTipoServico: "Borracheiro", icone: "tire" },
@@ -40,7 +38,7 @@ export default function InicioClienteScreen(): JSX.Element {
                         <CardTipoServico key={tipoServico.descricaoTipoServico} 
                             descricaoTipoServico={tipoServico.descricaoTipoServico} 
                             icone={tipoServico.icone}
-                            onPress={() => navigation.navigate('mapa')}/>
+                            onPress={() => navegarParaTela(RotaTabsEnum.MAPA)}/>
                     ))}
                 </View>
             </View>

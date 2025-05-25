@@ -10,12 +10,12 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     logo: {
-        height: 160,
+        height: 150,
         width: 160
     },
     versao: {
         color: Colors.branco,
-        marginBottom: 10,
+        marginBottom: 20,
         fontFamily: "Mulish-Medium"
     },
     containerFormulario: {

@@ -4,26 +4,23 @@ import Header from "../../../components/header/Header";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../../assets/styles/Colors";
 import { useState } from "react";
-import { RotaTabBar } from "../../../models/types/RotaTabBar";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { navegarParaTela } from "../../../utils/NavigationUtil";
+import { RotaTabsEnum } from "../../../models/enum/RotaTabs.enum";
 
 export default function InicioPrestadorScreen(): JSX.Element {
 
     const [iconeBotaoConexao, setIconeBotaoConexao] = useState<string>('access-point');
     const [textoBotaoConexao, setTextoBotaoConexao] = useState<string>('Conectar');
 
-    const navigation = useNavigation<NavigationProp<RotaTabBar>>();
-
     function onPressBotaoConexao(): void {
         if (textoBotaoConexao == 'Conectar') {
             setIconeBotaoConexao('access-point-off');
             setTextoBotaoConexao('Desconectar');
-            navigation.navigate('mapa');
         } else {
             setIconeBotaoConexao('access-point');
             setTextoBotaoConexao('Conectar');
-            navigation.navigate('mapa');
         }
+        navegarParaTela(RotaTabsEnum.MAPA);
     }
 
     return (

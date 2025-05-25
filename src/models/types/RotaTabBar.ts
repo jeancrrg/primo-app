@@ -1,7 +1,9 @@
+import { RotaTabsEnum } from "../enum/RotaTabs.enum";
+
 export type RotaTabBar = {
-    inicio: undefined;
-    pesquisa: undefined;
-    mapa: undefined;
-    servico: undefined;
-    perfil: undefined;
+    [RotaTabsEnum.INICIO]: undefined;
+    [RotaTabsEnum.PESQUISA]: undefined;
+    [RotaTabsEnum.MAPA]: undefined;
+    [RotaTabsEnum.SERVICO]: undefined;
+    [RotaTabsEnum.PERFIL]: undefined;
 }

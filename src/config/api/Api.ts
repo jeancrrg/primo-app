@@ -1,10 +1,10 @@
 import axios from "axios";
-import { Contants } from "../../constants/Contants";
 import { obterTokenAcesso } from "../../services/TokenAcesso.service";
 import { isNotEmpty } from "../../utils/ValidationUtil";
+import { UrlApi } from "../../constants/UrlApi";
 
 const api = axios.create({
-    baseURL: Contants.URL_BASE,
+    baseURL: UrlApi.URL_BASE,
 });
 
 const endpointsPublicos: string[] = [

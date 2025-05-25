@@ -1,25 +1,26 @@
-import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { styles } from "./PerfilClienteScreenStyle";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { Cliente } from "../../../models/cadastro/Cliente";
-import { RotaStack } from "../../../models/types/RotaStack";
 import { obterCodigoPessoaLogado, sairAplicativo } from "../../../services/Autenticacao.service";
 import { atualizarAvatarCliente, buscarCliente } from "../../../services/Cliente.service";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
 import CardSmall from "../../../components/card-small/CardSmall";
 import ModalAvatar from "../../../components/modal-avatar/ModalAvatar";
 import Header from "../../../components/header/Header";
+import BotaoSegmentado from "../../../components/botao-segmentado/BotaoSegmentado";
+import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
+import { navegarParaTela } from "../../../utils/NavigationUtil";
+import { Colors } from "../../../../assets/styles/Colors";
 
 export default function PerfilClienteScreen(): JSX.Element {
 
     const [cliente, setCliente] = useState<Cliente>();
     const [mostrarModalAvatar, setMostrarModalAvatar] = useState<boolean>(false);
-
-    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
+    const [opcoesBotaoSegmentado] = useState<string[]>(['Dados', 'Veículo']);
+    const [opcaoBotaoSelecionado, setOpcaoBotaoSelecionado] = useState<string>('Dados');
 
     useEffect(() => {
         carregarCliente();
@@ -41,7 +42,8 @@ export default function PerfilClienteScreen(): JSX.Element {
 
     async function selecionarAvatar(codigoAvatar: number): Promise<void> {
         cliente!.codigoAvatar = codigoAvatar;
-        await atualizarAvatarCliente(cliente!.codigo, cliente!.codigoAvatar);
+        setCliente(cliente);
+        atualizarAvatarCliente(cliente!.codigo, cliente!.codigoAvatar);
     }
 
     function confirmarSaidaAplicativo(): void {
@@ -63,7 +65,29 @@ export default function PerfilClienteScreen(): JSX.Element {
 
     function sair(): void {
         sairAplicativo();
-        navigation.replace('login');
+        navegarParaTela(RotaPrincipalEnum.LOGIN);
+    }
+
+    function confirmarExclusaoConta(): void {
+        Alert.alert("Aviso", "Deseja realmente excluir sua conta do aplicativo?",
+            [
+                {
+                    text: "SIM",
+                    onPress: () => excluir(),
+                },
+                {
+                    text: "NÃO",
+                    style: "cancel",
+                    onPress: () => {}
+                }
+            ],
+            {cancelable: true}
+        );
+    }
+
+    function excluir(): void {
+        sairAplicativo();
+        navegarParaTela(RotaPrincipalEnum.LOGIN);
     }
 
     return (
@@ -71,32 +95,65 @@ export default function PerfilClienteScreen(): JSX.Element {
             <Header titulo="Perfil" />
 
             <View style={styles.containerPerfil}>
-                <View style={styles.cardUsuario}>
-                    <View style={styles.containerNome}>
-                        <Text style={styles.nome}> {cliente?.nome} </Text>
-                    </View>
+                <View style={styles.containerNome}>
+                    <Text style={styles.nome}> {cliente?.nome} </Text>
+                </View>
 
-                    <View style={styles.containerAvatar}>
-                        <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
-                            <Image source={obterImagemAvatar(cliente?.codigoAvatar)} style={styles.avatar} />
-                        </TouchableOpacity>
-                    </View>
+                <View style={styles.containerAvatar}>
+                    <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
+                        <Image source={obterImagemAvatar(cliente?.codigoAvatar)} style={styles.avatar} />
+                    </TouchableOpacity>
                 </View>
             </View>
 
             <View style={styles.containerInformacoes}>
-                <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={cliente?.telefone} />
-                <CardSmall nomeIcone="email-outline" tipoInformacao="Email" informacao={cliente?.email} />
-                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo" informacao={cliente?.modeloVeiculo} />
-                <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano" informacao={cliente?.anoVeiculo.toString()} />
-                    
-                <View style={styles.containerLogo}>
-                    <Text style={styles.logo}> Primo </Text>
-                    <TouchableOpacity style={styles.containerSaidaApp} onPress={() => confirmarSaidaAplicativo()}>
-                        <Text style={styles.textoSaidaApp}> sair do aplicativo </Text>
-                        <MaterialCommunityIcons name='logout-variant' style={styles.iconeSaidaApp} />
-                    </TouchableOpacity>
+                <View style={styles.containerBotaoSegmentado}>
+                    <BotaoSegmentado
+                        opcoes={opcoesBotaoSegmentado}
+                        opcaoSelecionada={opcaoBotaoSelecionado}
+                        onSelecionar={setOpcaoBotaoSelecionado}
+                    />
                 </View>
+
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View>
+                        {opcaoBotaoSelecionado == 'Veículo' ? (
+                            <View>
+                                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo" informacao={cliente?.modeloVeiculo} />
+                                <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano" informacao={cliente?.anoVeiculo.toString()} />
+                            </View>
+                        ) : (
+                            <View>
+                                <CardSmall nomeIcone="card-account-details-outline" tipoInformacao="Cpf" informacao={cliente?.cpf} />
+                                <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={cliente?.telefone} />
+                                <CardSmall nomeIcone="email-outline" tipoInformacao="Email" informacao={cliente?.email} />
+                            </View>
+                        )}
+
+                        <View style={styles.containerBotoes}>
+                            <TouchableOpacity style={styles.botao} onPress={() => navegarParaTela(RotaPrincipalEnum.ESQUECI_SENHA)}>
+                                <MaterialCommunityIcons name='lock-check-outline' color={Colors.corPrimaria} size={28}/>
+                                <Text style={styles.textoBotao}> Alterar senha </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.botao} onPress={() => confirmarSaidaAplicativo()}>
+                                <MaterialCommunityIcons name='logout-variant' color={Colors.corPrimaria} size={28}/>
+                                <Text style={styles.textoBotao}> Sair Aplicativo </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.botao} onPress={() => confirmarExclusaoConta()}>
+                                <MaterialCommunityIcons name='delete-outline' color={Colors.vermelhoErro} size={28}/>
+                                <Text style={styles.textoBotao}> Excluir conta </Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.containerLogo}>
+                            <Text style={styles.logo}> Primo </Text>
+                            <Text style={styles.versaoApp}> Versão 0.0.1 </Text>
+                        </View>
+
+                    </View>
+                </ScrollView>
             </View>
             
             {mostrarModalAvatar && (

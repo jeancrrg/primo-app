@@ -7,15 +7,13 @@ export const styles = StyleSheet.create({
     },
     containerPerfil: {
         position: 'absolute',
-        top: 80,
+        top: 75,
         left: 20,
         right: 20,
-        zIndex: 10
-    },
-    cardUsuario: {
+        zIndex: 10,
         flexDirection: "row",
         backgroundColor: Colors.branco,
-        padding: 16,
+        padding: 15,
         borderRadius: 20
     },
     containerNome: {
@@ -46,7 +44,31 @@ export const styles = StyleSheet.create({
     containerInformacoes: {
         flex: 1,
         paddingHorizontal: 20,
-        marginTop: 110
+        marginTop: 65,
+        marginBottom: 110
+    },
+    containerBotaoSegmentado: {
+        alignItems: 'center'
+    },
+    containerBotoes: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    botao: {
+        height: 80,
+        width: 105,
+        backgroundColor: Colors.branco,
+        padding: 10,
+        justifyContent: 'center',
+        borderRadius: 10,
+        elevation: 4,
+        shadowColor: Colors.preto,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1
+    },
+    textoBotao: {
+        fontFamily: "Mulish-Medium"
     },
     containerLogo: {
         flex: 1,
@@ -57,19 +79,7 @@ export const styles = StyleSheet.create({
         fontFamily: "Mulish-Medium",
         color: Colors.cinzaMedio
     },
-    containerSaidaApp: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems:"center"
-    },
-    textoSaidaApp: {
-        padding: 2,
-        fontSize: 17,
+    versaoApp: {
         fontFamily: "Mulish-Medium"
-    },
-    iconeSaidaApp: {
-        color: Colors.preto,
-        fontSize: 24,
-        padding: 2
     }
 });

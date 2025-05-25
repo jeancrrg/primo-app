@@ -5,24 +5,22 @@ import { useEffect, useState } from "react";
 import { obterCodigoPessoaLogado, sairAplicativo } from "../../../services/Autenticacao.service";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ModalAvatar from "../../../components/modal-avatar/ModalAvatar";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RotaStack } from "../../../models/types/RotaStack";
 import CardSmall from "../../../components/card-small/CardSmall";
 import BotaoSegmentado from "../../../components/botao-segmentado/BotaoSegmentado";
 import Toast from "react-native-toast-message";
-import { atualizarAvatarPrestador, buscarPrestadorServico } from "../../../services/Prestador.service";
 import { PrestadorServico } from "../../../models/cadastro/PrestadorServico";
 import Header from "../../../components/header/Header";
+import { Colors } from "../../../../assets/styles/Colors";
+import { navegarParaTela } from "../../../utils/NavigationUtil";
+import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
+import { atualizarAvatarPrestador, buscarPrestadorServico } from "../../../services/Prestador.service";
 
 export default function PerfilPrestadorScreen(): JSX.Element {
 
     const [prestadorServico, setPrestadorServico] = useState<PrestadorServico>();
     const [mostrarModalAvatar, setMostrarModalAvatar] = useState<boolean>(false);
-    const [opcoesBotaoSegmentado, setOpcoesBotaoSegmentado] = useState<string[]>(['Dados', 'Serviço']);
+    const [opcoesBotaoSegmentado] = useState<string[]>(['Dados', 'Serviço']);
     const [opcaoBotaoSelecionado, setOpcaoBotaoSelecionado] = useState<string>('Dados');
-
-    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
     useEffect(() => {
         carregarPrestadorServico();
@@ -44,6 +42,7 @@ export default function PerfilPrestadorScreen(): JSX.Element {
 
     async function selecionarAvatar(codigoAvatar: number): Promise<void> {
         prestadorServico!.codigoAvatar = codigoAvatar;
+        setPrestadorServico(prestadorServico);
         atualizarAvatarPrestador(prestadorServico!.codigo, prestadorServico!.codigoAvatar);
     }
 
@@ -66,7 +65,29 @@ export default function PerfilPrestadorScreen(): JSX.Element {
 
     function sair(): void {
         sairAplicativo();
-        navigation.replace('login');
+        navegarParaTela(RotaPrincipalEnum.LOGIN); 
+    }
+
+    function confirmarExclusaoConta(): void {
+        Alert.alert("Aviso", "Deseja realmente excluir sua conta do aplicativo?",
+            [
+                {
+                    text: "SIM",
+                    onPress: () => excluir(),
+                },
+                {
+                    text: "NÃO",
+                    style: "cancel",
+                    onPress: () => {}
+                }
+            ],
+            {cancelable: true}
+        );
+    }
+
+    function excluir(): void {
+        sairAplicativo();
+        navegarParaTela(RotaPrincipalEnum.LOGIN);
     }
 
     return (
@@ -98,24 +119,38 @@ export default function PerfilPrestadorScreen(): JSX.Element {
                     <View>
                         {opcaoBotaoSelecionado == 'Serviço' ? (
                             <View>
+                                <CardSmall nomeIcone="map-marker-outline" tipoInformacao="Endereço" informacao={prestadorServico?.endereco.logradouro} />
                                 <CardSmall nomeIcone="car-wrench" tipoInformacao="Serviço" informacao={prestadorServico?.descricaoTipoServico} />
                                 <CardSmall nomeIcone="currency-usd" tipoInformacao="Valor" informacao={prestadorServico?.valorServico.toString()} />
                             </View>
                         ) : (
                             <View>
+                                <CardSmall nomeIcone="card-account-details-outline" tipoInformacao="Cnpj" informacao={prestadorServico?.cnpj} />
                                 <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={prestadorServico?.telefone} />
                                 <CardSmall nomeIcone="email-outline" tipoInformacao="Email" informacao={prestadorServico?.email} />
-                                <CardSmall nomeIcone="briefcase-check-outline" tipoInformacao="Cnpj" informacao={prestadorServico?.cnpj} />
-                                <CardSmall nomeIcone="map-marker-outline" tipoInformacao="Endereço" informacao={prestadorServico?.endereco.logradouro} />
                             </View>
                         )}
 
+                        <View style={styles.containerBotoes}>
+                            <TouchableOpacity style={styles.botao} onPress={() => navegarParaTela(RotaPrincipalEnum.ESQUECI_SENHA)}>
+                                <MaterialCommunityIcons name='lock-check-outline' color={Colors.corPrimaria} size={28}/>
+                                <Text style={styles.textoBotao}> Alterar senha </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.botao} onPress={() => confirmarSaidaAplicativo()}>
+                                <MaterialCommunityIcons name='logout-variant' color={Colors.corPrimaria} size={28}/>
+                                <Text style={styles.textoBotao}> Sair Aplicativo </Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.botao} onPress={() => confirmarExclusaoConta()}>
+                                <MaterialCommunityIcons name='delete-outline' color={Colors.vermelhoErro} size={28}/>
+                                <Text style={styles.textoBotao}> Excluir conta </Text>
+                            </TouchableOpacity>
+                        </View>
+
                         <View style={styles.containerLogo}>
                             <Text style={styles.logo}> Primo </Text>
-                            <TouchableOpacity style={styles.containerSaidaApp} onPress={() => confirmarSaidaAplicativo()}>
-                                <Text style={styles.textoSaidaApp}> sair do aplicativo </Text>
-                                <MaterialCommunityIcons name='logout-variant' style={styles.iconeSaidaApp} />
-                            </TouchableOpacity>
+                            <Text style={styles.versaoApp}> Versão 0.0.1 </Text>
                         </View>
                     </View>
                 </ScrollView>

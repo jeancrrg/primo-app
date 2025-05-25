@@ -53,7 +53,6 @@ export default function MapaClienteScreen(): JSX.Element {
                 longitudeDelta: 0.02,
             }, 1000);
 
-            // Depois de 1s, realizar zoom na localização atual
             setTimeout(() => {
                 referenciaMapa.current?.animateToRegion({
                     latitude: localizacao.coords.latitude,

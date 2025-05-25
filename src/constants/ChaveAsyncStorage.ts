@@ -1,3 +1,5 @@
-export const CHAVE_TOKEN = 'chaveToken';
-export const CHAVE_CODIGO_PESSOA = 'chaveCodigoPessoa';
-export const CHAVE_TIPO_PESSOA = 'chaveTipoPessoa';
+export const ChaveAsyncStorage = {
+    CHAVE_TOKEN: 'chaveToken',
+    CHAVE_CODIGO_PESSOA: 'chaveCodigoPessoa',
+    CHAVE_TIPO_PESSOA : 'chaveTipoPessoa'
+}

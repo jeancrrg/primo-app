@@ -3,8 +3,6 @@ import { styles } from "./CadastroPrestadorScreenStyle";
 import * as Animatable from 'react-native-animatable';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../../assets/styles/Colors";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import BotaoPrincipal from "../../../components/botao/botao-principal/BotaoPrincipal";
 import Input from "../../../components/input/Input";
@@ -12,7 +10,6 @@ import Divider from "../../../components/divider/Divider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioPrestador } from "../../../validations/PrestadorValidation";
-import { RotaStack } from "../../../models/types/RotaStack";
 import Loader from "../../../components/loader/Loader";
 import { buscarTiposServico } from "../../../services/TipoServico.service";
 import Picker from "../../../components/picker/Picker";
@@ -24,6 +21,8 @@ import { TipoServico } from "../../../models/cadastro/TipoServico";
 import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
 import { CadastroPrestadorDTO } from "../../../models/dto/CadastroPrestadorDTO";
 import { FormularioCadastroPrestador } from "../../../models/interfaces/formularios/FormularioCadastroPrestador";
+import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
+import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 
 export default function CadastroPrestadorScreen(): JSX.Element {
 
@@ -31,8 +30,6 @@ export default function CadastroPrestadorScreen(): JSX.Element {
     const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);
     const [tipoServicoSelecionado, setTipoServicoSelecionado] = useState<TipoServico | null>(null);
     const [listaTiposServico, setListaTiposServico] = useState<TipoServico[]>([])
-
-    const navigation = useNavigation<NativeStackNavigationProp<RotaStack>>();
 
     const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroPrestador>({
         resolver: yupResolver(validacoesFormularioPrestador)
@@ -66,7 +63,7 @@ export default function CadastroPrestadorScreen(): JSX.Element {
                 await cadastrarPrestador(cadastroPrestadorDTO);
                 await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
                 Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
-                navigation.navigate('login');
+                navegarParaTela(RotaPrincipalEnum.LOGIN);
             }
             setLoading(false);
         } catch (error: any) {
@@ -97,7 +94,7 @@ export default function CadastroPrestadorScreen(): JSX.Element {
             ) : (
                 <View style={styles.container}>
                     <Animatable.View animation='fadeInLeft' delay={500} style={styles.containerLogo}>
-                        <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
+                        <TouchableOpacity style={styles.botaoVoltar} onPress={() => voltarTela()}>
                             <MaterialCommunityIcons name='arrow-left-circle-outline' color={Colors.branco} size={40} />
                         </TouchableOpacity>
 
@@ -157,7 +154,7 @@ export default function CadastroPrestadorScreen(): JSX.Element {
                                     name='cnpj'
                                     label='Cnpj'
                                     maxLength={18}
-                                    nomeIconeEsquerda='briefcase-check-outline'
+                                    nomeIconeEsquerda='card-account-details-outline'
                                     errosValidacao={errors.cnpj?.message}
                                     mascara={formatarCNPJ}
                                     tipoTeclado='numeric'
