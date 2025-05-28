@@ -4,7 +4,7 @@ import { styles } from "./PerfilClienteScreenStyle";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { Cliente } from "../../../models/cadastro/Cliente";
-import { obterCodigoPessoaLogado, sairAplicativo } from "../../../services/Autenticacao.service";
+import { sairAplicativo } from "../../../services/Autenticacao.service";
 import { atualizarAvatarCliente, buscarCliente } from "../../../services/Cliente.service";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
 import CardSmall from "../../../components/card-small/CardSmall";
@@ -14,6 +14,7 @@ import BotaoSegmentado from "../../../components/botao-segmentado/BotaoSegmentad
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 import { navegarParaTela } from "../../../utils/NavigationUtil";
 import { Colors } from "../../../../assets/styles/Colors";
+import { obterCodigoPessoaLogado } from "../../../services/Storage.service";
 
 export default function PerfilClienteScreen(): JSX.Element {
 

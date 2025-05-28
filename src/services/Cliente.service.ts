@@ -1,26 +1,21 @@
 import Api from "../config/api/Api";
 import { Cliente } from "../models/cadastro/Cliente";
+import { CadastroClienteRequest } from "../models/dto/request/CadastroClienteRequest";
 
 export async function buscarCliente(codigoPessoa: number): Promise<Cliente> {
-    try {
-        const response = await Api.get('/clientes', {
-            params: { codigoPessoa }
-        });
-        return response.data;
-    } catch (error: any) {
-        console.error('Erro ao buscar o cliente! - ', error);
-        throw new Error('Erro ao buscar o cliente!');
-    }
+    return (await Api.get(`/clientes/${codigoPessoa}`)).data;
+}
+
+export async function cadastrarCliente(cadastroClienteRequest: CadastroClienteRequest): Promise<void> {
+    await Api.post('/clientes', cadastroClienteRequest);
 }
 
 export async function atualizarAvatarCliente(codigoPessoa: number, codigoAvatar: number): Promise<void> {
-    try {
-        const response = await Api.put('/clientes/avatar', null, {
-            params: { codigoPessoa, codigoAvatar }
-        });
-        return response.data;
-    } catch (error: any) {
-        console.error('Erro ao atualizar o avatar do cliente! - ', error);
-        throw new Error('Erro ao atualizar o avatar do cliente!');
-    }
+    await Api.put(`/clientes/${codigoPessoa}/avatar`, null, {
+        params: { codigoPessoa, codigoAvatar }
+    });
+}
+
+export async function inativarCliente(codigoPessoa: number): Promise<void> {
+    await Api.put(`/clientes/${codigoPessoa}/inativar`, null, {});
 }

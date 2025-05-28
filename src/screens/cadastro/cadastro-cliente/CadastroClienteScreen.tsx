@@ -1,5 +1,5 @@
 import { Image, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import * as Animatable from 'react-native-animatable'; 
+import * as Animatable from 'react-native-animatable';
 import { styles } from "./CadastroClienteScreenStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../../assets/styles/Colors";
@@ -11,13 +11,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioCliente } from "../../../validations/ClienteValidation";
 import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente";
-import { formatarTelefone } from "../../../utils/FormatterUtil";
-import { cadastrarCliente, cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
+import { formatarCPF, formatarTelefone } from "../../../utils/FormatterUtil";
+import { cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
 import Toast from "react-native-toast-message";
 import Loader from "../../../components/loader/Loader";
-import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
+import { removerTokenAcesso } from "../../../services/Storage.service";
+import { cadastrarCliente } from "../../../services/Cliente.service";
 
 export default function CadastroClienteScreen(): JSX.Element {
 
@@ -39,7 +40,6 @@ export default function CadastroClienteScreen(): JSX.Element {
             navegarParaTela(RotaPrincipalEnum.LOGIN);
         } catch (error: any) {
             setLoading(false);
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
         }
     }
 
@@ -87,10 +87,10 @@ export default function CadastroClienteScreen(): JSX.Element {
                                     control={control}
                                     name='cpf'
                                     label='Cpf'
-                                    maxLength={15}
+                                    maxLength={14}
                                     nomeIconeEsquerda='card-account-details-outline'
                                     errosValidacao={errors.cpf?.message}
-                                    mascara={formatarTelefone}
+                                    mascara={formatarCPF}
                                     tipoTeclado='numeric'
                                 />
 

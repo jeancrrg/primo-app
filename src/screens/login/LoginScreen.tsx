@@ -10,15 +10,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioLogin } from "../../validations/LoginValidation";
 import { User } from "firebase/auth";
-import { LoginDTO } from "../../models/dto/LoginDTO";
 import { isNotEmpty } from "../../utils/ValidationUtil";
-import Toast from "react-native-toast-message";
-import * as TokenAcessoService from "../../services/TokenAcesso.service";
 import Loader from "../../components/loader/Loader";
 import { FormularioLogin } from "../../models/interfaces/formularios/FormularioLogin";
 import { navegarParaTela } from "../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../models/enum/RotaPrincipal.enum";
-import { autenticarUsuario, realizarLogin, removerCodigoPessoaLogado, salvarCodigoPessoaLogado, salvarTipoPessoaLogado } from "../../services/Autenticacao.service";
+import { autenticarUsuario, realizarLogin } from "../../services/Autenticacao.service";
+import { removerCodigoPessoaLogado, removerTokenAcesso, salvarCodigoPessoaLogado, salvarTipoPessoaLogado, salvarTokenAcesso } from "../../services/Storage.service";
+import { LoginResponse } from "../../models/dto/response/LoginResponse";
 
 export default function LoginScreen(): JSX.Element {
 
@@ -32,23 +31,22 @@ export default function LoginScreen(): JSX.Element {
     async function entrar(formulario: FormularioLogin): Promise<void> {
         try {
             setLoading(true);
-            TokenAcessoService.removerTokenAcesso();
+            removerTokenAcesso();
             removerCodigoPessoaLogado();
             
             const usuario: User = await autenticarUsuario(formulario.login, formulario.senha);
-            const loginDTO: LoginDTO = await realizarLogin(formulario);
+            const loginResponse: LoginResponse = await realizarLogin(formulario);
 
-            TokenAcessoService.salvarTokenAcesso(loginDTO.token);
-            salvarCodigoPessoaLogado(loginDTO.codigoPessoa);
-            salvarTipoPessoaLogado(loginDTO.tipoPessoa);
+            salvarTokenAcesso(loginResponse.token);
+            salvarCodigoPessoaLogado(loginResponse.codigoPessoa);
+            salvarTipoPessoaLogado(loginResponse.tipoPessoa);
 
-            if (isNotEmpty(usuario) && isNotEmpty(loginDTO.token)) {
+            if (isNotEmpty(usuario) && isNotEmpty(loginResponse.token)) {
                 setLoading(false);
                 navegarParaTela(RotaPrincipalEnum.TABS);
             }
         } catch (error: any) {
             setLoading(false);
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message });
         }
     }
 

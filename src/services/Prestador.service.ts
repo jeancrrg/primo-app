@@ -1,5 +1,6 @@
 import Api from "../config/api/Api";
 import { PrestadorServico } from "../models/cadastro/PrestadorServico";
+import { CadastroPrestadorDTO } from "../models/dto/CadastroPrestadorDTO";
 import { isNotEmpty } from "../utils/ValidationUtil";
 
 export async function buscarPrestadoresServico(termoPesquisa?: string): Promise<PrestadorServico[]> {
@@ -8,37 +9,28 @@ export async function buscarPrestadoresServico(termoPesquisa?: string): Promise<
         if (isNotEmpty(termoPesquisa)) {
             parametros.termoPesquisa = termoPesquisa;
         }
-        const response = await Api.get('/prestadores-servico', { params: parametros });
-        return response.data;
+        return (await Api.get('/prestadores-servico', { params: parametros })).data;
     } catch (error: any) {
-        if (error.response?.status == 404) {
-            return [];
-        }
-        console.error('Erro ao buscar os prestadores de serviço! - ', error);
-        throw new Error('Erro ao buscar os prestadores de serviço!');
+        return [];
     }
 }
 
 export async function buscarPrestadorServico(codigoPessoa: number): Promise<PrestadorServico> {
-    try {
-        const response = await Api.get('/prestadores-servico/unico', {
-            params: { codigoPessoa }
-        });
-        return response.data;
-    } catch (error: any) {
-        console.error('Erro ao buscar o prestador de serviço! - ', error);
-        throw new Error('Erro ao buscar o prestador de serviço!');
-    }
+    return (await Api.get('/prestadores-servico/unico', {
+        params: { codigoPessoa }
+    })).data;
+}
+
+export async function cadastrarPrestador(cadastroPrestadorDTO: CadastroPrestadorDTO): Promise<void> {
+    await Api.post('/prestadores-servico', cadastroPrestadorDTO);
 }
 
 export async function atualizarAvatarPrestador(codigoPessoa: number, codigoAvatar: number): Promise<void> {
-    try {
-        const response = await Api.put('/prestadores-servico/avatar', null, {
-            params: { codigoPessoa, codigoAvatar }
-        });
-        return response.data;
-    } catch (error: any) {
-        console.error('Erro ao atualizar o avatar do prestador de serviço! - ', error);
-        throw new Error('Erro ao atualizar o avatar do prestador de serviço!');
-    }
+    await Api.put(`/prestadores-servico/${codigoPessoa}/avatar`, null, {
+        params: { codigoPessoa, codigoAvatar }
+    });
+}
+
+export async function inativarPrestador(codigoPessoa: number): Promise<void> {
+    await Api.put(`/prestadores-servico/${codigoPessoa}/inativar`, null, {});
 }

@@ -13,16 +13,17 @@ import { validacoesFormularioPrestador } from "../../../validations/PrestadorVal
 import Loader from "../../../components/loader/Loader";
 import { buscarTiposServico } from "../../../services/TipoServico.service";
 import Picker from "../../../components/picker/Picker";
-import { cadastrarPrestador, cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
+import { cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
 import Toast from "react-native-toast-message";
 import { isEmpty } from "../../../utils/ValidationUtil";
 import { formatarCNPJ, formatarTelefone } from "../../../utils/FormatterUtil";
 import { TipoServico } from "../../../models/cadastro/TipoServico";
-import { removerTokenAcesso } from "../../../services/TokenAcesso.service";
 import { CadastroPrestadorDTO } from "../../../models/dto/CadastroPrestadorDTO";
 import { FormularioCadastroPrestador } from "../../../models/interfaces/formularios/FormularioCadastroPrestador";
 import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
+import { removerTokenAcesso } from "../../../services/Storage.service";
+import { cadastrarPrestador } from "../../../services/Prestador.service";
 
 export default function CadastroPrestadorScreen(): JSX.Element {
 
@@ -42,7 +43,7 @@ export default function CadastroPrestadorScreen(): JSX.Element {
     async function carregarTiposServico(): Promise<void> {
         try {
             setLoading(true);
-            const listaTiposServico: TipoServico[] = await buscarTiposServico()
+            const listaTiposServico: TipoServico[] = await buscarTiposServico();
             setListaTiposServico(listaTiposServico);
             setLoading(false);
         } catch (error: any) {

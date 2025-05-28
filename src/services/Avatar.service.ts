@@ -3,17 +3,11 @@ import { Avatar } from "../models/cadastro/Avatar";
 import { isEmpty, isNotEmpty } from "../utils/ValidationUtil";
 
 export async function buscarAvatares(codigo?: number): Promise<Avatar[]> {
-    try {
-        const parametros: any = {};
-        if (isNotEmpty(codigo)) {
-            parametros.codigo = codigo;
-        }
-        const response = await Api.get('/avatares', { params: parametros });
-        return response.data;
-    } catch (error: any) {
-        console.error('Erro ao buscar os avatares! - ', error);
-        throw new Error('Erro ao buscar os avatares!');
+    const parametros: any = {};
+    if (isNotEmpty(codigo)) {
+        parametros.codigo = codigo;
     }
+    return (await Api.get('/avatares', { params: parametros })).data;
 }
 
 const imagensAvatares: { [key: number]: any } = {
@@ -24,6 +18,7 @@ const imagensAvatares: { [key: number]: any } = {
     5: require('../../assets/images/avatares/avatar-3.png'),
     6: require('../../assets/images/avatares/avatar-4.png'),
     7: require('../../assets/images/avatares/avatar-5.png'),
+    8: require('../../assets/images/avatares/avatar-maria-cecilia.png'),
 };
 
 export function obterImagemAvatar(codigoAvatar: number | undefined) {
