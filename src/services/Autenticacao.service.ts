@@ -1,10 +1,10 @@
+import { FormularioLogin } from './../models/interfaces/formularios/FormularioLogin';
 import Api from "../config/api/Api";
 import { auth } from "../config/firebase/FirebaseConfig";
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
 import Toast from 'react-native-toast-message';
 import { removerCodigoPessoaLogado, removerTipoPessoaLogado, removerTokenAcesso } from './Storage.service';
-import { LoginRequest } from '../models/dto/request/LoginRequest';
-import { LoginResponse } from '../models/dto/response/LoginResponse';
+import { LoginDTO } from "../models/dto/LoginDTO";
 
 export async function autenticarUsuario(email: string, senha: string): Promise<User> {
     try {
@@ -59,8 +59,8 @@ export async function redefinirSenha(email: string): Promise<void> {
     }
 }
 
-export async function realizarLogin(loginRequest: LoginRequest): Promise<LoginResponse> {
-    return (await Api.post('/autenticacoes/login', loginRequest)).data;
+export async function realizarLogin(FormularioLogin: FormularioLogin): Promise<LoginDTO> {
+    return (await Api.post('/autenticacoes/login', FormularioLogin)).data;
 }
 
 export async function sairAplicativo(): Promise<void> {

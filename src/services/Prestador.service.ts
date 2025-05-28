@@ -16,9 +16,7 @@ export async function buscarPrestadoresServico(termoPesquisa?: string): Promise<
 }
 
 export async function buscarPrestadorServico(codigoPessoa: number): Promise<PrestadorServico> {
-    return (await Api.get('/prestadores-servico/unico', {
-        params: { codigoPessoa }
-    })).data;
+    return (await Api.get(`/prestadores-servico/${codigoPessoa}`)).data;
 }
 
 export async function cadastrarPrestador(cadastroPrestadorDTO: CadastroPrestadorDTO): Promise<void> {
@@ -26,9 +24,7 @@ export async function cadastrarPrestador(cadastroPrestadorDTO: CadastroPrestador
 }
 
 export async function atualizarAvatarPrestador(codigoPessoa: number, codigoAvatar: number): Promise<void> {
-    await Api.put(`/prestadores-servico/${codigoPessoa}/avatar`, null, {
-        params: { codigoPessoa, codigoAvatar }
-    });
+    await Api.put(`/prestadores-servico/${codigoPessoa}/avatar`, { codigo: codigoAvatar });
 }
 
 export async function inativarPrestador(codigoPessoa: number): Promise<void> {

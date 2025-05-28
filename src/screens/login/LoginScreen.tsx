@@ -17,7 +17,7 @@ import { navegarParaTela } from "../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../models/enum/RotaPrincipal.enum";
 import { autenticarUsuario, realizarLogin } from "../../services/Autenticacao.service";
 import { removerCodigoPessoaLogado, removerTokenAcesso, salvarCodigoPessoaLogado, salvarTipoPessoaLogado, salvarTokenAcesso } from "../../services/Storage.service";
-import { LoginResponse } from "../../models/dto/response/LoginResponse";
+import { LoginDTO } from "../../models/dto/LoginDTO";
 
 export default function LoginScreen(): JSX.Element {
 
@@ -35,13 +35,13 @@ export default function LoginScreen(): JSX.Element {
             removerCodigoPessoaLogado();
             
             const usuario: User = await autenticarUsuario(formulario.login, formulario.senha);
-            const loginResponse: LoginResponse = await realizarLogin(formulario);
+            const loginDTO: LoginDTO = await realizarLogin(formulario);
 
-            salvarTokenAcesso(loginResponse.token);
-            salvarCodigoPessoaLogado(loginResponse.codigoPessoa);
-            salvarTipoPessoaLogado(loginResponse.tipoPessoa);
+            salvarTokenAcesso(loginDTO.token);
+            salvarCodigoPessoaLogado(loginDTO.codigoPessoa);
+            salvarTipoPessoaLogado(loginDTO.tipoPessoa);
 
-            if (isNotEmpty(usuario) && isNotEmpty(loginResponse.token)) {
+            if (isNotEmpty(usuario) && isNotEmpty(loginDTO.token)) {
                 setLoading(false);
                 navegarParaTela(RotaPrincipalEnum.TABS);
             }
