@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { TipoPessoaEnum } from "../models/enum/TipoPessoa.enum";
 import TabsClienteRoute from "../routes/TabsClienteRoute.routes";
 import TabsPrestadorRoute from "../routes/TabsPrestadorRoute.routes";
-import { obterTipoPessoaLogado } from "../services/Autenticacao.service";
+import { obterTipoPessoaLogado } from "../services/Storage.service";
 
 export default function RedirecionamentoTipoAcessoUtil(): JSX.Element {
 

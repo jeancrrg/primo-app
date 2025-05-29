@@ -39,7 +39,6 @@ export default function InicioPrestadorScreen(): JSX.Element {
             </View>
 
             <View style={styles.containerConteudo}>
-
                 <View style={styles.cardSecundario}>
                     <View style={styles.containerImagem}>
                         <Image source={require("../../../../assets/images/ilustracoes/conexao.png")} style={styles.imagemCardSecundario} />

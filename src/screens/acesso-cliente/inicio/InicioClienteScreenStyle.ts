@@ -19,11 +19,7 @@ export const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: Colors.branco,
         alignSelf: "flex-start",
-        justifyContent: "space-between",
-        elevation: 4,
-        shadowColor: Colors.preto,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1
+        justifyContent: "space-between"
     },
     containerTexto: {
         flex: 1,

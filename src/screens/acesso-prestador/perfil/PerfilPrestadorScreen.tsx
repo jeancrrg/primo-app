@@ -2,7 +2,7 @@ import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-na
 import { styles } from "./PerfilPrestadorScreenStyle";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
 import { useEffect, useState } from "react";
-import { obterCodigoPessoaLogado, sairAplicativo } from "../../../services/Autenticacao.service";
+import { sairAplicativo } from "../../../services/Autenticacao.service";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ModalAvatar from "../../../components/modal-avatar/ModalAvatar";
 import CardSmall from "../../../components/card-small/CardSmall";
@@ -14,6 +14,7 @@ import { Colors } from "../../../../assets/styles/Colors";
 import { navegarParaTela } from "../../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 import { atualizarAvatarPrestador, buscarPrestadorServico } from "../../../services/Prestador.service";
+import { obterCodigoPessoaLogado } from "../../../services/Storage.service";
 
 export default function PerfilPrestadorScreen(): JSX.Element {
 

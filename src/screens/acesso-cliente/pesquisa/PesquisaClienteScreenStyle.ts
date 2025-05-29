@@ -13,10 +13,10 @@ export const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 30,
         borderRadius: 20,
-        shadowColor: Colors.cinzaEscuro,
+        shadowColor: Colors.preto,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
-        elevation: 6
+        elevation: 4
     },
     iconeBarraPesquisa: {
         fontSize: 20,

@@ -16,10 +16,6 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         borderRadius: 20,
         backgroundColor: Colors.branco,
-        elevation: 4,
-        shadowColor: Colors.preto,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
         alignSelf: "flex-start",
         justifyContent: "space-between"
     },
@@ -65,10 +61,6 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: Colors.branco,
         borderRadius: 20,
-        elevation: 4,
-        shadowColor: Colors.preto,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
         marginVertical: 20
     },
     imagemCardSecundario: {
