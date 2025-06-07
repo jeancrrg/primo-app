@@ -28,16 +28,7 @@ export default function MapaClienteScreen(): JSX.Element {
         setLoading(true);
         obterLocalizacaoAtual();
         buscarPrestadores();
-    }, []);
-
-    useEffect(() => { 
-        Location.watchPositionAsync({
-            accuracy: Location.Accuracy.High,
-            timeInterval: 1000,
-            distanceInterval: 1
-        }, (localizacao) => {
-            setLocalizacaoAtual(localizacao);
-        });
+        atualizarLocalizacaoTemReal();
     }, []);
 
     async function obterLocalizacaoAtual(): Promise<void> {
@@ -46,6 +37,7 @@ export default function MapaClienteScreen(): JSX.Element {
             const localizacao: Location.LocationObject = await Location.getCurrentPositionAsync();
             setLocalizacaoAtual(localizacao);
 
+            // Mostrar mapa sem zoom
             referenciaMapa.current?.animateToRegion({
                 latitude: localizacao.coords.latitude,
                 longitude: localizacao.coords.longitude,
@@ -53,6 +45,7 @@ export default function MapaClienteScreen(): JSX.Element {
                 longitudeDelta: 0.02,
             }, 1000);
 
+            // Depois de 1s, realizar zoom na localização atual
             setTimeout(() => {
                 referenciaMapa.current?.animateToRegion({
                     latitude: localizacao.coords.latitude,
@@ -76,6 +69,19 @@ export default function MapaClienteScreen(): JSX.Element {
         const listaPrestadoresServico: PrestadorServico[] = await buscarPrestadoresServico();
         setListaPrestadoresServico(listaPrestadoresServico);
         setLoading(false);
+    }
+
+    async function atualizarLocalizacaoTemReal(): Promise<void> {
+        const concedeuPermissaoLocalizacao: boolean = await solicitarPermissaoLocalizacao();
+        if (concedeuPermissaoLocalizacao) {
+            Location.watchPositionAsync({
+                accuracy: Location.Accuracy.High,
+                timeInterval: 1000,
+                distanceInterval: 1
+            }, (localizacao) => {
+                setLocalizacaoAtual(localizacao);
+            });
+        }
     }
 
     function onPressMarker(prestadorServico: PrestadorServico): void {

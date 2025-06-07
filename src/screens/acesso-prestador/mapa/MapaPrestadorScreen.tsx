@@ -16,17 +16,7 @@ export default function MapaPrestadorScreen(): JSX.Element {
 
     useEffect(() => {
         obterLocalizacaoAtual();
-    }, []);
-    
-    // Atualiza a localização em tempo real
-    useEffect(() => {
-        Location.watchPositionAsync({
-            accuracy: Location.Accuracy.High,
-            timeInterval: 1000,
-            distanceInterval: 1
-        }, (localizacao) => {
-            setLocalizacaoAtual(localizacao);
-        });
+        atualizarLocalizacaoTemReal();
     }, []);
 
     async function obterLocalizacaoAtual(): Promise<void> {
@@ -63,6 +53,19 @@ export default function MapaPrestadorScreen(): JSX.Element {
             return true;
         }
         return false;
+    }
+
+    async function atualizarLocalizacaoTemReal(): Promise<void> {
+        const concedeuPermissaoLocalizacao: boolean = await solicitarPermissaoLocalizacao();
+        if (concedeuPermissaoLocalizacao) {
+            Location.watchPositionAsync({
+                accuracy: Location.Accuracy.High,
+                timeInterval: 1000,
+                distanceInterval: 1
+            }, (localizacao) => {
+                setLocalizacaoAtual(localizacao);
+            });
+        }
     }
 
     return (
