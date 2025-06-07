@@ -96,6 +96,10 @@ export default function MapaClienteScreen(): JSX.Element {
         bottomSheetRef.current?.close();
     }
 
+    async function solicitarPrestador(): Promise<void> {
+        
+    }
+
     return (
         <View style={styles.container}>
 
@@ -156,7 +160,7 @@ export default function MapaClienteScreen(): JSX.Element {
                         <View style={styles.containerSolicitacao}>
                             <Text style={styles.tempoSolicitacao}> 20 min </Text>
 
-                            <TouchableOpacity style={styles.botaoSolicitacao}>
+                            <TouchableOpacity style={styles.botaoSolicitacao} onPress={() => solicitarPrestador()}>
                                 <MaterialCommunityIcons name='checkbox-marked-circle-outline' size={24} color={Colors.branco} />
                                 <Text style={styles.textoBotaoSolicitacao}> Solicitar </Text>
                             </TouchableOpacity>

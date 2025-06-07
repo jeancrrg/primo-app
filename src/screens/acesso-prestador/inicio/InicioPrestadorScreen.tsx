@@ -19,8 +19,8 @@ export default function InicioPrestadorScreen(): JSX.Element {
         } else {
             setIconeBotaoConexao('access-point');
             setTextoBotaoConexao('Conectar');
+            navegarParaTela(RotaTabsEnum.MAPA);
         }
-        navegarParaTela(RotaTabsEnum.MAPA);
     }
 
     return (
