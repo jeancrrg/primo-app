@@ -152,6 +152,7 @@ export default function MapaClienteScreen(): JSX.Element {
 
             {prestadorServicoSelecionado && (
                 <BottomSheet
+                    key={prestadorServicoSelecionado.codigo}
                     ref={bottomSheetRef}
                     index={1}
                     snapPoints={snapPoints}

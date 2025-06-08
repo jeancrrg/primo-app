@@ -76,7 +76,8 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'flex-start',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 7
     },
     nome: {
         fontSize: 18,

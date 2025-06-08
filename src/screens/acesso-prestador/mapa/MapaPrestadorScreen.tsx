@@ -10,14 +10,15 @@ import { conectarWebSocket, disconectarWebSocket } from "../../../services/WebSo
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Surface } from "react-native-paper";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
+import { InformacaoClienteDTO } from "../../../models/dto/InformacaoClienteDTO.model";
 
 export default function MapaPrestadorScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [localizacaoAtual, setLocalizacaoAtual] = useState<Location.LocationObject | null>(null);
 
-    const [mensagemSolicitacao, setMensagemSolicitacao] = useState<string>("");
-    const [possuiSolicitacaoServico, setPossuiSolicitacaoServico] = useState<boolean>(true);
+    const [possuiSolicitacaoServico, setPossuiSolicitacaoServico] = useState<boolean>(false);
+    const [informacaoClienteDTO, setInformacaoClienteDTO] = useState<InformacaoClienteDTO>();
 
     const bottomSheetRef = useRef<BottomSheet>(null);
     const referenciaMapa = useRef<MapView>(null);
@@ -31,10 +32,10 @@ export default function MapaPrestadorScreen(): JSX.Element {
 
     useEffect(() => {
         conectarWebSocket(2, (data) => {
-            console.log('Mensagem recebida do WebSocket:', data);
-            setMensagemSolicitacao('Nova solicitação recebida!');
+            setInformacaoClienteDTO(data);           
+            setPossuiSolicitacaoServico(true);
+            abrirBottomSheet();
             setLoading(false);
-            setPossuiSolicitacaoServico(true);            
         });
 
         setLoading(false); 
@@ -90,13 +91,20 @@ export default function MapaPrestadorScreen(): JSX.Element {
         }
     }
 
+    function abrirBottomSheet(): void {
+        bottomSheetRef.current?.expand();
+    }
+
+    function fecharBottomSheet(): void {
+        bottomSheetRef.current?.close();
+    }
+
     return (
         <View style={styles.container}>
 
             <View style={styles.headerConexao}>
                 <MaterialCommunityIcons name='access-point' color={Colors.cinzaEscuro} size={30} />
                 <Text style={styles.textoHeaderConexao}> Você está conectado </Text>
-                <Text style={styles.textoHeaderConexao}> {mensagemSolicitacao} </Text>
             </View>
 
             {localizacaoAtual && !loading ? (
@@ -122,6 +130,7 @@ export default function MapaPrestadorScreen(): JSX.Element {
 
             {possuiSolicitacaoServico && (
                 <BottomSheet
+                    key={informacaoClienteDTO?.codigo}
                     ref={bottomSheetRef}
                     index={1}
                     snapPoints={snapPoints}
@@ -130,12 +139,12 @@ export default function MapaPrestadorScreen(): JSX.Element {
 
                     <Surface elevation={5} style={styles.containerBottomSheet}>
                         <View style={styles.containerAvatar}>
-                            <Image source={obterImagemAvatar(2)} style={styles.avatar} />
+                            <Image source={obterImagemAvatar(informacaoClienteDTO?.codigoAvatar)} style={styles.avatar} />
                         </View>
 
                         <View style={styles.containerConteudo}>
                             <View style={styles.containerDescricao}>
-                                <Text style={styles.nome}> Jean Garcia </Text>
+                                <Text style={styles.nome}> {informacaoClienteDTO?.nome} </Text>
                                 <Text style={styles.tempoSolicitacao}> 20 min </Text>
                             </View>
 
