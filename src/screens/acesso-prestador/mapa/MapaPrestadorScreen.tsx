@@ -6,17 +6,30 @@ import MapView, { Marker } from "react-native-maps";
 import Loader from "../../../components/loader/Loader";
 import { Colors } from "../../../../assets/styles/Colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { connectWebSocket, disconnectWebSocket } from "../../../services/WebSocket.service";
 
 export default function MapaPrestadorScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [localizacaoAtual, setLocalizacaoAtual] = useState<Location.LocationObject | null>(null);
 
+    const [mensagemSolicitacao, setMensagemSolicitacao] = useState<string>("");
+
     const referenciaMapa = useRef<MapView>(null);
 
     useEffect(() => {
         obterLocalizacaoAtual();
         atualizarLocalizacaoTemReal();
+    }, []);
+
+    useEffect(() => {
+        connectWebSocket("101", (data) => {
+            console.log("Nova solicitação recebida:", data);
+            setMensagemSolicitacao('Nova solicitação recebida!');
+            // aqui você pode abrir um modal, tocar som, etc.
+        });
+
+        return () => disconnectWebSocket();
     }, []);
 
     async function obterLocalizacaoAtual(): Promise<void> {
@@ -74,6 +87,7 @@ export default function MapaPrestadorScreen(): JSX.Element {
             <View style={styles.headerConexao}>
                 <MaterialCommunityIcons name='access-point' color={Colors.cinzaEscuro} size={30} />
                 <Text style={styles.textoHeaderConexao}> Você está conectado </Text>
+                <Text style={styles.textoHeaderConexao}> {mensagemSolicitacao} </Text>
             </View>
 
             {localizacaoAtual && !loading ? (
