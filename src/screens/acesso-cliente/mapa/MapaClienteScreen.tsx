@@ -11,7 +11,7 @@ import { buscarPrestadoresServico } from "../../../services/Prestador.service";
 import Loader from "../../../components/loader/Loader";
 import { PrestadorServico } from "../../../models/cadastro/PrestadorServico";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
-import { solicitarPrestador1 } from "../../../services/Solicitacao.service";
+import { enviarSolicitacao } from "../../../services/Solicitacao.service";
 
 export default function MapaClienteScreen(): JSX.Element {
 
@@ -105,8 +105,7 @@ export default function MapaClienteScreen(): JSX.Element {
 
     async function solicitarPrestador(): Promise<void> {
         try {
-            console.log('Solicitando prestador');
-            await solicitarPrestador1('1');
+            await enviarSolicitacao('1');
         } catch (error) {
             console.error("Erro ao solicitar prestador:", error);
         }

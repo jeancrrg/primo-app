@@ -15,18 +15,18 @@ export async function buscarPrestadoresServico(termoPesquisa?: string): Promise<
     }
 }
 
-export async function buscarPrestadorServico(codigoPessoa: number): Promise<PrestadorServico> {
-    return (await Api.get(`/prestadores-servico/${codigoPessoa}`)).data;
+export async function buscarPrestadorServico(codigo: number): Promise<PrestadorServico> {
+    return (await Api.get(`/prestadores-servico/${codigo}`)).data;
 }
 
 export async function cadastrarPrestador(cadastroPrestadorDTO: CadastroPrestadorDTO): Promise<void> {
     await Api.post('/prestadores-servico', cadastroPrestadorDTO);
 }
 
-export async function atualizarAvatarPrestador(codigoPessoa: number, codigoAvatar: number): Promise<void> {
-    await Api.put(`/prestadores-servico/${codigoPessoa}/avatar`, { codigo: codigoAvatar });
+export async function atualizarAvatarPrestador(codigo: number, codigoAvatar: number): Promise<void> {
+    await Api.put(`/prestadores-servico/${codigo}/avatar`, { codigo: codigoAvatar });
 }
 
-export async function inativarPrestador(codigoPessoa: number): Promise<void> {
-    await Api.put(`/prestadores-servico/${codigoPessoa}/inativar`, null, {});
+export async function inativarPrestador(codigo: number): Promise<void> {
+    await Api.put(`/prestadores-servico/${codigo}/inativar`, null, {});
 }

@@ -1,12 +1,9 @@
+import { isNotEmpty } from "../utils/ValidationUtil";
+
 let socket: WebSocket | null = null;
 
-export function connectWebSocket(
-    prestadorId: string,
-    onMessage: (data: any) => void
-): void {
-    socket = new WebSocket(
-        `ws://192.168.100.50:8096/primo-api/ws/prestador/${prestadorId}`
-    );
+export function conectarWebSocket(codigoPrestador: number, onMessage: (data: any) => void): void {
+    socket = new WebSocket(`ws://192.168.100.50:8096/primo-api/ws/prestador/${codigoPrestador}`);
 
     socket.onopen = () => {
         console.log("WebSocket conectado");
@@ -27,8 +24,8 @@ export function connectWebSocket(
     };
 }
 
-export function disconnectWebSocket() {
-    if (socket) {
+export function disconectarWebSocket(): void {
+    if (isNotEmpty(socket) && socket !== null) {
         socket.close();
     }
 }

@@ -6,7 +6,7 @@ import MapView, { Marker } from "react-native-maps";
 import Loader from "../../../components/loader/Loader";
 import { Colors } from "../../../../assets/styles/Colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { connectWebSocket, disconnectWebSocket } from "../../../services/WebSocket.service";
+import { conectarWebSocket, disconectarWebSocket } from "../../../services/WebSocket.service";
 
 export default function MapaPrestadorScreen(): JSX.Element {
 
@@ -23,13 +23,11 @@ export default function MapaPrestadorScreen(): JSX.Element {
     }, []);
 
     useEffect(() => {
-        connectWebSocket("101", (data) => {
-            console.log("Nova solicitação recebida:", data);
+        conectarWebSocket(1, (data) => {
             setMensagemSolicitacao('Nova solicitação recebida!');
-            // aqui você pode abrir um modal, tocar som, etc.
         });
 
-        return () => disconnectWebSocket();
+        return () => disconectarWebSocket();
     }, []);
 
     async function obterLocalizacaoAtual(): Promise<void> {
