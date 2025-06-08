@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./CardTipoServicoStyle";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { PropsCardTipoServico } from "../../models/interfaces/props/PropsCardTipoServico";
+import { PropsCardTipoServico } from "../../models/interfaces/props/PropsCardTipoServico.interface";
 
 export default function CardTipoServico(props: PropsCardTipoServico): JSX.Element {
     return (

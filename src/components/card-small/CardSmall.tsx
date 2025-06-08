@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import { styles } from "./CardSmallStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { PropsCardSmall } from "../../models/interfaces/props/PropsCardSmall";
+import { PropsCardSmall } from "../../models/interfaces/props/PropsCardSmall.interface";
 
 export default function CardSmall(props: PropsCardSmall): JSX.Element {
     return (

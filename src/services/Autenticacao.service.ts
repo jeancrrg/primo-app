@@ -1,10 +1,10 @@
-import { FormularioLogin } from './../models/interfaces/formularios/FormularioLogin';
+import { FormularioLogin } from '../models/interfaces/formularios/FormularioLogin.interface';
 import Api from "../config/api/Api";
 import { auth } from "../config/firebase/FirebaseConfig";
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth";
 import Toast from 'react-native-toast-message';
 import { removerCodigoPessoaLogado, removerTipoPessoaLogado, removerTokenAcesso } from './Storage.service';
-import { LoginDTO } from "../models/dto/LoginDTO";
+import { LoginDTO } from "../models/dto/LoginDTO.model";
 
 export async function autenticarUsuario(email: string, senha: string): Promise<User> {
     try {

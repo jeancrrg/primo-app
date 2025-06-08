@@ -4,7 +4,7 @@ import { styles } from "./InputStyle";
 import { Colors } from "../../../assets/styles/Colors";
 import { isNotEmpty } from "../../utils/ValidationUtil";
 import { Controller } from "react-hook-form";
-import { PropsInput } from "../../models/interfaces/props/PropsInput";
+import { PropsInput } from "../../models/interfaces/props/PropsInput.interface";
 
 export default function Input(props: PropsInput): JSX.Element {
 

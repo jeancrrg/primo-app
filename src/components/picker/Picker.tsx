@@ -3,7 +3,7 @@ import { useState } from "react";
 import { styles } from "./PickerStyle";
 import { TextInput } from "react-native-paper";
 import PopupModal from "../popup-modal/PopupModal";
-import { PropsPicker } from "../../models/interfaces/props/PropsPicker";
+import { PropsPicker } from "../../models/interfaces/props/PropsPicker.interface";
 import { Colors } from "../../../assets/styles/Colors";
 import { isNotEmpty } from "../../utils/ValidationUtil";
 

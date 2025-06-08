@@ -1,6 +1,6 @@
 import Api from "../config/api/Api";
-import { Cliente } from "../models/cadastro/Cliente";
-import { FormularioCadastroCliente } from "../models/interfaces/formularios/FormularioCadastroCliente";
+import { Cliente } from "../models/cadastro/Cliente.model";
+import { FormularioCadastroCliente } from "../models/interfaces/formularios/FormularioCadastroCliente.interface";
 
 export async function buscarCliente(codigo: number): Promise<Cliente> {
     return (await Api.get(`/clientes/${codigo}`)).data;

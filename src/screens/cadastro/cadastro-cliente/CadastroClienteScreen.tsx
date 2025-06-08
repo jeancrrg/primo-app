@@ -3,14 +3,14 @@ import * as Animatable from 'react-native-animatable';
 import { styles } from "./CadastroClienteScreenStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../../assets/styles/Colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Divider from "../../../components/divider/Divider";
 import BotaoPrincipal from "../../../components/botao/botao-principal/BotaoPrincipal";
 import Input from "../../../components/input/Input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioCliente } from "../../../validations/ClienteValidation";
-import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente";
+import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente.interface";
 import { formatarCPF, formatarTelefone } from "../../../utils/FormatterUtil";
 import { cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
 import Toast from "react-native-toast-message";
@@ -25,9 +25,14 @@ export default function CadastroClienteScreen(): JSX.Element {
     const [loading, setLoading] = useState<boolean>(false);
     const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);
 
-    const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroCliente>({
+    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormularioCadastroCliente>({
         resolver: yupResolver(validacoesFormularioCliente)
     });
+
+    useEffect(() => {
+        reset();
+        setMostrarSenha(false);
+    }, []);
 
     async function cadastrar(formulario: FormularioCadastroCliente): Promise<void> {
         try {
@@ -40,6 +45,7 @@ export default function CadastroClienteScreen(): JSX.Element {
             navegarParaTela(RotaPrincipalEnum.LOGIN);
         } catch (error: any) {
             setLoading(false);
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao cadastrar! - ' + error.message });
         }
     }
 

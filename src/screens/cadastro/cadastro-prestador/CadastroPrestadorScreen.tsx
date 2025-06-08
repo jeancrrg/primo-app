@@ -17,9 +17,9 @@ import { cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.ser
 import Toast from "react-native-toast-message";
 import { isEmpty } from "../../../utils/ValidationUtil";
 import { formatarCNPJ, formatarTelefone } from "../../../utils/FormatterUtil";
-import { TipoServico } from "../../../models/cadastro/TipoServico";
-import { CadastroPrestadorDTO } from "../../../models/dto/CadastroPrestadorDTO";
-import { FormularioCadastroPrestador } from "../../../models/interfaces/formularios/FormularioCadastroPrestador";
+import { TipoServico } from "../../../models/cadastro/TipoServico.model";
+import { CadastroPrestadorDTO } from "../../../models/dto/CadastroPrestadorDTO.model";
+import { FormularioCadastroPrestador } from "../../../models/interfaces/formularios/FormularioCadastroPrestador.interface";
 import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 import { removerTokenAcesso } from "../../../services/Storage.service";
@@ -32,11 +32,14 @@ export default function CadastroPrestadorScreen(): JSX.Element {
     const [tipoServicoSelecionado, setTipoServicoSelecionado] = useState<TipoServico | null>(null);
     const [listaTiposServico, setListaTiposServico] = useState<TipoServico[]>([])
 
-    const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroPrestador>({
+    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormularioCadastroPrestador>({
         resolver: yupResolver(validacoesFormularioPrestador)
     });
 
     useEffect(() => {
+        reset();
+        setMostrarSenha(false);
+        setTipoServicoSelecionado(null);
         carregarTiposServico();
     }, []);
 

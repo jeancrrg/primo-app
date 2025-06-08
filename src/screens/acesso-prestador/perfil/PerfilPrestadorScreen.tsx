@@ -8,7 +8,7 @@ import ModalAvatar from "../../../components/modal-avatar/ModalAvatar";
 import CardSmall from "../../../components/card-small/CardSmall";
 import BotaoSegmentado from "../../../components/botao-segmentado/BotaoSegmentado";
 import Toast from "react-native-toast-message";
-import { PrestadorServico } from "../../../models/cadastro/PrestadorServico";
+import { PrestadorServico } from "../../../models/cadastro/PrestadorServico.model";
 import Header from "../../../components/header/Header";
 import { Colors } from "../../../../assets/styles/Colors";
 import { navegarParaTela } from "../../../utils/NavigationUtil";

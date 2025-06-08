@@ -3,8 +3,8 @@ import { BottomTabBarButtonProps, BottomTabNavigationOptions } from "@react-navi
 import { createNavigationContainerRef, RouteProp, StackActions } from "@react-navigation/native";
 import { Colors } from "../../assets/styles/Colors";
 import { Feather } from "@expo/vector-icons";
-import { RotaPrincipal } from "../models/types/RotaPrincipal";
-import { RotaTabBar } from "../models/types/RotaTabBar";
+import { RotaPrincipal } from "../models/types/RotaPrincipal.type";
+import { RotaTabBar } from "../models/types/RotaTabBar.type";
 
 export const tabBar = ({ route }: {route: RouteProp<Record<string, object | undefined>, string>;}): BottomTabNavigationOptions => {
     return {

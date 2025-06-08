@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Toast from "react-native-toast-message";
 import { validacaoEmail } from "../../../validations/EmailValidation";
-import { FormularioEsqueciSenha } from "../../../models/interfaces/formularios/FormularioEsqueciSenha";
+import { FormularioEsqueciSenha } from "../../../models/interfaces/formularios/FormularioEsqueciSenha.interface";
 import { redefinirSenha } from "../../../services/Autenticacao.service";
 import { useState } from "react";
 import Loader from "../../../components/loader/Loader";

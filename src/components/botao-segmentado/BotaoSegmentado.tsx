@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { PropsBotaoSegmentado } from "../../models/interfaces/props/PropsBotaoSegmentado";
+import { PropsBotaoSegmentado } from "../../models/interfaces/props/PropsBotaoSegmentado.interface";
 import { styles } from "./BotaoSegmentadoStyle";
 import { TouchableOpacity } from "react-native-gesture-handler";
 

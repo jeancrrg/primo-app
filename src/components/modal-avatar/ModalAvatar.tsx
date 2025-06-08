@@ -5,10 +5,10 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Surface } from "react-native-paper";
 import { FlatList } from "react-native-gesture-handler";
-import { Avatar } from "../../models/cadastro/Avatar";
+import { Avatar } from "../../models/cadastro/Avatar.model";
 import { buscarAvatares, obterImagemAvatar } from "../../services/Avatar.service";
 import Toast from "react-native-toast-message";
-import { PropsModalAvatar } from "../../models/interfaces/props/PropsModalAvatar";
+import { PropsModalAvatar } from "../../models/interfaces/props/PropsModalAvatar.interface";
 
 export default function ModalAvatar(props: PropsModalAvatar): JSX.Element {
 

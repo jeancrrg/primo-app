@@ -1,5 +1,5 @@
 import Api from "../config/api/Api";
-import { Avatar } from "../models/cadastro/Avatar";
+import { Avatar } from "../models/cadastro/Avatar.model";
 import { isEmpty, isNotEmpty } from "../utils/ValidationUtil";
 
 export async function buscarAvatares(codigo?: number): Promise<Avatar[]> {

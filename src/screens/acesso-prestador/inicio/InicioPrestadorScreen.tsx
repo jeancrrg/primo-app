@@ -16,10 +16,10 @@ export default function InicioPrestadorScreen(): JSX.Element {
         if (textoBotaoConexao == 'Conectar') {
             setIconeBotaoConexao('access-point-off');
             setTextoBotaoConexao('Desconectar');
+            navegarParaTela(RotaTabsEnum.MAPA);
         } else {
             setIconeBotaoConexao('access-point');
             setTextoBotaoConexao('Conectar');
-            navegarParaTela(RotaTabsEnum.MAPA);
         }
     }
 

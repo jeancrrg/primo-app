@@ -9,9 +9,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Surface } from "react-native-paper"
 import { buscarPrestadoresServico } from "../../../services/Prestador.service";
 import Loader from "../../../components/loader/Loader";
-import { PrestadorServico } from "../../../models/cadastro/PrestadorServico";
+import { PrestadorServico } from "../../../models/cadastro/PrestadorServico.model";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
-import { enviarSolicitacao } from "../../../services/Solicitacao.service";
+import { enviarSolicitacao } from "../../../services/SolicitacaoServico.service";
+import { SolicitacaoServicoDTO } from "../../../models/dto/SolicitacaoServicoDTO.model";
 
 export default function MapaClienteScreen(): JSX.Element {
 
@@ -105,9 +106,9 @@ export default function MapaClienteScreen(): JSX.Element {
 
     async function solicitarPrestador(): Promise<void> {
         try {
-            await enviarSolicitacao('1');
+            await enviarSolicitacao(new SolicitacaoServicoDTO(1, 2));
         } catch (error) {
-            console.error("Erro ao solicitar prestador:", error);
+            console.error("Erro ao solicitar prestador: ", error);
         }
     }
 

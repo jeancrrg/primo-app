@@ -11,7 +11,7 @@ export function conectarWebSocket(codigoPrestador: number, onMessage: (data: any
 
     socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        console.log("Solicitação recebida:", data);
+        console.log("Solicitação recebida!");
         onMessage(data);
     };
 

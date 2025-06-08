@@ -1,7 +1,7 @@
 import { FlatList, Modal, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../assets/styles/Colors";
-import { PropsPopupModal } from "../../models/interfaces/props/PropsPopupModal";
+import { PropsPopupModal } from "../../models/interfaces/props/PropsPopupModal.interface";
 import { styles } from "./PopupModalStyle";
 import Divider from "../divider/Divider";
 import { Checkbox } from "react-native-paper";

@@ -1,6 +1,6 @@
 import Api from "../config/api/Api";
-import { PrestadorServico } from "../models/cadastro/PrestadorServico";
-import { CadastroPrestadorDTO } from "../models/dto/CadastroPrestadorDTO";
+import { PrestadorServico } from "../models/cadastro/PrestadorServico.model";
+import { CadastroPrestadorDTO } from "../models/dto/CadastroPrestadorDTO.model";
 import { isNotEmpty } from "../utils/ValidationUtil";
 
 export async function buscarPrestadoresServico(termoPesquisa?: string): Promise<PrestadorServico[]> {

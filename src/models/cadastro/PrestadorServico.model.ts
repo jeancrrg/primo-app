@@ -1,4 +1,4 @@
-import { Endereco } from "./Endereco";
+import { Endereco } from "./Endereco.model";
 
 export class PrestadorServico {
     codigo: number;

@@ -1,7 +1,7 @@
 import { Image, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./LoginScreenStyle";
 import * as Animatable from 'react-native-animatable'; 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Divider from "../../components/divider/Divider";
 import BotaoPrincipal from "../../components/botao/botao-principal/BotaoPrincipal";
 import BotaoSecundario from "../../components/botao/botao-secundario/BotaoSecundario";
@@ -12,27 +12,32 @@ import { validacoesFormularioLogin } from "../../validations/LoginValidation";
 import { User } from "firebase/auth";
 import { isNotEmpty } from "../../utils/ValidationUtil";
 import Loader from "../../components/loader/Loader";
-import { FormularioLogin } from "../../models/interfaces/formularios/FormularioLogin";
+import { FormularioLogin } from "../../models/interfaces/formularios/FormularioLogin.interface";
 import { navegarParaTela } from "../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../models/enum/RotaPrincipal.enum";
 import { autenticarUsuario, realizarLogin } from "../../services/Autenticacao.service";
 import { removerCodigoPessoaLogado, removerTokenAcesso, salvarCodigoPessoaLogado, salvarTipoPessoaLogado, salvarTokenAcesso } from "../../services/Storage.service";
-import { LoginDTO } from "../../models/dto/LoginDTO";
+import { LoginDTO } from "../../models/dto/LoginDTO.model";
 
 export default function LoginScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
-    const { control, handleSubmit, formState: { errors } } = useForm<FormularioLogin>({
+    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormularioLogin>({
         resolver: yupResolver(validacoesFormularioLogin)
     });
+
+    useEffect(() => {
+        reset();
+        setMostrarSenha(false);
+        removerTokenAcesso();
+        removerCodigoPessoaLogado();
+    }, [])
 
     async function entrar(formulario: FormularioLogin): Promise<void> {
         try {
             setLoading(true);
-            removerTokenAcesso();
-            removerCodigoPessoaLogado();
             
             const usuario: User = await autenticarUsuario(formulario.login, formulario.senha);
             const loginDTO: LoginDTO = await realizarLogin(formulario);

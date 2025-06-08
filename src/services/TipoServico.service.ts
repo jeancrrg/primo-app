@@ -1,5 +1,5 @@
 import Api from "../config/api/Api";
-import { TipoServico } from "../models/cadastro/TipoServico";
+import { TipoServico } from "../models/cadastro/TipoServico.model";
 import { isNotEmpty } from "../utils/ValidationUtil";
 
 export async function buscarTiposServico(codigo?: number, descricao?: string): Promise<TipoServico[]> {

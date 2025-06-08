@@ -3,7 +3,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { styles } from "./PerfilClienteScreenStyle";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
-import { Cliente } from "../../../models/cadastro/Cliente";
+import { Cliente } from "../../../models/cadastro/Cliente.model";
 import { sairAplicativo } from "../../../services/Autenticacao.service";
 import { atualizarAvatarCliente, buscarCliente } from "../../../services/Cliente.service";
 import { obterImagemAvatar } from "../../../services/Avatar.service";

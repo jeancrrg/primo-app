@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 import { styles } from "./ToastMessageStyle";
-import { PropsToastMessage } from "../../models/interfaces/props/PropsToastMessage";
+import { PropsToastMessage } from "../../models/interfaces/props/PropsToastMessage.interface";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../assets/styles/Colors";
 

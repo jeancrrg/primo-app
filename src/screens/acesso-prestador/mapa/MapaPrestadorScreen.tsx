@@ -7,6 +7,7 @@ import Loader from "../../../components/loader/Loader";
 import { Colors } from "../../../../assets/styles/Colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { conectarWebSocket, disconectarWebSocket } from "../../../services/WebSocket.service";
+import { Modal } from "react-native-paper";
 
 export default function MapaPrestadorScreen(): JSX.Element {
 
@@ -23,10 +24,13 @@ export default function MapaPrestadorScreen(): JSX.Element {
     }, []);
 
     useEffect(() => {
-        conectarWebSocket(1, (data) => {
+        conectarWebSocket(2, (data) => {
+            console.log('Mensagem recebida do WebSocket:', data);
             setMensagemSolicitacao('Nova solicitação recebida!');
+            setLoading(false);            
         });
 
+        setLoading(false); 
         return () => disconectarWebSocket();
     }, []);
 
