@@ -1,31 +1,31 @@
 import { isNotEmpty } from "../utils/ValidationUtil";
 
-let socket: WebSocket | null = null;
+let webSocket: WebSocket | null = null;
 
 export function conectarWebSocket(codigoPrestador: number, onMessage: (data: any) => void): void {
-    socket = new WebSocket(`ws://192.168.100.50:8096/primo-api/ws/prestador/${codigoPrestador}`);
+    webSocket = new WebSocket(`ws://192.168.100.50:8096/primo-api/ws/prestador/${codigoPrestador}`);
 
-    socket.onopen = () => {
+    webSocket.onopen = () => {
         console.log("WebSocket conectado");
     };
 
-    socket.onmessage = (event) => {
+    webSocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
         console.log("Solicitação recebida!");
         onMessage(data);
     };
 
-    socket.onerror = (error) => {
+    webSocket.onerror = (error) => {
         console.error("Erro no WebSocket:", error);
     };
 
-    socket.onclose = () => {
+    webSocket.onclose = () => {
         console.log("WebSocket desconectado");
     };
 }
 
 export function disconectarWebSocket(): void {
-    if (isNotEmpty(socket) && socket !== null) {
-        socket.close();
+    if (isNotEmpty(webSocket) && webSocket !== null) {
+        webSocket.close();
     }
 }

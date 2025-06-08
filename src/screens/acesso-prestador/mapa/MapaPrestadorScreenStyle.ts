@@ -52,5 +52,72 @@ export const styles = StyleSheet.create({
         borderWidth: 4,
         borderRadius: 15,
         position: 'absolute'
+    },
+    containerBottomSheet: {
+        height: 110,
+        backgroundColor: Colors.branco,
+        flexDirection: 'row',
+        padding: 10,
+        marginHorizontal: 20,
+        borderRadius: 20
+    },
+    containerAvatar: {
+        width: 75,
+        justifyContent: 'center'
+    },
+    avatar: {
+        height: 72,
+        width: 72
+    },
+    containerConteudo: {
+        flex: 1
+    },
+    containerDescricao: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between'
+    },
+    nome: {
+        fontSize: 18,
+        fontFamily: "Mulish-Medium",
+        fontWeight: "bold"
+    },
+    tempoSolicitacao: {
+        color: Colors.corPrimaria,
+        fontSize: 16,
+        fontFamily: "Mulish-Medium",
+        fontWeight: "bold"
+    },
+    containerBotoes: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    botaoAceitar: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.verdeSucesso,
+        padding: 5,
+        marginHorizontal: 4,
+        borderRadius: 10
+    },
+    botaoRecusar: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.vermelhoErro,
+        padding: 5,
+        marginHorizontal: 4,
+        borderRadius: 10
+    },
+    textoBotaoSolicitacao: {
+        color: Colors.branco,
+        marginLeft: 5,
+        fontSize: 16,
+        fontFamily: "Mulish-Medium",
+        fontWeight: 'bold'
     }
 })

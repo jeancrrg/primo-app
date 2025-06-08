@@ -1,13 +1,15 @@
-import { Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./MapaPrestadorScreenStyle";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import Loader from "../../../components/loader/Loader";
 import { Colors } from "../../../../assets/styles/Colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { conectarWebSocket, disconectarWebSocket } from "../../../services/WebSocket.service";
-import { Modal } from "react-native-paper";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { Surface } from "react-native-paper";
+import { obterImagemAvatar } from "../../../services/Avatar.service";
 
 export default function MapaPrestadorScreen(): JSX.Element {
 
@@ -15,8 +17,12 @@ export default function MapaPrestadorScreen(): JSX.Element {
     const [localizacaoAtual, setLocalizacaoAtual] = useState<Location.LocationObject | null>(null);
 
     const [mensagemSolicitacao, setMensagemSolicitacao] = useState<string>("");
+    const [possuiSolicitacaoServico, setPossuiSolicitacaoServico] = useState<boolean>(true);
 
+    const bottomSheetRef = useRef<BottomSheet>(null);
     const referenciaMapa = useRef<MapView>(null);
+
+    const snapPoints = useMemo(() => ['20%', '33%'], []);
 
     useEffect(() => {
         obterLocalizacaoAtual();
@@ -27,7 +33,8 @@ export default function MapaPrestadorScreen(): JSX.Element {
         conectarWebSocket(2, (data) => {
             console.log('Mensagem recebida do WebSocket:', data);
             setMensagemSolicitacao('Nova solicitação recebida!');
-            setLoading(false);            
+            setLoading(false);
+            setPossuiSolicitacaoServico(true);            
         });
 
         setLoading(false); 
@@ -112,6 +119,42 @@ export default function MapaPrestadorScreen(): JSX.Element {
             ) : (
                 <Loader />
             )}
+
+            {possuiSolicitacaoServico && (
+                <BottomSheet
+                    ref={bottomSheetRef}
+                    index={1}
+                    snapPoints={snapPoints}
+                    enablePanDownToClose={true}
+                    backgroundStyle={{ backgroundColor: Colors.cinzaClaro }}>
+
+                    <Surface elevation={5} style={styles.containerBottomSheet}>
+                        <View style={styles.containerAvatar}>
+                            <Image source={obterImagemAvatar(2)} style={styles.avatar} />
+                        </View>
+
+                        <View style={styles.containerConteudo}>
+                            <View style={styles.containerDescricao}>
+                                <Text style={styles.nome}> Jean Garcia </Text>
+                                <Text style={styles.tempoSolicitacao}> 20 min </Text>
+                            </View>
+
+                            <View style={styles.containerBotoes}>
+                                <TouchableOpacity style={styles.botaoAceitar} onPress={() => {}}>
+                                    <MaterialCommunityIcons name='checkbox-marked-circle-outline' size={25} color={Colors.branco} />
+                                    <Text style={styles.textoBotaoSolicitacao}> Aceitar </Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.botaoRecusar} onPress={() => {}}>
+                                    <MaterialCommunityIcons name='close-circle-outline' size={25} color={Colors.branco} />
+                                    <Text style={styles.textoBotaoSolicitacao}> Recusar </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Surface>
+                </BottomSheet>
+            )}
+
         </View>
     );
 }
