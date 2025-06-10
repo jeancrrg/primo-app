@@ -15,6 +15,7 @@ import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 import { navegarParaTela } from "../../../utils/NavigationUtil";
 import { Colors } from "../../../../assets/styles/Colors";
 import { obterCodigoPessoaLogado } from "../../../services/Storage.service";
+import { formatarCPF, formatarNome, formatarTelefone } from "../../../utils/FormatterUtil";
 
 export default function PerfilClienteScreen(): JSX.Element {
 
@@ -97,7 +98,7 @@ export default function PerfilClienteScreen(): JSX.Element {
 
             <View style={styles.containerPerfil}>
                 <View style={styles.containerNome}>
-                    <Text style={styles.nome}> {cliente?.nome} </Text>
+                    <Text style={styles.nome}> {formatarNome(cliente?.nome)} </Text>
                 </View>
 
                 <View style={styles.containerAvatar}>
@@ -120,13 +121,13 @@ export default function PerfilClienteScreen(): JSX.Element {
                     <View>
                         {opcaoBotaoSelecionado == 'Veículo' ? (
                             <View>
-                                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo" informacao={cliente?.modeloVeiculo} />
+                                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo" informacao={formatarNome(cliente?.modeloVeiculo)} />
                                 <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano" informacao={cliente?.anoVeiculo.toString()} />
                             </View>
                         ) : (
                             <View>
-                                <CardSmall nomeIcone="card-account-details-outline" tipoInformacao="Cpf" informacao={cliente?.cpf} />
-                                <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={cliente?.telefone} />
+                                <CardSmall nomeIcone="card-account-details-outline" tipoInformacao="Cpf" informacao={formatarCPF(cliente?.cpf)} />
+                                <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={formatarTelefone(cliente?.telefone)} />
                                 <CardSmall nomeIcone="email-outline" tipoInformacao="Email" informacao={cliente?.email} />
                             </View>
                         )}

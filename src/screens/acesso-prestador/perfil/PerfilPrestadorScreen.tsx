@@ -15,6 +15,7 @@ import { navegarParaTela } from "../../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 import { atualizarAvatarPrestador, buscarPrestadorServico } from "../../../services/Prestador.service";
 import { obterCodigoPessoaLogado } from "../../../services/Storage.service";
+import { formatarCNPJ, formatarNome, formatarTelefone } from "../../../utils/FormatterUtil";
 
 export default function PerfilPrestadorScreen(): JSX.Element {
 
@@ -97,7 +98,7 @@ export default function PerfilPrestadorScreen(): JSX.Element {
 
             <View style={styles.containerPerfil}>
                 <View style={styles.containerNome}>
-                    <Text style={styles.nome}> {prestadorServico?.nome} </Text>
+                    <Text style={styles.nome}> {formatarNome(prestadorServico?.nome)} </Text>
                 </View>
 
                 <View style={styles.containerAvatar}>
@@ -120,14 +121,14 @@ export default function PerfilPrestadorScreen(): JSX.Element {
                     <View>
                         {opcaoBotaoSelecionado == 'Serviço' ? (
                             <View>
-                                <CardSmall nomeIcone="map-marker-outline" tipoInformacao="Endereço" informacao={prestadorServico?.endereco.logradouro} />
-                                <CardSmall nomeIcone="car-wrench" tipoInformacao="Serviço" informacao={prestadorServico?.descricaoTipoServico} />
+                                <CardSmall nomeIcone="map-marker-outline" tipoInformacao="Endereço" informacao={formatarNome(prestadorServico?.endereco.logradouro)} />
+                                <CardSmall nomeIcone="car-wrench" tipoInformacao="Serviço" informacao={formatarNome(prestadorServico?.descricaoTipoServico)} />
                                 <CardSmall nomeIcone="currency-usd" tipoInformacao="Valor" informacao={prestadorServico?.valorServico.toString()} />
                             </View>
                         ) : (
                             <View>
-                                <CardSmall nomeIcone="card-account-details-outline" tipoInformacao="Cnpj" informacao={prestadorServico?.cnpj} />
-                                <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={prestadorServico?.telefone} />
+                                <CardSmall nomeIcone="card-account-details-outline" tipoInformacao="Cnpj" informacao={formatarCNPJ(prestadorServico?.cnpj)} />
+                                <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={formatarTelefone(prestadorServico?.telefone)} />
                                 <CardSmall nomeIcone="email-outline" tipoInformacao="Email" informacao={prestadorServico?.email} />
                             </View>
                         )}
