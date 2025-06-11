@@ -6,18 +6,23 @@ import { Colors } from "../../../../assets/styles/Colors";
 import { useState } from "react";
 import { navegarParaTela } from "../../../utils/NavigationUtil";
 import { RotaTabsEnum } from "../../../models/enum/RotaTabs.enum";
+import { useConexaoPrestador } from "../../../contexts/ConexaoPrestadorContext";
 
 export default function InicioPrestadorScreen(): JSX.Element {
 
     const [iconeBotaoConexao, setIconeBotaoConexao] = useState<string>('access-point');
     const [textoBotaoConexao, setTextoBotaoConexao] = useState<string>('Conectar');
 
+    const { setIndicadorConectado } = useConexaoPrestador();
+
     function onPressBotaoConexao(): void {
         if (textoBotaoConexao == 'Conectar') {
+            setIndicadorConectado(true);
             setIconeBotaoConexao('access-point-off');
             setTextoBotaoConexao('Desconectar');
             navegarParaTela(RotaTabsEnum.MAPA);
         } else {
+            setIndicadorConectado(false);
             setIconeBotaoConexao('access-point');
             setTextoBotaoConexao('Conectar');
         }

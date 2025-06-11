@@ -1,7 +1,7 @@
 import { Image, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./LoginScreenStyle";
 import * as Animatable from 'react-native-animatable'; 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Divider from "../../components/divider/Divider";
 import BotaoPrincipal from "../../components/botao/botao-principal/BotaoPrincipal";
 import BotaoSecundario from "../../components/botao/botao-secundario/BotaoSecundario";
@@ -18,22 +18,27 @@ import { RotaPrincipalEnum } from "../../models/enum/RotaPrincipal.enum";
 import { autenticarUsuario, realizarLogin } from "../../services/Autenticacao.service";
 import { removerCodigoPessoaLogado, removerTokenAcesso, salvarCodigoPessoaLogado, salvarTipoPessoaLogado, salvarTokenAcesso } from "../../services/Storage.service";
 import { LoginDTO } from "../../models/dto/LoginDTO.model";
+import { useFocusEffect } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
 
 export default function LoginScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [mostrarSenha, setMostrarSenha] = useState(false);
 
-    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormularioLogin>({
+    const { control, handleSubmit, formState: { errors }, setValue } = useForm<FormularioLogin>({
         resolver: yupResolver(validacoesFormularioLogin)
     });
 
-    useEffect(() => {
-        reset();
-        setMostrarSenha(false);
-        removerTokenAcesso();
-        removerCodigoPessoaLogado();
-    }, [])
+    useFocusEffect(
+        useCallback(() => {
+            setValue('login', '');
+            setValue('senha', '');
+            setMostrarSenha(false);
+            removerTokenAcesso();
+            removerCodigoPessoaLogado();
+        }, [])
+    );
 
     async function entrar(formulario: FormularioLogin): Promise<void> {
         try {
@@ -42,15 +47,18 @@ export default function LoginScreen(): JSX.Element {
             const usuario: User = await autenticarUsuario(formulario.login, formulario.senha);
             const loginDTO: LoginDTO = await realizarLogin(formulario);
 
+            console.log('Dados do login:', loginDTO);
+
             salvarTokenAcesso(loginDTO.token);
             salvarCodigoPessoaLogado(loginDTO.codigoPessoa);
             salvarTipoPessoaLogado(loginDTO.tipoPessoa);
 
             if (isNotEmpty(usuario) && isNotEmpty(loginDTO.token)) {
-                setLoading(false);
                 navegarParaTela(RotaPrincipalEnum.TABS);
             }
         } catch (error: any) {
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao entrar! - ' + error.message });
+        } finally {
             setLoading(false);
         }
     }

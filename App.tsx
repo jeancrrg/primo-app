@@ -12,6 +12,7 @@ import Fonts from "./assets/styles/Fonts";
 import Toast from "react-native-toast-message";
 import { ToastMessageConfig } from "./src/components/toast-message/ToastMessageConfig";
 import { navigationRef } from "./src/utils/NavigationUtil";
+import ConexaoPrestadorProvider from "./src/contexts/ConexaoPrestadorContext";
 
 export default function App() {
 
@@ -23,14 +24,16 @@ export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <MenuProvider>
-                <NavigationContainer ref={navigationRef}>
-                    <View style={styles.container}>
-                        <AppRoute />
-                    </View>
-                    <StatusBar backgroundColor={Colors.corPrimaria} barStyle={"light-content"}/>
-                    <FlashMessage position="top" />
-                    <Toast config={ToastMessageConfig} />
-                </NavigationContainer>
+                <ConexaoPrestadorProvider>
+                    <NavigationContainer ref={navigationRef}>
+                        <View style={styles.container}>
+                            <AppRoute />
+                        </View>
+                        <StatusBar backgroundColor={Colors.corPrimaria} barStyle={"light-content"}/>
+                        <FlashMessage position="top" />
+                        <Toast config={ToastMessageConfig} />
+                    </NavigationContainer>
+                </ConexaoPrestadorProvider>
             </MenuProvider>
         </GestureHandlerRootView>
     );

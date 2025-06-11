@@ -3,7 +3,7 @@ import * as Animatable from 'react-native-animatable';
 import { styles } from "./CadastroClienteScreenStyle";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../../../../assets/styles/Colors";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Divider from "../../../components/divider/Divider";
 import BotaoPrincipal from "../../../components/botao/botao-principal/BotaoPrincipal";
 import Input from "../../../components/input/Input";
@@ -17,7 +17,6 @@ import Toast from "react-native-toast-message";
 import Loader from "../../../components/loader/Loader";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
-import { removerTokenAcesso } from "../../../services/Storage.service";
 import { cadastrarCliente } from "../../../services/Cliente.service";
 
 export default function CadastroClienteScreen(): JSX.Element {
@@ -25,27 +24,21 @@ export default function CadastroClienteScreen(): JSX.Element {
     const [loading, setLoading] = useState<boolean>(false);
     const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);
 
-    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormularioCadastroCliente>({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroCliente>({
         resolver: yupResolver(validacoesFormularioCliente)
     });
-
-    useEffect(() => {
-        reset();
-        setMostrarSenha(false);
-    }, []);
 
     async function cadastrar(formulario: FormularioCadastroCliente): Promise<void> {
         try {
             setLoading(true);
-            removerTokenAcesso();
             await cadastrarCliente(formulario);
             await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
-            setLoading(false);
             Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
             navegarParaTela(RotaPrincipalEnum.LOGIN);
         } catch (error: any) {
-            setLoading(false);
             Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao cadastrar! - ' + error.message });
+        } finally {
+            setLoading(false);
         }
     }
 

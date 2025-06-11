@@ -11,6 +11,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import { Surface } from "react-native-paper";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
 import { InformacaoClienteDTO } from "../../../models/dto/InformacaoClienteDTO.model";
+import { useConexaoPrestador } from "../../../contexts/ConexaoPrestadorContext";
 
 export default function MapaPrestadorScreen(): JSX.Element {
 
@@ -24,6 +25,8 @@ export default function MapaPrestadorScreen(): JSX.Element {
     const referenciaMapa = useRef<MapView>(null);
 
     const snapPoints = useMemo(() => ['20%', '33%'], []);
+
+    const { indicadorConectado } = useConexaoPrestador();
 
     useEffect(() => {
         obterLocalizacaoAtual();
@@ -104,7 +107,7 @@ export default function MapaPrestadorScreen(): JSX.Element {
 
             <View style={styles.headerConexao}>
                 <MaterialCommunityIcons name='access-point' color={Colors.cinzaEscuro} size={30} />
-                <Text style={styles.textoHeaderConexao}> Você está conectado </Text>
+                <Text style={styles.textoHeaderConexao}> Você está {indicadorConectado ? 'conectado' : 'desconectado'} </Text>
             </View>
 
             {localizacaoAtual && !loading ? (

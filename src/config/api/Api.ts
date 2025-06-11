@@ -12,8 +12,8 @@ const api = axios.create({
 
 const endpointsPublicos: string[] = [
     '/autenticacao/login',
-    '/autenticacao/cadastro/cliente',
-    '/autenticacao/cadastro/prestador',
+    '/clientes',
+    '/prestadores-servico',
     '/tipos-servico',
 ];
 

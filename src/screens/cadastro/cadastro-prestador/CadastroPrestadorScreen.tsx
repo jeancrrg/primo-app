@@ -22,7 +22,6 @@ import { CadastroPrestadorDTO } from "../../../models/dto/CadastroPrestadorDTO.m
 import { FormularioCadastroPrestador } from "../../../models/interfaces/formularios/FormularioCadastroPrestador.interface";
 import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
-import { removerTokenAcesso } from "../../../services/Storage.service";
 import { cadastrarPrestador } from "../../../services/Prestador.service";
 
 export default function CadastroPrestadorScreen(): JSX.Element {
@@ -32,14 +31,11 @@ export default function CadastroPrestadorScreen(): JSX.Element {
     const [tipoServicoSelecionado, setTipoServicoSelecionado] = useState<TipoServico | null>(null);
     const [listaTiposServico, setListaTiposServico] = useState<TipoServico[]>([])
 
-    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormularioCadastroPrestador>({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormularioCadastroPrestador>({
         resolver: yupResolver(validacoesFormularioPrestador)
     });
 
     useEffect(() => {
-        reset();
-        setMostrarSenha(false);
-        setTipoServicoSelecionado(null);
         carregarTiposServico();
     }, []);
 
@@ -48,10 +44,10 @@ export default function CadastroPrestadorScreen(): JSX.Element {
             setLoading(true);
             const listaTiposServico: TipoServico[] = await buscarTiposServico();
             setListaTiposServico(listaTiposServico);
-            setLoading(false);
         } catch (error: any) {
-            setLoading(false);
             Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -62,17 +58,16 @@ export default function CadastroPrestadorScreen(): JSX.Element {
                 Toast.show({ type: 'aviso', text1: 'AVISO', text2: 'Tipo de serviço não informado! Informe o tipo de serviço!'});
 
             } else {
-                removerTokenAcesso();
                 const cadastroPrestadorDTO: CadastroPrestadorDTO = await criarDtoCadastroPrestador(formulario);
                 await cadastrarPrestador(cadastroPrestadorDTO);
                 await cadastrarUsuarioAutenticacao(formulario.email, formulario.senha);
                 Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
                 navegarParaTela(RotaPrincipalEnum.LOGIN);
             }
-            setLoading(false);
         } catch (error: any) {
-            setLoading(false);
             Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+        } finally {
+            setLoading(false);
         }
     }
 
