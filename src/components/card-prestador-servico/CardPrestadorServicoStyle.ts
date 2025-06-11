@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     },
     endereco: {
         flex: 1,
-        fontSize: 14,
+        fontSize: 16,
         color: Colors.corPrimaria,
         justifyContent: "center"
     },

@@ -38,7 +38,7 @@ export default function PerfilClienteScreen(): JSX.Element {
                 setCliente(cliente);
             }
         } catch (error: any) {
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao carregar cliente! - ' + error.message});
         }
     }
 

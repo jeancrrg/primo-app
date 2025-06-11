@@ -10,11 +10,11 @@ const api = axios.create({
     timeout: 10000, // 10 segundos
 });
 
-const endpointsPublicos: string[] = [
-    '/autenticacao/login',
-    '/clientes',
-    '/prestadores-servico',
-    '/tipos-servico',
+const endpointsPublicos: { url: string; method: string }[] = [
+    { url: '/autenticacao/login', method: 'POST' },
+    { url: '/clientes', method: 'POST' },
+    { url: '/prestadores-servico', method: 'POST' },
+    { url: '/tipos-servico', method: 'GET' },
 ];
 
 // Interceptor para incluir token em requisições privadas
@@ -30,9 +30,10 @@ api.interceptors.request.use(
             });
         }
 
-        const isEndpointPublico: boolean = endpointsPublicos.some((url) =>
-            config.url?.startsWith(url)
+        const isEndpointPublico: boolean = endpointsPublicos.some(
+            (endpoint) => config.url === endpoint.url && config.method?.toUpperCase() === endpoint.method.toUpperCase()
         );
+        
         if (!isEndpointPublico) {
             const token: string | null = await obterTokenAcesso();
             if (isNotEmpty(token) && isNotEmpty(config.headers)) {

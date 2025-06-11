@@ -4,6 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { Colors } from "../../../assets/styles/Colors";
 import { PropsCardPrestadorServico } from "../../models/interfaces/props/PropsCardPrestadorServico.interface";
 import { obterImagemAvatar } from "../../services/Avatar.service";
+import { formatarNome } from "../../utils/FormatterUtil";
 
 export default function CardPrestadorServico(props: PropsCardPrestadorServico): JSX.Element {
     return (
@@ -13,13 +14,13 @@ export default function CardPrestadorServico(props: PropsCardPrestadorServico): 
 
                 <View style={styles.containerDescricao}>
                     <View style={styles.containerTitulo}>
-                        <Text style={styles.nome}> {props.nome} </Text>
-                        <Text style={styles.tipoServico}> {props.descricaoTipoServico} </Text>
+                        <Text style={styles.nome}> {formatarNome(props.nome)} </Text>
+                        <Text style={styles.tipoServico}> {formatarNome(props.descricaoTipoServico)} </Text>
                     </View>
 
                     <View style={styles.containerEndereco}>
                         <MaterialCommunityIcons name='map-marker-outline' size={18} color={Colors.corPrimaria} />
-                        <Text style={styles.endereco}> {props.logradouro} </Text>
+                        <Text style={styles.endereco}> {formatarNome(props.logradouro)} </Text>
                     </View>
                 </View>
             </View>
