@@ -16,9 +16,12 @@ import { navegarParaTela } from "../../../utils/NavigationUtil";
 import { Colors } from "../../../../assets/styles/Colors";
 import { obterCodigoPessoaLogado } from "../../../services/Storage.service";
 import { formatarCPF, formatarNome, formatarTelefone } from "../../../utils/FormatterUtil";
+import { MensagemErroDTO } from "../../../models/dto/MensagemErroDTO.model";
+import Loader from "../../../components/loader/Loader";
 
 export default function PerfilClienteScreen(): JSX.Element {
 
+    const [loading, setLoading] = useState<boolean>(false);
     const [cliente, setCliente] = useState<Cliente>();
     const [mostrarModalAvatar, setMostrarModalAvatar] = useState<boolean>(false);
     const [opcoesBotaoSegmentado] = useState<string[]>(['Dados', 'Veículo']);
@@ -30,6 +33,7 @@ export default function PerfilClienteScreen(): JSX.Element {
 
     async function carregarCliente(): Promise<void> {
         try {
+            setLoading(true);
             const codigoPessoa: number | null = await obterCodigoPessoaLogado();
             if (codigoPessoa === null) {
                 Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Código do cliente não encontrado!'});
@@ -38,14 +42,25 @@ export default function PerfilClienteScreen(): JSX.Element {
                 setCliente(cliente);
             }
         } catch (error: any) {
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao carregar cliente! - ' + error.message});
+            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: (mensagemErroDTO?.mensagem || 'Ocorreu um erro inesperado!') });
+        } finally {
+            setLoading(false);
         }
     }
 
     async function selecionarAvatar(codigoAvatar: number): Promise<void> {
-        cliente!.codigoAvatar = codigoAvatar;
-        setCliente(cliente);
-        atualizarAvatarCliente(cliente!.codigo, cliente!.codigoAvatar);
+        try {
+            setLoading(true);
+            cliente!.codigoAvatar = codigoAvatar;
+            setCliente(cliente);
+            atualizarAvatarCliente(cliente!.codigo, cliente!.codigoAvatar);
+        } catch (error: any) {
+            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: (mensagemErroDTO?.mensagem || 'Ocorreu um erro inesperado!') });
+        } finally {
+            setLoading(false);
+        }
     }
 
     function confirmarSaidaAplicativo(): void {
@@ -88,85 +103,98 @@ export default function PerfilClienteScreen(): JSX.Element {
     }
 
     async function excluir(): Promise<void> {
-        await inativarCliente(cliente!.codigo);
-        Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Conta excluída com sucesso!'});
-        sairAplicativo();
-        navegarParaTela(RotaPrincipalEnum.LOGIN);
+        try {
+            setLoading(true);
+            await inativarCliente(cliente!.codigo);
+            Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Conta excluída com sucesso!'});
+            sairAplicativo();
+            navegarParaTela(RotaPrincipalEnum.LOGIN);
+        } catch (error: any) {
+            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: (mensagemErroDTO?.mensagem || 'Ocorreu um erro inesperado!') });
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
         <View style={styles.container}>
-            <Header titulo="Perfil" />
-
-            <View style={styles.containerPerfil}>
-                <View style={styles.containerNome}>
-                    <Text style={styles.nome}> {formatarNome(cliente?.nome)} </Text>
-                </View>
-
-                <View style={styles.containerAvatar}>
-                    <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
-                        <Image source={obterImagemAvatar(cliente?.codigoAvatar)} style={styles.avatar} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            <View style={styles.containerInformacoes}>
-                <View style={styles.containerBotaoSegmentado}>
-                    <BotaoSegmentado
-                        opcoes={opcoesBotaoSegmentado}
-                        opcaoSelecionada={opcaoBotaoSelecionado}
-                        onSelecionar={setOpcaoBotaoSelecionado}
-                    />
-                </View>
-
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View>
-                        {opcaoBotaoSelecionado == 'Veículo' ? (
-                            <View>
-                                <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo" informacao={formatarNome(cliente?.modeloVeiculo)} />
-                                <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano" informacao={cliente?.anoVeiculo.toString()} />
-                            </View>
-                        ) : (
-                            <View>
-                                <CardSmall nomeIcone="card-account-details-outline" tipoInformacao="Cpf" informacao={formatarCPF(cliente?.cpf)} />
-                                <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={formatarTelefone(cliente?.telefone)} />
-                                <CardSmall nomeIcone="email-outline" tipoInformacao="Email" informacao={cliente?.email} />
-                            </View>
-                        )}
-
-                        <View style={styles.containerBotoes}>
-                            <TouchableOpacity style={styles.botao} onPress={() => navegarParaTela(RotaPrincipalEnum.ESQUECI_SENHA)}>
-                                <MaterialCommunityIcons name='lock-check-outline' color={Colors.corPrimaria} size={28}/>
-                                <Text style={styles.textoBotao}> Alterar senha </Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={styles.botao} onPress={() => confirmarSaidaAplicativo()}>
-                                <MaterialCommunityIcons name='logout-variant' color={Colors.corPrimaria} size={28}/>
-                                <Text style={styles.textoBotao}> Sair Aplicativo </Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={styles.botao} onPress={() => confirmarExclusaoConta()}>
-                                <MaterialCommunityIcons name='delete-outline' color={Colors.vermelhoErro} size={28}/>
-                                <Text style={styles.textoBotao}> Excluir conta </Text>
-                            </TouchableOpacity>
+            {loading ? (
+                <Loader />
+            ) : (
+                <View style={styles.container}>
+                    <Header titulo="Perfil" />
+                    <View style={styles.containerPerfil}>
+                        <View style={styles.containerNome}>
+                            <Text style={styles.nome}> {formatarNome(cliente?.nome)} </Text>
                         </View>
 
-                        <View style={styles.containerLogo}>
-                            <Text style={styles.logo}> Primo </Text>
-                            <Text style={styles.versaoApp}> Versão 0.0.1 </Text>
+                        <View style={styles.containerAvatar}>
+                            <TouchableOpacity onPress={() => setMostrarModalAvatar(true)}>
+                                <Image source={obterImagemAvatar(cliente?.codigoAvatar)} style={styles.avatar} />
+                            </TouchableOpacity>
                         </View>
-
                     </View>
-                </ScrollView>
-            </View>
-            
-            {mostrarModalAvatar && (
-                <ModalAvatar
-                    onClose={() => setMostrarModalAvatar(false)}
-                    onSelecionarAvatar={(codigoAvatar) => {
-                        selecionarAvatar(codigoAvatar);
-                    }}
-                />
+
+                    <View style={styles.containerInformacoes}>
+                        <View style={styles.containerBotaoSegmentado}>
+                            <BotaoSegmentado
+                                opcoes={opcoesBotaoSegmentado}
+                                opcaoSelecionada={opcaoBotaoSelecionado}
+                                onSelecionar={setOpcaoBotaoSelecionado}
+                            />
+                        </View>
+
+                        <ScrollView showsVerticalScrollIndicator={false}>
+                            <View>
+                                {opcaoBotaoSelecionado == 'Veículo' ? (
+                                    <View>
+                                        <CardSmall nomeIcone="car-outline" tipoInformacao="Modelo" informacao={formatarNome(cliente?.modeloVeiculo)} />
+                                        <CardSmall nomeIcone="calendar-range" tipoInformacao="Ano" informacao={cliente?.anoVeiculo.toString()} />
+                                    </View>
+                                ) : (
+                                    <View>
+                                        <CardSmall nomeIcone="card-account-details-outline" tipoInformacao="Cpf" informacao={formatarCPF(cliente?.cpf)} />
+                                        <CardSmall nomeIcone="phone" tipoInformacao="Telefone" informacao={formatarTelefone(cliente?.telefone)} />
+                                        <CardSmall nomeIcone="email-outline" tipoInformacao="Email" informacao={cliente?.email} />
+                                    </View>
+                                )}
+
+                                <View style={styles.containerBotoes}>
+                                    <TouchableOpacity style={styles.botao} onPress={() => navegarParaTela(RotaPrincipalEnum.ESQUECI_SENHA)}>
+                                        <MaterialCommunityIcons name='lock-check-outline' color={Colors.corPrimaria} size={28}/>
+                                        <Text style={styles.textoBotao}> Alterar senha </Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style={styles.botao} onPress={() => confirmarSaidaAplicativo()}>
+                                        <MaterialCommunityIcons name='logout-variant' color={Colors.corPrimaria} size={28}/>
+                                        <Text style={styles.textoBotao}> Sair Aplicativo </Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style={styles.botao} onPress={() => confirmarExclusaoConta()}>
+                                        <MaterialCommunityIcons name='delete-outline' color={Colors.vermelhoErro} size={28}/>
+                                        <Text style={styles.textoBotao}> Excluir conta </Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View style={styles.containerLogo}>
+                                    <Text style={styles.logo}> Primo </Text>
+                                    <Text style={styles.versaoApp}> Versão 0.0.1 </Text>
+                                </View>
+
+                            </View>
+                        </ScrollView>
+                    </View>
+                    
+                    {mostrarModalAvatar && (
+                        <ModalAvatar
+                            onClose={() => setMostrarModalAvatar(false)}
+                            onSelecionarAvatar={(codigoAvatar) => {
+                                selecionarAvatar(codigoAvatar);
+                            }}
+                        />
+                    )}
+                </View>
             )}
         </View>
     );

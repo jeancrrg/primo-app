@@ -12,12 +12,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validacoesFormularioCliente } from "../../../validations/ClienteValidation";
 import { FormularioCadastroCliente } from "../../../models/interfaces/formularios/FormularioCadastroCliente.interface";
 import { formatarCPF, formatarTelefone } from "../../../utils/FormatterUtil";
-import { cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
 import Toast from "react-native-toast-message";
 import Loader from "../../../components/loader/Loader";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
 import { cadastrarCliente } from "../../../services/Cliente.service";
+import { MensagemErroDTO } from "../../../models/dto/MensagemErroDTO.model";
+import { cadastrarUsuarioAutenticacao, tratarErroFirebase } from "../../../utils/FirebaseUtil";
+import { FirebaseError } from "firebase/app";
 
 export default function CadastroClienteScreen(): JSX.Element {
 
@@ -36,9 +38,23 @@ export default function CadastroClienteScreen(): JSX.Element {
             Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
             navegarParaTela(RotaPrincipalEnum.LOGIN);
         } catch (error: any) {
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao cadastrar! - ' + error.message });
+            if ((error as FirebaseError)?.code) {
+                tratarErroFirebase(error);
+            } else {
+                tratarErroGeral(error);
+            }
         } finally {
             setLoading(false);
+        }
+    }
+
+    function tratarErroGeral(error: any): void {
+        const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+        if (mensagemErroDTO?.codigoErro == 409) {
+            Toast.show({ type: 'aviso', text1: 'AVISO', text2: mensagemErroDTO?.mensagem });
+        } else {
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao realizar o login! - ' + (mensagemErroDTO?.mensagem 
+                                                                || 'Ocorreu um erro inesperado!') });
         }
     }
 

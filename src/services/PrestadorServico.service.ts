@@ -4,15 +4,11 @@ import { CadastroPrestadorDTO } from "../models/dto/CadastroPrestadorDTO.model";
 import { isNotEmpty } from "../utils/ValidationUtil";
 
 export async function buscarPrestadoresServico(termoPesquisa?: string): Promise<PrestadorServico[]> {
-    try {
-        const parametros: any = {};
-        if (isNotEmpty(termoPesquisa)) {
-            parametros.termoPesquisa = termoPesquisa;
-        }
-        return (await Api.get('/prestadores-servico', { params: parametros })).data;
-    } catch (error: any) {
-        return [];
+    const parametros: any = {};
+    if (isNotEmpty(termoPesquisa)) {
+        parametros.termoPesquisa = termoPesquisa;
     }
+    return (await Api.get('/prestadores-servico', { params: parametros })).data;
 }
 
 export async function buscarPrestadorServico(codigo: number): Promise<PrestadorServico> {

@@ -13,7 +13,6 @@ import { validacoesFormularioPrestador } from "../../../validations/PrestadorVal
 import Loader from "../../../components/loader/Loader";
 import { buscarTiposServico } from "../../../services/TipoServico.service";
 import Picker from "../../../components/picker/Picker";
-import { cadastrarUsuarioAutenticacao } from "../../../services/Autenticacao.service";
 import Toast from "react-native-toast-message";
 import { isEmpty } from "../../../utils/ValidationUtil";
 import { formatarCNPJ, formatarTelefone } from "../../../utils/FormatterUtil";
@@ -23,6 +22,9 @@ import { FormularioCadastroPrestador } from "../../../models/interfaces/formular
 import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
 import { cadastrarPrestador } from "../../../services/PrestadorServico.service";
+import { MensagemErroDTO } from "../../../models/dto/MensagemErroDTO.model";
+import { cadastrarUsuarioAutenticacao, tratarErroFirebase } from "../../../utils/FirebaseUtil";
+import { FirebaseError } from "firebase/app";
 
 export default function CadastroPrestadorScreen(): JSX.Element {
 
@@ -45,7 +47,8 @@ export default function CadastroPrestadorScreen(): JSX.Element {
             const listaTiposServico: TipoServico[] = await buscarTiposServico();
             setListaTiposServico(listaTiposServico);
         } catch (error: any) {
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: (mensagemErroDTO?.mensagem || 'Ocorreu um erro inesperado!') });
         } finally {
             setLoading(false);
         }
@@ -65,7 +68,11 @@ export default function CadastroPrestadorScreen(): JSX.Element {
                 navegarParaTela(RotaPrincipalEnum.LOGIN);
             }
         } catch (error: any) {
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+            if ((error as FirebaseError)?.code) {
+                tratarErroFirebase(error);
+            } else {
+                tratarErroGeral(error);
+            }
         } finally {
             setLoading(false);
         }
@@ -83,6 +90,16 @@ export default function CadastroPrestadorScreen(): JSX.Element {
             valorServico: formulario.valorServico
         };
         return cadastroPrestadorDTO;
+    }
+
+    function tratarErroGeral(error: any): void {
+        const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+        if (mensagemErroDTO?.codigoErro == 409) {
+            Toast.show({ type: 'aviso', text1: 'AVISO', text2: mensagemErroDTO?.mensagem });
+        } else {
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao realizar o login! - ' + (mensagemErroDTO?.mensagem 
+                                                                || 'Ocorreu um erro inesperado!') });
+        }
     }
 
     return (

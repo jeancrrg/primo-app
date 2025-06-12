@@ -98,13 +98,8 @@ export default function MapaPrestadorScreen(): JSX.Element {
         bottomSheetRef.current?.expand();
     }
 
-    function fecharBottomSheet(): void {
-        bottomSheetRef.current?.close();
-    }
-
     return (
         <View style={styles.container}>
-
             <View style={styles.headerConexao}>
                 <MaterialCommunityIcons name='access-point' color={Colors.cinzaEscuro} size={30} />
                 <Text style={styles.textoHeaderConexao}> Você está {indicadorConectado ? 'conectado' : 'desconectado'} </Text>
@@ -166,7 +161,6 @@ export default function MapaPrestadorScreen(): JSX.Element {
                     </Surface>
                 </BottomSheet>
             )}
-
         </View>
     );
 }

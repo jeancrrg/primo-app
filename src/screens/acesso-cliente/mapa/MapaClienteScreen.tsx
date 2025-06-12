@@ -13,6 +13,8 @@ import { PrestadorServico } from "../../../models/cadastro/PrestadorServico.mode
 import { obterImagemAvatar } from "../../../services/Avatar.service";
 import { enviarSolicitacao } from "../../../services/SolicitacaoServico.service";
 import { SolicitacaoServicoDTO } from "../../../models/dto/SolicitacaoServicoDTO.model";
+import Toast from "react-native-toast-message";
+import { MensagemErroDTO } from "../../../models/dto/MensagemErroDTO.model";
 
 export default function MapaClienteScreen(): JSX.Element {
 
@@ -29,8 +31,8 @@ export default function MapaClienteScreen(): JSX.Element {
     useEffect(() => {
         setLoading(true);
         obterLocalizacaoAtual();
-        buscarPrestadores();
         atualizarLocalizacaoTemReal();
+        buscarPrestadores();
     }, []);
 
     async function obterLocalizacaoAtual(): Promise<void> {
@@ -68,9 +70,15 @@ export default function MapaClienteScreen(): JSX.Element {
     }
 
     async function buscarPrestadores(): Promise<void> {
-        const listaPrestadoresServico: PrestadorServico[] = await buscarPrestadoresServico();
-        setListaPrestadoresServico(listaPrestadoresServico);
-        setLoading(false);
+        try {
+            const listaPrestadoresServico: PrestadorServico[] = await buscarPrestadoresServico();
+            setListaPrestadoresServico(listaPrestadoresServico);
+        } catch (error: any) {
+            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: (mensagemErroDTO?.mensagem || 'Ocorreu um erro inesperado!') });
+        } finally {
+            setLoading(false);
+        }
     }
 
     async function atualizarLocalizacaoTemReal(): Promise<void> {
@@ -106,15 +114,18 @@ export default function MapaClienteScreen(): JSX.Element {
 
     async function solicitarPrestador(): Promise<void> {
         try {
+            setLoading(true);
             await enviarSolicitacao(new SolicitacaoServicoDTO(1, 2));
-        } catch (error) {
-            console.error("Erro ao solicitar prestador: ", error);
+        } catch (error: any) {
+            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: (mensagemErroDTO?.mensagem || 'Ocorreu um erro inesperado!') });
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <View style={styles.container}>
-
             {localizacaoAtual && !loading ? (
                 <MapView
                     ref={referenciaMapa}
@@ -181,7 +192,6 @@ export default function MapaClienteScreen(): JSX.Element {
                     </Surface>
                 </BottomSheet>
             )}
-
         </View>
     );
 }

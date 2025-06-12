@@ -11,6 +11,7 @@ import CardPrestadorServico from "../../../components/card-prestador-servico/Car
 import Loader from "../../../components/loader/Loader";
 import { navegarParaTela } from "../../../utils/NavigationUtil";
 import { RotaTabsEnum } from "../../../models/enum/RotaTabs.enum";
+import { MensagemErroDTO } from "../../../models/dto/MensagemErroDTO.model";
 
 export default function PesquisaClienteScreen(): JSX.Element {
 
@@ -27,10 +28,11 @@ export default function PesquisaClienteScreen(): JSX.Element {
             setLoading(true);
             const listaPrestadoresServico: PrestadorServico[] = await buscarPrestadoresServico();
             setListaPrestadoresServico(listaPrestadoresServico);
-            setLoading(false);
         } catch (error: any) {
+            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: (mensagemErroDTO?.mensagem || 'Ocorreu um erro inesperado!') });
+        } finally {
             setLoading(false);
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
         }
     }
 
@@ -54,13 +56,17 @@ export default function PesquisaClienteScreen(): JSX.Element {
 
     async function pesquisar(termoPesquisa: string): Promise<void> {
         try {
+            setLoading(true);
             const prestadoresServico: PrestadorServico[] = await buscarPrestadoresServico(termoPesquisa);
             if (isEmpty(prestadoresServico)) {
                 Toast.show({ type: 'info', text1: 'INFORMAÇÃO', text2: 'Nenhum prestador de serviço encontrado!' });
             }
             setListaPrestadoresServico(prestadoresServico);
         } catch (error: any) {
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: error.message});
+            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: (mensagemErroDTO?.mensagem || 'Ocorreu um erro inesperado!') });
+        } finally {
+            setLoading(false);
         }
     }
 

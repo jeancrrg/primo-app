@@ -15,17 +15,20 @@ import Loader from "../../components/loader/Loader";
 import { FormularioLogin } from "../../models/interfaces/formularios/FormularioLogin.interface";
 import { navegarParaTela } from "../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../models/enum/RotaPrincipal.enum";
-import { autenticarUsuario, realizarLogin } from "../../services/Autenticacao.service";
-import { removerCodigoPessoaLogado, removerTokenAcesso, salvarCodigoPessoaLogado, salvarTipoPessoaLogado, salvarTokenAcesso } from "../../services/Storage.service";
+import { realizarLogin } from "../../services/Autenticacao.service";
+import { removerCodigoPessoaLogado, removerTokenAcesso, salvarCodigoPessoaLogado, 
+        salvarTipoPessoaLogado, salvarTokenAcesso } from "../../services/Storage.service";
 import { LoginDTO } from "../../models/dto/LoginDTO.model";
 import { useFocusEffect } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import { MensagemErroDTO } from "../../models/dto/MensagemErroDTO.model";
+import { FirebaseError } from "firebase/app";
+import { autenticarUsuario, tratarErroFirebase } from "../../utils/FirebaseUtil";
 
 export default function LoginScreen(): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [mostrarSenha, setMostrarSenha] = useState<boolean>(false);
 
     const { control, handleSubmit, formState: { errors }, setValue } = useForm<FormularioLogin>({
         resolver: yupResolver(validacoesFormularioLogin)
@@ -56,15 +59,23 @@ export default function LoginScreen(): JSX.Element {
                 navegarParaTela(RotaPrincipalEnum.TABS);
             }
         } catch (error: any) {
-            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
-            if (mensagemErroDTO?.codigoErro == 409) {
-                Toast.show({ type: 'aviso', text1: 'AVISO', text2: mensagemErroDTO?.mensagem });
+            if ((error as FirebaseError)?.code) {
+                tratarErroFirebase(error);
             } else {
-                Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao realizar o login! - ' + mensagemErroDTO?.mensagem 
-                                                                    || 'Ocorreu um erro inesperado!' });
+                tratarErroGeral(error);
             }
         } finally {
             setLoading(false);
+        }
+    }
+
+    function tratarErroGeral(error: any): void {
+        const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+        if (mensagemErroDTO?.codigoErro == 409) {
+            Toast.show({ type: 'aviso', text1: 'AVISO', text2: mensagemErroDTO?.mensagem });
+        } else {
+            Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao realizar o login! - ' + (mensagemErroDTO?.mensagem 
+                                                                || 'Ocorreu um erro inesperado!') });
         }
     }
 
