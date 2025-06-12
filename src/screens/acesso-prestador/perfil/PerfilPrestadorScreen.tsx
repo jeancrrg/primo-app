@@ -2,7 +2,6 @@ import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-na
 import { styles } from "./PerfilPrestadorScreenStyle";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
 import { useEffect, useState } from "react";
-import { sairAplicativo } from "../../../services/Autenticacao.service";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ModalAvatar from "../../../components/modal-avatar/ModalAvatar";
 import CardSmall from "../../../components/card-small/CardSmall";
@@ -18,6 +17,7 @@ import { obterCodigoPessoaLogado } from "../../../services/Storage.service";
 import { formatarCNPJ, formatarNome, formatarTelefone } from "../../../utils/FormatterUtil";
 import { MensagemErroDTO } from "../../../models/dto/MensagemErroDTO.model";
 import Loader from "../../../components/loader/Loader";
+import { sairAplicativo } from "../../../utils/FirebaseUtil";
 
 export default function PerfilPrestadorScreen(): JSX.Element {
 

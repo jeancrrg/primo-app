@@ -22,7 +22,6 @@ import { LoginDTO } from "../../models/dto/LoginDTO.model";
 import { useFocusEffect } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import { MensagemErroDTO } from "../../models/dto/MensagemErroDTO.model";
-import { FirebaseError } from "firebase/app";
 import { autenticarUsuario, tratarErroFirebase } from "../../utils/FirebaseUtil";
 
 export default function LoginScreen(): JSX.Element {
@@ -59,7 +58,7 @@ export default function LoginScreen(): JSX.Element {
                 navegarParaTela(RotaPrincipalEnum.TABS);
             }
         } catch (error: any) {
-            if ((error as FirebaseError)?.code) {
+            if (error?.code && error.name === 'FirebaseError') {
                 tratarErroFirebase(error);
             } else {
                 tratarErroGeral(error);

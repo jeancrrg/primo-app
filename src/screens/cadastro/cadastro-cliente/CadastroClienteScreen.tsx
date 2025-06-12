@@ -19,7 +19,6 @@ import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
 import { cadastrarCliente } from "../../../services/Cliente.service";
 import { MensagemErroDTO } from "../../../models/dto/MensagemErroDTO.model";
 import { cadastrarUsuarioAutenticacao, tratarErroFirebase } from "../../../utils/FirebaseUtil";
-import { FirebaseError } from "firebase/app";
 
 export default function CadastroClienteScreen(): JSX.Element {
 
@@ -38,7 +37,7 @@ export default function CadastroClienteScreen(): JSX.Element {
             Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Usuário cadastrado com sucesso! Acesse sua conta!'});
             navegarParaTela(RotaPrincipalEnum.LOGIN);
         } catch (error: any) {
-            if ((error as FirebaseError)?.code) {
+            if (error?.code && error.name === 'FirebaseError') {
                 tratarErroFirebase(error);
             } else {
                 tratarErroGeral(error);
@@ -60,7 +59,6 @@ export default function CadastroClienteScreen(): JSX.Element {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-
             {loading ? (
                 <Loader/>
             ) : (

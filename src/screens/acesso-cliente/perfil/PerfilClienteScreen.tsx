@@ -4,7 +4,6 @@ import { styles } from "./PerfilClienteScreenStyle";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { Cliente } from "../../../models/cadastro/Cliente.model";
-import { sairAplicativo } from "../../../services/Autenticacao.service";
 import { atualizarAvatarCliente, buscarCliente, inativarCliente } from "../../../services/Cliente.service";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
 import CardSmall from "../../../components/card-small/CardSmall";
@@ -18,6 +17,7 @@ import { obterCodigoPessoaLogado } from "../../../services/Storage.service";
 import { formatarCPF, formatarNome, formatarTelefone } from "../../../utils/FormatterUtil";
 import { MensagemErroDTO } from "../../../models/dto/MensagemErroDTO.model";
 import Loader from "../../../components/loader/Loader";
+import { sairAplicativo } from "../../../utils/FirebaseUtil";
 
 export default function PerfilClienteScreen(): JSX.Element {
 
