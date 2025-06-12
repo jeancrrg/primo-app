@@ -22,7 +22,7 @@ import { CadastroPrestadorDTO } from "../../../models/dto/CadastroPrestadorDTO.m
 import { FormularioCadastroPrestador } from "../../../models/interfaces/formularios/FormularioCadastroPrestador.interface";
 import { navegarParaTela, voltarTela } from "../../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
-import { cadastrarPrestador } from "../../../services/Prestador.service";
+import { cadastrarPrestador } from "../../../services/PrestadorServico.service";
 
 export default function CadastroPrestadorScreen(): JSX.Element {
 

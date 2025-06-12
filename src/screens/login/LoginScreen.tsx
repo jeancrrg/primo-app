@@ -1,7 +1,7 @@
 import { Image, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { styles } from "./LoginScreenStyle";
 import * as Animatable from 'react-native-animatable'; 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Divider from "../../components/divider/Divider";
 import BotaoPrincipal from "../../components/botao/botao-principal/BotaoPrincipal";
 import BotaoSecundario from "../../components/botao/botao-secundario/BotaoSecundario";
@@ -20,6 +20,7 @@ import { removerCodigoPessoaLogado, removerTokenAcesso, salvarCodigoPessoaLogado
 import { LoginDTO } from "../../models/dto/LoginDTO.model";
 import { useFocusEffect } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
+import { MensagemErroDTO } from "../../models/dto/MensagemErroDTO.model";
 
 export default function LoginScreen(): JSX.Element {
 
@@ -47,8 +48,6 @@ export default function LoginScreen(): JSX.Element {
             const usuario: User = await autenticarUsuario(formulario.login, formulario.senha);
             const loginDTO: LoginDTO = await realizarLogin(formulario);
 
-            console.log('Dados do login:', loginDTO);
-
             salvarTokenAcesso(loginDTO.token);
             salvarCodigoPessoaLogado(loginDTO.codigoPessoa);
             salvarTipoPessoaLogado(loginDTO.tipoPessoa);
@@ -57,7 +56,13 @@ export default function LoginScreen(): JSX.Element {
                 navegarParaTela(RotaPrincipalEnum.TABS);
             }
         } catch (error: any) {
-            Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao entrar! - ' + error.message });
+            const mensagemErroDTO: MensagemErroDTO = error?.response?.data;
+            if (mensagemErroDTO?.codigoErro == 409) {
+                Toast.show({ type: 'aviso', text1: 'AVISO', text2: mensagemErroDTO?.mensagem });
+            } else {
+                Toast.show({ type: 'erro', text1: 'ERRO', text2: 'Erro ao realizar o login! - ' + mensagemErroDTO?.mensagem 
+                                                                    || 'Ocorreu um erro inesperado!' });
+            }
         } finally {
             setLoading(false);
         }

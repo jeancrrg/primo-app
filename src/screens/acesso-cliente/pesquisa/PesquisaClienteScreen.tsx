@@ -5,7 +5,7 @@ import LottieView from 'lottie-react-native';
 import { Feather } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import { PrestadorServico } from "../../../models/cadastro/PrestadorServico.model";
-import { buscarPrestadoresServico } from "../../../services/Prestador.service";
+import { buscarPrestadoresServico } from "../../../services/PrestadorServico.service";
 import { isEmpty, isNotEmpty } from "../../../utils/ValidationUtil";
 import CardPrestadorServico from "../../../components/card-prestador-servico/CardPrestadorServico";
 import Loader from "../../../components/loader/Loader";

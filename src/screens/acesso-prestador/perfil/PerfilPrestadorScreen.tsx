@@ -13,7 +13,7 @@ import Header from "../../../components/header/Header";
 import { Colors } from "../../../../assets/styles/Colors";
 import { navegarParaTela } from "../../../utils/NavigationUtil";
 import { RotaPrincipalEnum } from "../../../models/enum/RotaPrincipal.enum";
-import { atualizarAvatarPrestador, buscarPrestadorServico } from "../../../services/Prestador.service";
+import { atualizarAvatarPrestador, buscarPrestadorServico, inativarPrestador } from "../../../services/PrestadorServico.service";
 import { obterCodigoPessoaLogado } from "../../../services/Storage.service";
 import { formatarCNPJ, formatarNome, formatarTelefone } from "../../../utils/FormatterUtil";
 
@@ -87,7 +87,9 @@ export default function PerfilPrestadorScreen(): JSX.Element {
         );
     }
 
-    function excluir(): void {
+    async function excluir(): Promise<void> {
+        await inativarPrestador(prestadorServico!.codigo);
+        Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Conta excluída com sucesso!'});
         sairAplicativo();
         navegarParaTela(RotaPrincipalEnum.LOGIN);
     }

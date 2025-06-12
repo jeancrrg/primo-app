@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { Cliente } from "../../../models/cadastro/Cliente.model";
 import { sairAplicativo } from "../../../services/Autenticacao.service";
-import { atualizarAvatarCliente, buscarCliente } from "../../../services/Cliente.service";
+import { atualizarAvatarCliente, buscarCliente, inativarCliente } from "../../../services/Cliente.service";
 import { obterImagemAvatar } from "../../../services/Avatar.service";
 import CardSmall from "../../../components/card-small/CardSmall";
 import ModalAvatar from "../../../components/modal-avatar/ModalAvatar";
@@ -87,7 +87,9 @@ export default function PerfilClienteScreen(): JSX.Element {
         );
     }
 
-    function excluir(): void {
+    async function excluir(): Promise<void> {
+        await inativarCliente(cliente!.codigo);
+        Toast.show({ type: 'sucesso', text1: 'SUCESSO', text2: 'Conta excluída com sucesso!'});
         sairAplicativo();
         navegarParaTela(RotaPrincipalEnum.LOGIN);
     }
